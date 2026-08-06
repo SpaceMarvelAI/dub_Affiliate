@@ -1,0 +1,4 @@
+[    1503ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/a9154_next_dist_compiled_react-dom_89a36d01._.js:14537
+[    1715ms] [WARNING] Ignoring Event: localhost @ http://localhost:3000/_proxy/plausible/script.js:0
+[    1987ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5949
+[    4709ms] [LOG] [Fast Refresh] done in 2822ms @ http://localhost:3000/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5809

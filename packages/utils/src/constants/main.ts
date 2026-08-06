@@ -3,7 +3,7 @@ export const SHORT_DOMAIN = "dub.sh";
 export const APP_HOSTNAMES = new Set([
   "app.dub.co",
   "preview.dub.co",
-  "localhost:8888",
+  "localhost:3000",
   "localhost",
 ]);
 
@@ -12,7 +12,7 @@ export const APP_DOMAIN =
     ? "https://app.dub.co"
     : process.env.NEXT_PUBLIC_VERCEL_ENV === "preview"
       ? "https://preview.dub.co"
-      : "http://localhost:8888";
+      : "http://localhost:3000";
 
 export const APP_DOMAIN_WITH_NGROK =
   process.env.NEXT_PUBLIC_VERCEL_ENV === "production"
@@ -21,13 +21,13 @@ export const APP_DOMAIN_WITH_NGROK =
       ? process.env.VERCEL_URL
         ? `https://${process.env.VERCEL_URL}`
         : "https://preview.dub.co"
-      : process.env.NEXT_PUBLIC_NGROK_URL || "http://localhost:8888";
+      : process.env.NEXT_PUBLIC_NGROK_URL || "http://localhost:3000";
 
 export const API_HOSTNAMES = new Set([
   "api.dub.co",
   "api-staging.dub.co",
   `api.${SHORT_DOMAIN}`,
-  "api.localhost:8888",
+  "api.localhost:3000",
   "api.localhost",
 ]);
 
@@ -36,18 +36,18 @@ export const API_DOMAIN =
     ? "https://api.dub.co"
     : process.env.NEXT_PUBLIC_VERCEL_ENV === "preview"
       ? "https://api-staging.dub.co"
-      : "http://api.localhost:8888";
+      : "http://api.localhost:3000";
 
 export const ADMIN_HOSTNAMES = new Set([
   "admin.dub.co",
-  "admin.localhost:8888",
+  "admin.localhost:3000",
   "admin.localhost",
 ]);
 
 export const PARTNERS_HOSTNAMES = new Set([
   "partners.dub.co",
   "partners-staging.dub.co",
-  "partners.localhost:8888",
+  "partners.localhost:3000",
   "partners.localhost",
 ]);
 
@@ -56,14 +56,14 @@ export const PARTNERS_DOMAIN =
     ? "https://partners.dub.co"
     : process.env.NEXT_PUBLIC_VERCEL_ENV === "preview"
       ? "https://partners-staging.dub.co"
-      : "http://partners.localhost:8888";
+      : "http://partners.localhost:3000";
 
 export const PARTNERS_DOMAIN_WITH_NGROK =
   process.env.NEXT_PUBLIC_VERCEL_ENV === "production"
     ? "https://partners.dub.co"
     : process.env.NEXT_PUBLIC_VERCEL_ENV === "preview"
       ? "https://partners-staging.dub.co"
-      : process.env.NEXT_PUBLIC_NGROK_URL || "http://partners.localhost:8888";
+      : process.env.NEXT_PUBLIC_NGROK_URL || "http://partners.localhost:3000";
 
 export const DUB_LOGO = "https://assets.dub.co/logo.png";
 export const DUB_LOGO_SQUARE = "https://assets.dub.co/logo-square.png";

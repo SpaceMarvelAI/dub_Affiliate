@@ -1,7 +1,10 @@
 import Stripe from "stripe";
 import { StripeMode } from "../types";
 
-export const stripe = new Stripe(`${process.env.STRIPE_SECRET_KEY}`, {
+// ponytail: falls back to a placeholder key so the app boots without a real Stripe
+// account (billing routes will fail loudly if actually hit); set STRIPE_SECRET_KEY
+// once billing/subscriptions need to work.
+export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "sk_test_placeholder", {
   apiVersion: "2025-05-28.basil",
   appInfo: {
     name: "Dub.co",
@@ -19,7 +22,7 @@ const secretMap: Record<StripeMode, string | undefined> = {
 export const stripeAppClient = ({ mode }: { mode?: StripeMode }) => {
   const appSecretKey = secretMap[mode ?? "live"];
 
-  return new Stripe(appSecretKey!, {
+  return new Stripe(appSecretKey || "sk_test_placeholder", {
     apiVersion: "2025-05-28.basil",
     appInfo: {
       name: "Dub.co",

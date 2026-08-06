@@ -1,0 +1,32 @@
+[   16583ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:8888/_next/static/chunks/a9154_next_dist_compiled_react-dom_89a36d01._.js:14537
+[   16874ms] [WARNING] Ignoring Event: localhost @ http://localhost:8888/_proxy/plausible/script.js:0
+[   17265ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:8888/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5949
+[   38993ms] [LOG] [Fast Refresh] done in 22031ms @ http://localhost:8888/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5809
+[   64646ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:8888/_next/static/chunks/a9154_next_dist_compiled_react-dom_89a36d01._.js:14537
+[   64842ms] [WARNING] Ignoring Event: localhost @ http://localhost:8888/_proxy/plausible/script.js:0
+[   65090ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:8888/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5949
+[   65195ms] [LOG] [Fast Refresh] done in 207ms @ http://localhost:8888/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5809
+[   69964ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:8888/_next/static/chunks/a9154_next_dist_compiled_react-dom_89a36d01._.js:14537
+[   70160ms] [WARNING] Ignoring Event: localhost @ http://localhost:8888/_proxy/plausible/script.js:0
+[   70320ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:8888/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5949
+[   70377ms] [LOG] [Fast Refresh] done in 158ms @ http://localhost:8888/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5809
+[   77898ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:8888/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5949
+[   78155ms] [LOG] [Fast Refresh] done in 365ms @ http://localhost:8888/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5809
+[   82383ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:8888/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5949
+[   82398ms] [LOG] [Fast Refresh] done in 116ms @ http://localhost:8888/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5809
+[   82885ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:8888/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5949
+[   82895ms] [LOG] [Fast Refresh] done in 112ms @ http://localhost:8888/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5809
+[   84077ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:8888/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5949
+[   84261ms] [LOG] [Fast Refresh] done in 286ms @ http://localhost:8888/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5809
+[   88700ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:8888/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5949
+[   88717ms] [LOG] [Fast Refresh] done in 118ms @ http://localhost:8888/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5809
+[   97729ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:8888/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5949
+[   97747ms] [LOG] [Fast Refresh] done in 120ms @ http://localhost:8888/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5809
+[   99237ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:8888/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5949
+[   99632ms] [LOG] [Fast Refresh] done in 496ms @ http://localhost:8888/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5809
+[  503530ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:8888/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5949
+[  504068ms] [LOG] [Fast Refresh] done in 396ms @ http://localhost:8888/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5809
+[  505564ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:8888/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5949
+[  507443ms] [LOG] [Fast Refresh] done in 1979ms @ http://localhost:8888/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5809
+[  508218ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:8888/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5949
+[  511775ms] [ERROR] Failed to load resource: net::ERR_EMPTY_RESPONSE @ http://localhost:8888/manifest.webmanifest:0
