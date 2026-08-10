@@ -1,0 +1,44 @@
+# syntax=docker/dockerfile:1
+
+FROM node:20-slim AS base
+RUN corepack enable
+WORKDIR /app
+
+# ---- deps: install once, cached across builds ----
+FROM base AS deps
+COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
+COPY apps/web/package.json apps/web/package.json
+COPY packages/ui/package.json packages/ui/package.json
+COPY packages/utils/package.json packages/utils/package.json
+COPY packages/email/package.json packages/email/package.json
+COPY packages/tailwind-config/package.json packages/tailwind-config/package.json
+COPY packages/tsconfig/package.json packages/tsconfig/package.json
+COPY packages/cli/package.json packages/cli/package.json
+COPY packages/hubspot-app/package.json packages/hubspot-app/package.json
+COPY packages/stripe-app/package.json packages/stripe-app/package.json
+COPY packages/embeds/core/package.json packages/embeds/core/package.json
+COPY packages/embeds/react/package.json packages/embeds/react/package.json
+RUN pnpm install --frozen-lockfile
+
+# ---- build ----
+FROM deps AS build
+COPY . .
+ENV NEXT_TELEMETRY_DISABLED=1
+# Next.js build for this app (hundreds of routes) exceeds V8's default ~2GB
+# old-space limit inside a container; raise it explicitly.
+ENV NODE_OPTIONS=--max-old-space-size=4096
+RUN pnpm --filter web prisma:generate
+RUN pnpm --filter web build
+
+# ---- runtime ----
+FROM node:20-slim AS runner
+RUN corepack enable
+WORKDIR /app
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
+
+COPY --from=build /app /app
+WORKDIR /app/apps/web
+
+EXPOSE 3000
+CMD ["pnpm", "start"]

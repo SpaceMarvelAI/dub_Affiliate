@@ -1,0 +1,16 @@
+**/node_modules
+**/.next
+**/.turbo
+**/dist
+.git
+.github
+graft
+graphify-out
+.playwright-mcp
+.claude
+**/*.log
+**/.env
+**/.env.*
+!**/.env.example
+DEPLOYMENT.md
+README.md
