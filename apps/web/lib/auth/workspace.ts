@@ -488,7 +488,7 @@ export const withWorkspace = (
           throw new DubApiError({
             code: "forbidden",
             message:
-              "You don't have access to Dub Partners in this workspace. Please contact your workspace admin to get access.",
+              "You don't have access to Space Marvel Partners in this workspace. Please contact your workspace admin to get access.",
           });
         }
 

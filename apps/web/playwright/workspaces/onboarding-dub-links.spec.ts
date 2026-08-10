@@ -14,7 +14,7 @@ test("complete workspace onboarding with Dub Links product", async ({
   // Welcome page
   await page.goto("/onboarding");
   await expect(
-    page.getByRole("heading", { name: "Welcome to Dub" }),
+    page.getByRole("heading", { name: "Welcome to Space Marvel" }),
   ).toBeVisible();
   await Promise.all([
     expect(page).toHaveURL(/\/onboarding\/workspace/, {
@@ -36,7 +36,7 @@ test("complete workspace onboarding with Dub Links product", async ({
   expect(slug).toBeTruthy();
 
   const productsHeading = page.getByRole("heading", {
-    name: "What do you want to do with Dub?",
+    name: "What do you want to do with Space Marvel?",
   });
 
   await Promise.all([
@@ -51,7 +51,7 @@ test("complete workspace onboarding with Dub Links product", async ({
     expect(page).toHaveURL(/\/onboarding\/domain/, {
       timeout: STEP_NAV_TIMEOUT,
     }),
-    page.getByRole("button", { name: "Continue with Dub Links" }).click(),
+    page.getByRole("button", { name: "Continue with Space Marvel Links" }).click(),
   ]);
 
   // Domain step — skip it

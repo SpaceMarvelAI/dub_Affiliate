@@ -59,7 +59,7 @@ export async function POST(req: Request) {
       const sentEmail = await sendEmail({
         variant: "notifications",
         subject:
-          "[Action Required]: Your recent auto-withdrawal from Dub failed",
+          "[Action Required]: Your recent auto-withdrawal from Space Marvel failed",
         to: partner.email,
         react: PartnerPayoutWithdrawalFailed({
           email: partner.email,

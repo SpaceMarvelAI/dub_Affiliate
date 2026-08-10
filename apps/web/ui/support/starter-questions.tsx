@@ -8,7 +8,7 @@ const STARTER_QUESTIONS: Record<SupportChatContext, string[]> = {
     "How do I set up custom domain?",
     "How do I set up conversion tracking?",
     "How does attribution work?",
-    "How do I use the Dub API?",
+    "How do I use the Space Marvel API?",
     "How do I set up a partner program?",
     "How do I update my billing information?",
   ],

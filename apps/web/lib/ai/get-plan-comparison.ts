@@ -12,7 +12,7 @@ const planSummarySchema = z.object({
 
 export const getPlanComparisonTool = tool({
   description:
-    "Returns the canonical Dub plan hierarchy and features. Use when users ask about plan differences, upgrades, or which plan includes a feature.",
+    "Returns the canonical Space Marvel plan hierarchy and features. Use when users ask about plan differences, upgrades, or which plan includes a feature.",
   inputSchema: z.object({}),
   outputSchema: z.array(planSummarySchema),
   execute: async () => getPlanSummaries(),

@@ -28,7 +28,7 @@ export default function UpgradeEmail({
         <Text style={pStyle}>
           My name is Steven, and I&apos;m the founder of Dub. I wanted to
           personally reach out to thank you for upgrading to{" "}
-          <strong>Dub {capitalize(plan)}</strong>! Your support means the world
+          <strong>Space Marvel {capitalize(plan)}</strong>! Your support means the world
           to us and helps us continue to build and improve Dub.
         </Text>
 

@@ -100,7 +100,7 @@ const STATUS_CONFIG: Record<
   },
   "has site": {
     suffix:
-      "is currently pointing to an existing website. Only proceed if you're sure you want to use this domain for short links on Dub.",
+      "is currently pointing to an existing website. Only proceed if you're sure you want to use this domain for short links on Space Marvel.",
     icon: AlertCircleFill,
     className: "bg-blue-100 text-blue-800",
   },

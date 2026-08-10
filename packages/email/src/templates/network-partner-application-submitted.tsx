@@ -24,7 +24,7 @@ export default function NetworkPartnerApplicationSubmitted({
   return (
     <Html>
       <Head />
-      <Preview>Dub Partner Network application submitted</Preview>
+      <Preview>Space Marvel Partner Network application submitted</Preview>
       <Tailwind>
         <Body className="mx-auto my-auto bg-white font-sans">
           <Container className="mx-auto my-8 max-w-[600px] px-8 py-8">
@@ -38,7 +38,7 @@ export default function NetworkPartnerApplicationSubmitted({
 
             <Text className="text-sm leading-6 text-neutral-600">
               {name ? `Hi ${name}, t` : "T"}hanks for applying to the{" "}
-              <strong>Dub Partner Network</strong>!
+              <strong>Space Marvel Partner Network</strong>!
             </Text>
 
             <Text className="text-sm leading-6 text-neutral-600">

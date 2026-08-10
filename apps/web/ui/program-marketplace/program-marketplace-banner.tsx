@@ -56,7 +56,7 @@ export function ProgramMarketplaceBanner() {
 
                 <p
                   className="text-content-subtle flex min-w-0 flex-col px-3 text-base sm:block sm:truncate sm:px-0 sm:text-sm xl:text-base"
-                  title="Program Marketplace is here. Discover and apply to more programs on Dub."
+                  title="Program Marketplace is here. Discover and apply to more programs on Space Marvel."
                 >
                   <span className="text-content-emphasis font-semibold">
                     Program Marketplace is here.

@@ -10,7 +10,7 @@ export const trackOpen: ZodOpenApiOperationObject = {
   "x-speakeasy-ignore": true,
   summary: "Track a deep link open event",
   description:
-    "This endpoint is used to track when a user opens your app via a Dub-powered deep link (for both iOS and Android).",
+    "This endpoint is used to track when a user opens your app via a Space Marvel-powered deep link (for both iOS and Android).",
   requestBody: {
     content: {
       "application/json": {

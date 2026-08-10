@@ -30,7 +30,7 @@ export const POST = withWorkspace(
       throw new DubApiError({
         code: "bad_request",
         message:
-          "You can only transfer Dub default domain links to another workspace.",
+          "You can only transfer Space Marvel default domain links to another workspace.",
       });
     }
 

@@ -91,7 +91,7 @@ export const sendOtpAction = actionClient
       }),
 
       sendEmail({
-        subject: "Dub: OTP to verify your account",
+        subject: "Space Marvel: OTP to verify your account",
         to: email,
         react: VerifyEmail({
           email,

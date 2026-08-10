@@ -49,7 +49,7 @@ export default function CustomDomainPage() {
               "animate-slide-up-fade motion-reduce:animate-fade-in [--offset:20px] [animation-duration:1s] [animation-fill-mode:both]",
             )}
           >
-            Welcome to Dub
+            Welcome to Space Marvel
           </h1>
           <p
             className={cn(

@@ -109,7 +109,7 @@ export const authOptions: NextAuthOptions = {
 
         sendEmail({
           to: identifier,
-          subject: "Your Dub Login Link",
+          subject: "Your Space Marvel Login Link",
           react: LoginLink({ url, email: identifier }),
         });
       },
@@ -255,7 +255,7 @@ export const authOptions: NextAuthOptions = {
     // Sign in with email and password
     CredentialsProvider({
       id: "credentials",
-      name: "Dub.co",
+      name: "Space Marvel",
       type: "credentials",
       credentials: {
         email: { type: "email" },

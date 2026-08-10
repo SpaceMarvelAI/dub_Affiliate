@@ -3,7 +3,7 @@ import { Metadata } from "next";
 export function constructMetadata({
   title,
   fullTitle,
-  description = "Dub is the modern link attribution platform for short links, conversion tracking, and affiliate programs.",
+  description = "Space Marvel is the modern link attribution platform for short links, conversion tracking, and affiliate programs.",
   image = "https://assets.dub.co/thumbnail.jpg",
   video,
   icons = [
@@ -44,7 +44,9 @@ export function constructMetadata({
   return {
     title:
       fullTitle ||
-      (title ? `${title} | Dub` : "Dub - The Modern Link Attribution Platform"),
+      (title
+        ? `${title} | Space Marvel`
+        : "Space Marvel - The Modern Link Attribution Platform"),
     description,
     openGraph: {
       title,

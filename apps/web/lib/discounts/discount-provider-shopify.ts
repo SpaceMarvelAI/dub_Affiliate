@@ -41,7 +41,7 @@ async function requireInstalledIntegration(
     throw new DiscountProviderError(
       "shopify",
       "INTEGRATION_NOT_AVAILABLE",
-      "SHOPIFY_CONNECTION_REQUIRED: Your workspace isn't connected to Shopify yet. Please install the Dub Shopify app in settings to create a discount.",
+      "SHOPIFY_CONNECTION_REQUIRED: Your workspace isn't connected to Shopify yet. Please install the Space Marvel Shopify app in settings to create a discount.",
     );
   }
 
@@ -56,7 +56,7 @@ async function requireInstalledIntegration(
     throw new DiscountProviderError(
       "shopify",
       "INTEGRATION_NOT_AVAILABLE",
-      "SHOPIFY_CONNECTION_REQUIRED: Your workspace isn't connected to Shopify yet. Please install the Dub Shopify app in settings to create a discount.",
+      "SHOPIFY_CONNECTION_REQUIRED: Your workspace isn't connected to Shopify yet. Please install the Space Marvel Shopify app in settings to create a discount.",
     );
   }
 
@@ -68,7 +68,7 @@ async function requireInstalledIntegration(
     throw new DiscountProviderError(
       "shopify",
       "PERMISSIONS_REQUIRED",
-      "SHOPIFY_APP_UPGRADE_REQUIRED: Your connected Shopify store doesn't have permission to create discount codes. Please reinstall or upgrade the Dub Shopify app.",
+      "SHOPIFY_APP_UPGRADE_REQUIRED: Your connected Shopify store doesn't have permission to create discount codes. Please reinstall or upgrade the Space Marvel Shopify app.",
     );
   }
 

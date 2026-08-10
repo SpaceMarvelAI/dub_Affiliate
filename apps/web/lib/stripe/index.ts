@@ -7,7 +7,7 @@ import { StripeMode } from "../types";
 export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "sk_test_placeholder", {
   apiVersion: "2025-05-28.basil",
   appInfo: {
-    name: "Dub.co",
+    name: "Space Marvel",
     version: "0.1.0",
   },
 });
@@ -25,7 +25,7 @@ export const stripeAppClient = ({ mode }: { mode?: StripeMode }) => {
   return new Stripe(appSecretKey || "sk_test_placeholder", {
     apiVersion: "2025-05-28.basil",
     appInfo: {
-      name: "Dub.co",
+      name: "Space Marvel",
       version: "0.1.0",
     },
   });

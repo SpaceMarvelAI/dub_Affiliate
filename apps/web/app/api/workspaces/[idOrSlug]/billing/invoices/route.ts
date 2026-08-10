@@ -56,7 +56,7 @@ const getSubscriptionInvoices = async (
       total: invoice.total ?? invoice.amount_due,
       stripeStatus: invoice.status,
       createdAt: new Date(invoice.created * 1000),
-      description: "Dub subscription",
+      description: "Space Marvel subscription",
       pdfUrl: invoice.invoice_pdf,
     }));
   } catch (error) {
@@ -94,7 +94,7 @@ const getOtherInvoices = async ({
     return {
       ...invoice,
       description:
-        type === "partnerPayout" ? "Dub Partner payout" : "Dub Domain renewal",
+        type === "partnerPayout" ? "Space Marvel Partner payout" : "Space Marvel Domain renewal",
       pdfUrl: `${APP_DOMAIN}/invoices/${invoice.id}`,
     };
   });

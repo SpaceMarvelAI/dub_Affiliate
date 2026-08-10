@@ -16,7 +16,7 @@ export const InvoiceSchema = z.object({
   stripeStatus: StripeInvoiceStatusSchema.nullish(), // only for Stripe subscription invoices
   paymentMethod: z.enum(PaymentMethod).nullable().optional(),
   createdAt: z.date(),
-  description: z.string().default("Dub payout"),
+  description: z.string().default("Space Marvel payout"),
   pdfUrl: z.string().nullable(),
   failedReason: z.string().nullish().default(null),
 });

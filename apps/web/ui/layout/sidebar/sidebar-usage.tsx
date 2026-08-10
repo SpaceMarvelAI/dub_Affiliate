@@ -218,7 +218,7 @@ function UsageInner() {
                 )}
               >
                 {paymentFailedAt && plan !== "free"
-                  ? "Your last payment failed. Please update your payment method to continue using Dub."
+                  ? "Your last payment failed. Please update your payment method to continue using Space Marvel."
                   : isTrial && trialEndsAt
                     ? null
                     : billingEnd

@@ -47,7 +47,7 @@ const socials = [
 
 const navigation = {
   product: FEATURES_LIST.filter(
-    ({ title }) => title !== "Dub Integrations",
+    ({ title }) => title !== "Space Marvel Integrations",
   ).map(({ id, title, href }) => ({
     id,
     name: title,
@@ -134,7 +134,7 @@ export function Footer({
                 })}
                 className="block max-w-fit"
               >
-                <span className="sr-only">Dub Logo</span>
+                <span className="sr-only">Space Marvel Logo</span>
                 <NavWordmark className="h-8 text-neutral-800" />
               </Link>
             </div>

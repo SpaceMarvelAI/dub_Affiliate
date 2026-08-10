@@ -27,7 +27,7 @@ export default function WelcomeEmailPartner({
   return (
     <Html>
       <Head />
-      <Preview>Welcome to Dub Partners</Preview>
+      <Preview>Welcome to Space Marvel Partners</Preview>
       <Tailwind>
         <Body className="mx-auto my-auto bg-white font-sans">
           <Container className="mx-auto my-10 max-w-[600px] rounded border border-solid border-neutral-200 px-10 py-5">
@@ -35,7 +35,7 @@ export default function WelcomeEmailPartner({
               <Img src={DUB_WORDMARK} height="32" alt="Dub" />
             </Section>
             <Heading className="mx-0 my-7 p-0 text-xl font-semibold text-black">
-              Welcome {name || "to Dub Partners"}!
+              Welcome {name || "to Space Marvel Partners"}!
             </Heading>
             <Text className="mb-8 text-sm leading-6 text-gray-600">
               We're excited to have you onboard. Time to start earning rewards

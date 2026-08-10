@@ -31,7 +31,7 @@ export const getApplicationSourceLabelTooltip = (
     };
   if (isMarketplaceReferralSource(referralSource))
     return {
-      label: "Dub Marketplace",
+      label: "Space Marvel Marketplace",
       tooltip:
         "This application came from your [Dub Program Marketplace](https://partners.dub.co/marketplace) listing",
     };
@@ -44,7 +44,7 @@ export const getApplicationSourceLabelTooltip = (
 
 export const getReferralSourceDisplayValue = (referralSource: string) => {
   if (referralSource === MARKETPLACE_REFERRAL_SOURCE)
-    return "Dub Program Marketplace";
+    return "Space Marvel Program Marketplace";
   if (referralSource === "direct") return "Direct application";
   if (referralSource === "manual") return "Manual attribution";
   return referralSource;

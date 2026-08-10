@@ -280,7 +280,7 @@ export default function AddOAuthAppForm({
             <h2 className="text-sm font-medium text-neutral-900">
               Application slug
             </h2>
-            <InfoTooltip content="Unique slug for this application on Dub" />
+            <InfoTooltip content="Unique slug for this application on Space Marvel" />
           </label>
           <div className="relative mt-2 rounded-md shadow-sm">
             <input

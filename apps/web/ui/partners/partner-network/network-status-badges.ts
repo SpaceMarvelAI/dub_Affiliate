@@ -9,7 +9,7 @@ export const NetworkStatusBadges = {
   draft: {
     partnerTooltip: {
       content:
-        "Submit your application to join the Dub Partner Network. After approval, you can then apply to this program.",
+        "Submit your application to join the Space Marvel Partner Network. After approval, you can then apply to this program.",
       cta: "Submit application",
     },
     label: "Draft",
@@ -20,7 +20,7 @@ export const NetworkStatusBadges = {
   submitted: {
     partnerTooltip: {
       content:
-        "Your Dub Partner Network application is under review. You'll be able to apply to this program once approved.",
+        "Your Space Marvel Partner Network application is under review. You'll be able to apply to this program once approved.",
       cta: "Pending approval",
       ctaClassName: "bg-bg-attention text-content-attention",
     },
@@ -32,7 +32,7 @@ export const NetworkStatusBadges = {
   rejected: {
     partnerTooltip: {
       content:
-        "Your Dub Partner Network application was not approved. You are not eligible to apply to this program.",
+        "Your Space Marvel Partner Network application was not approved. You are not eligible to apply to this program.",
       cta: "Rejected",
     },
     label: "Rejected",

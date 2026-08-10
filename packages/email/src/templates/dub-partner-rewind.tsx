@@ -31,7 +31,7 @@ export default function DubPartnerRewind({
           }
         `}</style>
       </Head>
-      <Preview>Your Dub Partner Rewind &rsquo;25 is ready</Preview>
+      <Preview>Your Space Marvel Partner Rewind &rsquo;25 is ready</Preview>
       <Tailwind>
         <Body className="mx-auto my-auto bg-white font-sans">
           <Container className="email-container mx-auto my-10 max-w-[600px] px-10 py-5">
@@ -67,7 +67,7 @@ export default function DubPartnerRewind({
                   src="https://assets.dub.co/misc/partner-rewind-2025/hero.jpg"
                   width="500"
                   height="292"
-                  alt="Dub Partner Rewind"
+                  alt="Space Marvel Partner Rewind"
                   className="mx-auto my-0 block h-auto max-w-full rounded-2xl border border-solid border-neutral-200"
                 />
               </Link>

@@ -23,7 +23,7 @@ export function EmbeddedSupportChat() {
         <div className="flex items-center gap-3">
           <img
             src="https://assets.dub.co/misc/dub-avatar.svg"
-            alt="Dub Support"
+            alt="Space Marvel Support"
             className="size-8 rounded-full"
             draggable={false}
           />

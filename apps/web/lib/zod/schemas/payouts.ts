@@ -46,7 +46,7 @@ export const payoutsQuerySchema = z
       .string()
       .optional()
       .describe(
-        "Filter the list of payouts by invoice ID (the unique ID of the invoice you receive for each batch payout you process on Dub). Pending payouts will not have an invoice ID.",
+        "Filter the list of payouts by invoice ID (the unique ID of the invoice you receive for each batch payout you process on Space Marvel). Pending payouts will not have an invoice ID.",
       ),
     groupId: z
       .string()

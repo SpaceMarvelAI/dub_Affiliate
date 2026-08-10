@@ -38,7 +38,7 @@ export function YearInReviewCard() {
         />
         <Image
           src="https://assets.dub.co/blog/2024.jpg"
-          alt="Dub logo with confetti"
+          alt="Space Marvel logo with confetti"
           fill
           sizes="10vw"
           className="rounded object-cover object-center"

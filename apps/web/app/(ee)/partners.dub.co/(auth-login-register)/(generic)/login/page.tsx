@@ -71,7 +71,7 @@ export default async function LoginPage(props: {
       <AuthLayout showTerms="partners" className={cn(programSlug && "pt-20")}>
         <div className="w-full max-w-sm">
           <h1 className="text-center text-xl font-semibold">
-            Log in to your Dub Partner account
+            Log in to your Space Marvel Partner account
           </h1>
           <div className="mt-8">
             <LoginForm

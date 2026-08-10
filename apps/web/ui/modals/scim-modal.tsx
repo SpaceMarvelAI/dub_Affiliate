@@ -82,7 +82,7 @@ function SCIMModal({
         <p className="text-center text-sm text-neutral-500">
           {currentProvider
             ? "Your workspace is currently syncing with your SCIM directory."
-            : "Select a provider to configure directory sync for your Dub workspace."}
+            : "Select a provider to configure directory sync for your Space Marvel workspace."}
         </p>
       </div>
 

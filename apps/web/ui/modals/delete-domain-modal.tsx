@@ -59,7 +59,7 @@ function DeleteDomainModal({
           Deleting this domain will delete all associated links as well as their
           analytics, permanently.
           {Boolean(props.registeredDomain) &&
-            " The domain will also be provisioned back to Dub."}{" "}
+            " The domain will also be provisioned back to Space Marvel."}{" "}
           <strong className="font-semibold text-neutral-700">
             This action can't be undone
           </strong>{" "}

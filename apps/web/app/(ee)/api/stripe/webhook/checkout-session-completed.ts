@@ -152,7 +152,7 @@ export async function checkoutSessionCompleted(
         users.map((user) => ({
           to: user.email as string,
           replyTo: "steven.tey@dub.co",
-          subject: "Welcome to your 14-day Dub trial",
+          subject: "Welcome to your 14-day Space Marvel trial",
           react: TrialStartedEmail({
             email: user.email as string,
             plan: plan.name,

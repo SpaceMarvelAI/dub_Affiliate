@@ -2,9 +2,9 @@ import { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Dub",
-    short_name: "Dub",
-    description: "Dub - The Modern Link Attribution Platform",
+    name: "Space Marvel",
+    short_name: "Space Marvel",
+    description: "Space Marvel - The Modern Link Attribution Platform",
     start_url: "/",
     display: "standalone",
     background_color: "#ffffff",

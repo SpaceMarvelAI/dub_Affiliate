@@ -17,7 +17,7 @@ const products = [
         <DubPartnersIcon className="size-2.5 text-violet-900" />
       </div>
     ),
-    title: "Dub Partners",
+    title: "Space Marvel Partners",
     description: "Grow your revenue on auto-pilot with partnerships.",
     href: "/partners",
     color: "#818cf8",
@@ -30,7 +30,7 @@ const products = [
         <DubAnalyticsIcon className="size-2.5 text-green-900" />
       </div>
     ),
-    title: "Dub Analytics",
+    title: "Space Marvel Analytics",
     description: "Powerful analytics delivered instantly.",
     href: "/analytics",
     color: "#36D78F",
@@ -45,7 +45,7 @@ const products = [
         <DubLinksIcon className="size-2.5 text-orange-900" />
       </div>
     ),
-    title: "Dub Links",
+    title: "Space Marvel Links",
     description: "Short links with superpowers for modern marketing teams.",
     href: "/links",
     color: "#f4950c",
@@ -56,7 +56,7 @@ const products = [
 
 const largeLinks = [
   {
-    title: "Dub Integrations",
+    title: "Space Marvel Integrations",
     description: "Connect Dub with your favorite tools",
     href: "/integrations",
     graphic: (
@@ -70,7 +70,7 @@ const largeLinks = [
     ),
   },
   {
-    title: "Dub API & MCP",
+    title: "Space Marvel API & MCP",
     description: "Connect your agent to Dub",
     href: "/docs/api-reference/introduction",
     graphic: (

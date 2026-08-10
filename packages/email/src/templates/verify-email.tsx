@@ -23,7 +23,7 @@ export default function VerifyEmail({
   return (
     <Html>
       <Head />
-      <Preview>Your Dub Verification Code</Preview>
+      <Preview>Your Space Marvel Verification Code</Preview>
       <Tailwind>
         <Body className="mx-auto my-auto bg-white font-sans">
           <Container className="mx-auto my-10 max-w-[600px] rounded border border-solid border-neutral-200 px-10 py-5">

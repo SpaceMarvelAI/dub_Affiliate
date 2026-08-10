@@ -164,7 +164,7 @@ export const GET = withCron(async () => {
     partnerPrograms.map(({ partner, programs }) => ({
       variant: "notifications",
       to: partner.email,
-      subject: "Connect your payout details on Dub Partners",
+      subject: "Connect your payout details on Space Marvel Partners",
       templateName: "ConnectPayoutReminder",
       templateProps: {
         email: partner.email,

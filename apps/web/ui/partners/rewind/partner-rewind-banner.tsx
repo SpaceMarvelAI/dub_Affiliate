@@ -61,7 +61,7 @@ export function PartnerRewindBanner() {
 
                 <p
                   className="text-content-subtle sm:@[1000px]/page:text-base flex min-w-0 flex-col px-3 text-base sm:block sm:truncate sm:px-0 sm:text-sm"
-                  title="Your Dub Partner Rewind &rsquo;25 is ready. See how you performed this year on Dub Partners!"
+                  title="Your Space Marvel Partner Rewind &rsquo;25 is ready. See how you performed this year on Space Marvel Partners!"
                 >
                   <span className="text-content-emphasis font-semibold">
                     Your Dub Partner Rewind &rsquo;25 is ready.

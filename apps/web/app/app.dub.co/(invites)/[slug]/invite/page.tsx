@@ -130,7 +130,7 @@ export default async function WorkspaceInvitePage({
                       <DubLinksIcon className="size-3 text-orange-900" />
                     </div>
                   ),
-                  title: "Dub Links",
+                  title: "Space Marvel Links",
                   href: "https://dub.co/links",
                   cta: "Learn more",
                 },
@@ -142,7 +142,7 @@ export default async function WorkspaceInvitePage({
                             <DubPartnersIcon className="size-3 text-violet-900" />
                           </div>
                         ),
-                        title: "Dub Partners",
+                        title: "Space Marvel Partners",
                         href: "https://dub.co/partners",
                         cta: "Learn more",
                       },

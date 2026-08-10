@@ -27,7 +27,7 @@ export default function ConnectPayoutReminder({
     },
     {
       id: "2",
-      name: "Dub",
+      name: "Space Marvel",
       logo: "https://dubassets.com/programs/prog_d8pl69xXCv4AoHNT281pHQdo/logo_TMLMTHs",
       amount: 40_24,
     },

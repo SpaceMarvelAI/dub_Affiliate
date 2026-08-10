@@ -67,7 +67,7 @@ export function IdentityVerificationBanner() {
 
                 <p
                   className="text-content-subtle flex min-w-0 flex-col px-3 text-base sm:block sm:truncate sm:px-0 sm:text-sm xl:text-base"
-                  title="Verify your identity on Dub. Programs trust verified partners—stand out and get approved faster."
+                  title="Verify your identity on Space Marvel. Programs trust verified partners—stand out and get approved faster."
                 >
                   <span className="text-content-emphasis font-semibold">
                     Verify your identity on Dub.

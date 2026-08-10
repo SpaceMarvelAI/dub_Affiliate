@@ -48,7 +48,7 @@ export default function NetworkPartnerApplicationApproved({
                 src="https://assets.dub.co/misc/program-marketplace-email-header.jpg"
                 width="500"
                 height="292"
-                alt="Dub Program Marketplace"
+                alt="Space Marvel Program Marketplace"
                 style={{
                   display: "block",
                   maxWidth: "100%",
@@ -63,7 +63,7 @@ export default function NetworkPartnerApplicationApproved({
             </Heading>
 
             <Text className="mx-auto mb-4 mt-0 max-w-[420px] text-center text-base leading-7 text-neutral-600">
-              Your application to join the <strong>Dub Network</strong> has been
+              Your application to join the <strong>Space Marvel Network</strong> has been
               approved. You can now apply to more programs on the marketplace,
               and get discovered by brands.
             </Text>

@@ -32,7 +32,7 @@ const RATINGS = [
 export function CTA({
   utmParams,
   title = "Supercharge your marketing efforts",
-  subtitle = "See why Dub is the link management platform of choice for modern marketing teams.",
+  subtitle = "See why Space Marvel is the link management platform of choice for modern marketing teams.",
   className,
 }: {
   utmParams?: Partial<Record<(typeof UTMTags)[number], string>>;

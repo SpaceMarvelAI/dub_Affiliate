@@ -33,12 +33,12 @@ const RequiredFieldsPreview = () => {
         <RequiredFieldItemPreview
           icon={<SignatureIcon />}
           label="Name"
-          tooltip="The partner's name when their Dub account is created"
+          tooltip="The partner's name when their Space Marvel account is created"
         />
         <RequiredFieldItemPreview
           icon={<EmailIcon />}
           label="Email"
-          tooltip="The partner's email when their Dub account is created"
+          tooltip="The partner's email when their Space Marvel account is created"
         />
       </div>
       <div className="mt-1 flex items-center justify-center gap-1.5">

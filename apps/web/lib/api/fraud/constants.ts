@@ -43,7 +43,7 @@ export const FRAUD_RULES: FraudRuleInfo[] = [
     type: "partnerCrossProgramBan",
     name: "Cross-program ban",
     description:
-      "This partner was banned from another program on Dub. Our team reviewed this decision and confirmed the fraudulent behavior or terms of service violation.",
+      "This partner was banned from another program on Space Marvel. Our team reviewed this decision and confirmed the fraudulent behavior or terms of service violation.",
     scope: "partner",
     severity: "high",
     configurable: true,
@@ -52,7 +52,7 @@ export const FRAUD_RULES: FraudRuleInfo[] = [
     type: "partnerDuplicateAccount",
     name: "Duplicate account detected",
     description:
-      "This partner was flagged by our system for having 2 or more Dub accounts. Please review to prevent abuse of program restrictions, caps, or bonuses.",
+      "This partner was flagged by our system for having 2 or more Space Marvel accounts. Please review to prevent abuse of program restrictions, caps, or bonuses.",
     scope: "partner",
     severity: "high",
     configurable: true,

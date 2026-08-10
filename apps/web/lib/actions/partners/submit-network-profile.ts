@@ -77,7 +77,7 @@ export const submitNetworkProfileAction = authPartnerActionClient.action(
     if (partner.email) {
       await sendEmail({
         to: partner.email,
-        subject: "Dub Partner Network application submitted",
+        subject: "Space Marvel Partner Network application submitted",
         variant: "notifications",
         react: NetworkPartnerApplicationSubmitted({
           name: partner.name,

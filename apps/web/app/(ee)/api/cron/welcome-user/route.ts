@@ -69,7 +69,7 @@ export async function POST(req: Request) {
       await sendEmail({
         to: user.email,
         replyTo: "steven.tey@dub.co",
-        subject: "Welcome to Dub Partners!",
+        subject: "Welcome to Space Marvel Partners!",
         react: WelcomeEmailPartner({
           email: user.email,
           name: user.name,
@@ -89,7 +89,7 @@ export async function POST(req: Request) {
       await sendEmail({
         to: user.email,
         replyTo: "steven.tey@dub.co",
-        subject: "Welcome to Dub!",
+        subject: "Welcome to Space Marvel!",
         react: WelcomeEmail({
           email: user.email,
           workspace: user.projects[0].project,

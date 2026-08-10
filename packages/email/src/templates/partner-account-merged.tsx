@@ -26,7 +26,7 @@ export default function PartnerAccountMerged({
   return (
     <Html>
       <Head />
-      <Preview>Your Dub partner accounts are now merged</Preview>
+      <Preview>Your Space Marvel partner accounts are now merged</Preview>
       <Tailwind>
         <Body className="mx-auto my-auto bg-white font-sans">
           <Container className="mx-auto my-10 max-w-[600px] px-10 py-5">

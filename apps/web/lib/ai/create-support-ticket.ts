@@ -36,7 +36,7 @@ export function createSupportTicketTool(options: CreateSupportTicketOptions) {
             .filter((p) => p.type === "text")
             .map((p) => (p as { type: "text"; text: string }).text)
             .join("");
-          return `${msg.role === "user" ? "User" : "Dub Support"}: ${text}`;
+          return `${msg.role === "user" ? "User" : "Space Marvel Support"}: ${text}`;
         })
         .join("\n\n");
 

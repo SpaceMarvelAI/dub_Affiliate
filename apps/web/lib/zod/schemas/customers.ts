@@ -115,7 +115,7 @@ export const createCustomerBodySchema = z.object({
   externalId: z
     .string("External ID is required")
     .describe(
-      "The customer's unique identifier your database. This is useful for associating subsequent conversion events from Dub's API to your internal systems.",
+      "The customer's unique identifier your database. This is useful for associating subsequent conversion events from Space Marvel's API to your internal systems.",
     ),
   stripeCustomerId: z
     .string()
@@ -126,7 +126,7 @@ export const createCustomerBodySchema = z.object({
   country: z
     .string()
     .describe(
-      "The customer's country in ISO 3166-1 alpha-2 format. Updating this field will only affect the customer's country in Dub's system (and has no effect on existing conversion events).",
+      "The customer's country in ISO 3166-1 alpha-2 format. Updating this field will only affect the customer's country in Space Marvel's system (and has no effect on existing conversion events).",
     ),
 });
 
@@ -137,7 +137,7 @@ export const CustomerSchema = z.object({
   id: z
     .string()
     .describe(
-      "The unique ID of the customer. You may use either the customer's `id` on Dub (obtained via `/customers` endpoint) or their `externalId` (unique ID within your system, prefixed with `ext_`, e.g. `ext_123`).",
+      "The unique ID of the customer. You may use either the customer's `id` on Space Marvel (obtained via `/customers` endpoint) or their `externalId` (unique ID within your system, prefixed with `ext_`, e.g. `ext_123`).",
     ),
   name: z.string().nullish().describe("Name of the customer."),
   email: z.string().nullish().describe("Email of the customer."),

@@ -14,7 +14,7 @@ import { UserSchema } from "./users";
 import { centsSchema, parseDateSchema } from "./utils";
 
 export const CommissionSchema = z.object({
-  id: z.string().describe("The commission's unique ID on Dub.").meta({
+  id: z.string().describe("The commission's unique ID on Space Marvel.").meta({
     example: "cm_1JVR7XRCSR0EDBAF39FZ4PMYE",
   }),
   type: z.enum(CommissionType).optional(), // Note: Not sure the type will ever be optional

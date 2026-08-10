@@ -1,0 +1,28 @@
+- generic [active] [ref=e1]:
+  - region "Notifications alt+T"
+  - generic [ref=e2]:
+    - generic [ref=e11]:
+      - link "SpaceMarvel" [ref=e12] [cursor=pointer]:
+        - /url: https://dub.co
+      - paragraph [ref=e16]:
+        - text: By continuing, you agree to Dub’s
+        - link "Terms of Service" [ref=e17] [cursor=pointer]:
+          - /url: https://dub.co/legal/terms
+        - text: and
+        - link "Privacy Policy" [ref=e18] [cursor=pointer]:
+          - /url: https://dub.co/legal/privacy
+    - generic [ref=e19]:
+      - generic [ref=e26]:
+        - generic [ref=e27]:
+          - img "Framer team" [ref=e28]
+          - img "Framer" [ref=e29]
+        - paragraph [ref=e30]: Learn how Framer manages $900K+ in monthly affiliate payouts with Dub
+        - link "Read more" [ref=e31] [cursor=pointer]:
+          - /url: https://dub.co/customers/framer
+      - generic [ref=e32]:
+        - img "Framer" [ref=e33]
+        - img "Granola" [ref=e34]
+        - img "Buffer" [ref=e35]
+        - img "Copper" [ref=e36]
+        - img "Perplexity" [ref=e37]
+        - img "Wispr Flow" [ref=e38]

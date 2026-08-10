@@ -34,15 +34,15 @@ export const NOTIFICATION_PREFERENCE_LABELS: Record<
   { title: string; description: string; link: string }
 > = {
   dubLinks: {
-    title: "Dub Links",
+    title: "Space Marvel Links",
     description:
-      "New Dub Links features and guides on how to manage and track your links",
+      "New Space Marvel Links features and guides on how to manage and track your links",
     link: "https://dub.co/links",
   },
   dubPartners: {
-    title: "Dub Partners",
+    title: "Space Marvel Partners",
     description:
-      "New Dub Partners features and tips on how to grow your affiliate program",
+      "New Space Marvel Partners features and tips on how to grow your affiliate program",
     link: "https://dub.co/partners",
   },
   partnerAccount: {

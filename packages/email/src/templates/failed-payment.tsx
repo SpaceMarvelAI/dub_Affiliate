@@ -21,7 +21,7 @@ export default function FailedPayment({
     email: "panic@thedis.co",
   },
   workspace = {
-    name: "Dub",
+    name: "Space Marvel",
     slug: "dub",
     plan: "business",
     defaultProgramId: null,
@@ -69,7 +69,7 @@ export default function FailedPayment({
             <Heading className="mx-0 my-7 p-0 text-lg font-medium text-black">
               {attemptCount == 2 || attemptCount == 3
                 ? `${attemptCount == 2 ? "2nd" : "3rd"} payment attempt failed`
-                : "Failed Payment for Dub"}
+                : "Failed Payment for Space Marvel"}
             </Heading>
             <Text className="text-sm leading-6 text-black">
               Hey{user.name ? ` ${user.name}` : ""},

@@ -71,7 +71,7 @@ export const POST = withAdmin(
         owners.map((email) => ({
           to: email!,
           variant: "notifications",
-          subject: "Your Dub workspace has been disabled",
+          subject: "Your Space Marvel workspace has been disabled",
           templateName: "WorkspaceDisabled",
           templateProps: {
             email: email!,

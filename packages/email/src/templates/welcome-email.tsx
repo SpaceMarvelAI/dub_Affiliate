@@ -37,7 +37,7 @@ export default function WelcomeEmail({
   return (
     <Html>
       <Head />
-      <Preview>Welcome to Dub</Preview>
+      <Preview>Welcome to Space Marvel</Preview>
       <Tailwind>
         <Body className="mx-auto my-auto bg-white font-sans">
           <Container className="mx-auto my-10 max-w-[600px] rounded border border-solid border-neutral-200 px-10 py-5">

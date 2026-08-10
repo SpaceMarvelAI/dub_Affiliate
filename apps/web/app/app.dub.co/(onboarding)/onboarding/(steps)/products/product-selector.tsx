@@ -11,14 +11,14 @@ import { useOnboardingProgress } from "../../use-onboarding-progress";
 const products = {
   partners: {
     image: "https://assets.dub.co/icons/trophy.webp",
-    title: "Dub Partners",
+    title: "Space Marvel Partners",
     href: "https://dub.co/partners",
     description:
       "Modern [affiliate programs](https://dub.co/partners) with [global payouts](https://dub.co/help/article/partner-payouts) and [accurate attribution](https://dub.co/help/article/program-analytics).",
   },
   links: {
     image: "https://assets.dub.co/icons/link.webp",
-    title: "Dub Links",
+    title: "Space Marvel Links",
     href: "https://dub.co/links",
     description:
       "[Short links](https://dub.co/help/category/link-management), [QR codes](https://dub.co/help/article/custom-qr-codes), [real-time analytics](https://dub.co/help/article/dub-analytics), and [conversion tracking](https://dub.co/docs/conversions/quickstart).",

@@ -18,7 +18,7 @@ export const GET = withSession(async ({ searchParams }) => {
     const response = await fetch(faviconUrl, {
       method: "HEAD",
       headers: {
-        "User-Agent": "Mozilla/5.0 (compatible; Dub/1.0)",
+        "User-Agent": "Mozilla/5.0 (compatible; Space Marvel/1.0)",
       },
     });
 

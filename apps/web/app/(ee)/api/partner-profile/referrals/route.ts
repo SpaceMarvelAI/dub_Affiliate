@@ -26,7 +26,7 @@ export const GET = withPartnerProfile(async ({ partner, searchParams }) => {
     throw new DubApiError({
       code: "forbidden",
       message:
-        "You must be approved in the Dub Partner Network to view referrals.",
+        "You must be approved in the Space Marvel Partner Network to view referrals.",
     });
   }
 

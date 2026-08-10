@@ -11,11 +11,11 @@ import { mutate } from "swr";
 
 const products = {
   links: {
-    label: "Dub Links",
+    label: "Space Marvel Links",
     icon: "links" as const,
   },
   program: {
-    label: "Dub Partners",
+    label: "Space Marvel Partners",
     icon: "partners" as const,
   },
 } satisfies Record<DubProduct, { label: string; icon: "links" | "partners" }>;

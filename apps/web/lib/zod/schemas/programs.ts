@@ -138,9 +138,9 @@ export const ProgramEnrollmentApplicationSchema = z.object({
 });
 
 export const ProgramEnrollmentSchema = z.object({
-  programId: z.string().describe("The program's unique ID on Dub."),
-  groupId: z.string().nullish().describe("The partner's group ID on Dub."),
-  partnerId: z.string().describe("The partner's unique ID on Dub."),
+  programId: z.string().describe("The program's unique ID on Space Marvel."),
+  groupId: z.string().nullish().describe("The partner's group ID on Space Marvel."),
+  partnerId: z.string().describe("The partner's unique ID on Space Marvel."),
   tenantId: z
     .string()
     .nullable()

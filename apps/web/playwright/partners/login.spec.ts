@@ -14,7 +14,7 @@ test.describe("Partner Login", () => {
 
     await expect(
       page.getByRole("heading", {
-        name: "Log in to your Dub Partner account",
+        name: "Log in to your Space Marvel Partner account",
       }),
     ).toBeVisible();
 

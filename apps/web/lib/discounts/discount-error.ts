@@ -27,20 +27,20 @@ function resolveDiscountProviderMessage(
 ): string {
   if (providerCode === "INTEGRATION_NOT_AVAILABLE") {
     return provider === "stripe"
-      ? "STRIPE_CONNECTION_REQUIRED: Your workspace isn't connected to Stripe yet. Please install the Dub Stripe app in settings to create a discount."
-      : "SHOPIFY_CONNECTION_REQUIRED: Your workspace isn't connected to Shopify yet. Please install the Dub Shopify app in settings to create a discount.";
+      ? "STRIPE_CONNECTION_REQUIRED: Your workspace isn't connected to Stripe yet. Please install the Space Marvel Stripe app in settings to create a discount."
+      : "SHOPIFY_CONNECTION_REQUIRED: Your workspace isn't connected to Shopify yet. Please install the Space Marvel Shopify app in settings to create a discount.";
   }
 
   if (providerCode === "AUTH_EXPIRED") {
     return provider === "stripe"
-      ? "STRIPE_RECONNECT_REQUIRED: Your Stripe connection has expired or been revoked. Please reconnect the Dub Stripe app in settings."
-      : "SHOPIFY_RECONNECT_REQUIRED: Your Shopify connection has expired or been revoked. Please reconnect the Dub Shopify app in settings.";
+      ? "STRIPE_RECONNECT_REQUIRED: Your Stripe connection has expired or been revoked. Please reconnect the Space Marvel Stripe app in settings."
+      : "SHOPIFY_RECONNECT_REQUIRED: Your Shopify connection has expired or been revoked. Please reconnect the Space Marvel Shopify app in settings.";
   }
 
   if (providerCode === "PERMISSIONS_REQUIRED") {
     return provider === "stripe"
       ? "STRIPE_APP_UPGRADE_REQUIRED: Your connected Stripe account doesn't have the permissions needed to create discount codes. Please upgrade your Stripe integration in settings or reach out to our support team for help."
-      : "SHOPIFY_APP_UPGRADE_REQUIRED: Your connected Shopify store doesn't have permission to create discount codes. Please reinstall or upgrade the Dub Shopify app.";
+      : "SHOPIFY_APP_UPGRADE_REQUIRED: Your connected Shopify store doesn't have permission to create discount codes. Please reinstall or upgrade the Space Marvel Shopify app.";
   }
 
   return message;

@@ -12,7 +12,7 @@ export const APPSFLYER_HARDCODED_PARAMETERS = [
   {
     key: "clickid",
     value: "{dub_id}",
-    description: "Dub click ID",
+    description: "Space Marvel click ID",
   },
 ];
 

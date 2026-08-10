@@ -17,10 +17,10 @@ export default function Welcome() {
             <Gradient className="opacity-50 mix-blend-hard-light" />
           </div>
           <h1 className="animate-slide-up-fade mt-14 text-xl font-semibold text-neutral-900 [--offset:10px] [animation-delay:250ms] [animation-duration:1s] [animation-fill-mode:both]">
-            Welcome to Dub
+            Welcome to Space Marvel
           </h1>
           <p className="animate-slide-up-fade mt-2 text-balance text-base text-neutral-500 [--offset:10px] [animation-delay:500ms] [animation-duration:1s] [animation-fill-mode:both]">
-            Dub gives you superpowers to track how your marketing efforts
+            Space Marvel gives you superpowers to track how your marketing efforts
             convert to revenue.
           </p>
           <div className="animate-slide-up-fade mt-8 w-full [--offset:10px] [animation-delay:750ms] [animation-duration:1s] [animation-fill-mode:both]">

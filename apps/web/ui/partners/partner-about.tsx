@@ -103,7 +103,7 @@ export function PartnerAbout({
             <h3 className="text-content-emphasis text-xs font-semibold">
               Monthly traffic
             </h3>
-            <InfoTooltip content="Shared by the partner, not verified by Dub." />
+            <InfoTooltip content="Shared by the partner, not verified by Space Marvel." />
           </div>
           <span className="text-content-default text-xs">
             {monthlyTrafficAmountsMap[partner.monthlyTraffic!]?.label ?? "-"}

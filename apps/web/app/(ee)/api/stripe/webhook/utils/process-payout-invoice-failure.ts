@@ -90,7 +90,7 @@ export async function processPayoutInvoiceFailure({
         stripeId: workspace.stripeId,
         amount: PAYOUT_FAILURE_FEE_CENTS,
         description: `Dub Partners payout failure fee for invoice ${invoice.id}`,
-        statementDescriptor: "Dub Partners",
+        statementDescriptor: "Space Marvel Partners",
       });
 
       if (paymentIntent) {

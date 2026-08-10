@@ -64,7 +64,7 @@ export function FeaturesSection({
           className="border-y border-neutral-200 pt-12 sm:col-span-2"
           graphicClassName="sm:h-96"
           title="Analytics that matter"
-          description="Dub provides powerful analytics for your links, including geolocation, device, browser, and referrer information."
+          description="Space Marvel provides powerful analytics for your links, including geolocation, device, browser, and referrer information."
           linkText="Explore analytics"
           href={createHref("/help/article/dub-analytics", domain, {
             utm_campaign: domain,

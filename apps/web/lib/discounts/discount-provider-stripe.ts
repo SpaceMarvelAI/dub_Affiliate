@@ -23,7 +23,7 @@ async function requireInstalledIntegration(
     throw new DiscountProviderError(
       "stripe",
       "INTEGRATION_NOT_AVAILABLE",
-      "STRIPE_CONNECTION_REQUIRED: Your workspace isn't connected to Stripe yet. Please install the Dub Stripe app in settings to create a discount.",
+      "STRIPE_CONNECTION_REQUIRED: Your workspace isn't connected to Stripe yet. Please install the Space Marvel Stripe app in settings to create a discount.",
     );
   }
 
@@ -38,7 +38,7 @@ async function requireInstalledIntegration(
     throw new DiscountProviderError(
       "stripe",
       "INTEGRATION_NOT_AVAILABLE",
-      "STRIPE_CONNECTION_REQUIRED: Your workspace isn't connected to Stripe yet. Please install the Dub Stripe app in settings to create a discount.",
+      "STRIPE_CONNECTION_REQUIRED: Your workspace isn't connected to Stripe yet. Please install the Space Marvel Stripe app in settings to create a discount.",
     );
   }
 

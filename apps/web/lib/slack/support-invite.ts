@@ -137,7 +137,7 @@ export async function requestSlackConnectSupportInvite({
     throw new DubApiError({
       code: "conflict",
       message:
-        "Your workspace already has a Dub support channel. Please ask your Slack admin to add you to it.",
+        "Your workspace already has a Space Marvel support channel. Please ask your Slack admin to add you to it.",
     });
   }
 

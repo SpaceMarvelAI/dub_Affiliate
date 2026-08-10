@@ -18,7 +18,7 @@ import { WorkspaceProps } from "../types";
 export default function DomainTransferred({
   email = "panic@thedis.co",
   domain = "dub.sh",
-  newWorkspace = { name: "Dub", slug: "dub" },
+  newWorkspace = { name: "Space Marvel", slug: "dub" },
   linksCount = 50,
 }: {
   email: string;

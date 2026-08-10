@@ -266,7 +266,7 @@ export const createProgram = async ({
               sendEmail({
                 to: user.email!,
                 replyTo: "steven.tey@dub.co",
-                subject: "Welcome to your 14-day Dub trial",
+                subject: "Welcome to your 14-day Space Marvel trial",
                 react: TrialStartedEmail({
                   email: user.email!,
                   plan: workspace.plan,

@@ -14,7 +14,7 @@ export const revalidate = false; // cache indefinitely
 export const metadata = constructMetadata({
   title: "Link Not Found",
   description:
-    "This link does not exist on Dub. Please check the URL and try again.",
+    "This link does not exist on Space Marvel. Please check the URL and try again.",
   image: "https://assets.dub.co/misc/notfoundlink.jpg",
   noIndex: true,
 });

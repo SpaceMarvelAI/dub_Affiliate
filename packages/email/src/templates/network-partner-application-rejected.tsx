@@ -24,7 +24,7 @@ export default function NetworkPartnerApplicationRejected({
   return (
     <Html>
       <Head />
-      <Preview>Dub Partner Network application update</Preview>
+      <Preview>Space Marvel Partner Network application update</Preview>
       <Tailwind>
         <Body className="mx-auto my-auto bg-white font-sans">
           <Container className="mx-auto my-8 max-w-[600px] px-8 py-8">
@@ -39,7 +39,7 @@ export default function NetworkPartnerApplicationRejected({
             <Text className="text-sm leading-6 text-neutral-600">
               {name ? `Hi ${name}, t` : "T"}hanks for your interest in joining
               the{" "}
-              <strong className="text-neutral-800">Dub Partner Network</strong>.
+              <strong className="text-neutral-800">Space Marvel Partner Network</strong>.
             </Text>
 
             <Text className="text-sm leading-6 text-neutral-600">

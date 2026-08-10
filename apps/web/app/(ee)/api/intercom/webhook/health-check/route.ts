@@ -36,7 +36,7 @@ export const POST = withAxiom(async (req) => {
     if (!installation) {
       return NextResponse.json<IntercomHealthCheckResponse>({
         state: "UNHEALTHY",
-        message: "You need to re-install with Dub to continue using the app.",
+        message: "You need to re-install with Space Marvel to continue using the app.",
         cta_type: "URL_CTA",
         cta_label: "Finish setup",
         cta_url: "https://app.dub.co/settings/integrations/intercom",
@@ -50,7 +50,7 @@ export const POST = withAxiom(async (req) => {
     if (!success) {
       return NextResponse.json<IntercomHealthCheckResponse>({
         state: "UNHEALTHY",
-        message: "You need to re-install with Dub to continue using the app.",
+        message: "You need to re-install with Space Marvel to continue using the app.",
         cta_type: "URL_CTA",
         cta_label: "Finish setup",
         cta_url: "https://app.dub.co/settings/integrations/intercom",

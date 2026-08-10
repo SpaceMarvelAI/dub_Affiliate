@@ -104,7 +104,7 @@ export const PATCH = withWorkspace(
       if (registeredDomain) {
         throw new DubApiError({
           code: "forbidden",
-          message: "You cannot update a Dub-provisioned domain.",
+          message: "You cannot update a Space Marvel-provisioned domain.",
         });
       }
 
@@ -290,7 +290,7 @@ export const DELETE = withWorkspace(
     if (registeredDomain) {
       throw new DubApiError({
         code: "forbidden",
-        message: "You cannot delete a Dub-provisioned domain.",
+        message: "You cannot delete a Space Marvel-provisioned domain.",
       });
     }
 

@@ -277,7 +277,7 @@ export function ChatInterface({
       >
         <img
           src="https://assets.dub.co/misc/dub-avatar.svg"
-          alt="Dub Support"
+          alt="Space Marvel Support"
           className="size-12 rounded-full"
           draggable={false}
         />

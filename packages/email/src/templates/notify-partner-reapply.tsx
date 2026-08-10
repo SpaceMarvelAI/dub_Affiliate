@@ -28,7 +28,7 @@ export default function NotifyPartnerReapply({
       logo: "https://dubassets.com/programs/prog_CYCu7IMAapjkRpTnr8F1azjN/logo_HPEaC8P",
     },
     {
-      name: "Dub",
+      name: "Space Marvel",
       slug: "dub",
       logo: "https://dubassets.com/programs/prog_d8pl69xXCv4AoHNT281pHQdo/logo_TMLMTHs",
     },

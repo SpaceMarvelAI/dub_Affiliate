@@ -38,7 +38,7 @@ test.describe("Dub Partners onboarding", () => {
     // Welcome page
     await page.goto("/onboarding");
     await expect(
-      page.getByRole("heading", { name: "Welcome to Dub" }),
+      page.getByRole("heading", { name: "Welcome to Space Marvel" }),
     ).toBeVisible();
     await Promise.all([
       expect(page).toHaveURL(/\/onboarding\/workspace/, {
@@ -60,7 +60,7 @@ test.describe("Dub Partners onboarding", () => {
     expect(slug).toBeTruthy();
 
     const productsHeading = page.getByRole("heading", {
-      name: "What do you want to do with Dub?",
+      name: "What do you want to do with Space Marvel?",
     });
 
     // Navigation runs in onSuccess after POST + SWR mutate + session.update(); wait for API first (CI).
@@ -87,7 +87,9 @@ test.describe("Dub Partners onboarding", () => {
       expect(page).toHaveURL(/\/onboarding\/domain/, {
         timeout: STEP_NAV_TIMEOUT,
       }),
-      page.getByRole("button", { name: "Continue with Dub Partners" }).click(),
+      page
+        .getByRole("button", { name: "Continue with Space Marvel Partners" })
+        .click(),
     ]);
 
     // Domain step — connect a custom domain

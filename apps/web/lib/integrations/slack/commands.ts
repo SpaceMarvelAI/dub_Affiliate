@@ -101,7 +101,7 @@ export const handleSlashCommand = async (req: Request) => {
           type: "section",
           text: {
             type: "plain_text",
-            text: "Unable to find Dub account matching your Slack account. Only Dub users can use this command.",
+            text: "Unable to find Space Marvel account matching your Slack account. Only Space Marvel users can use this command.",
           },
         },
       ],
