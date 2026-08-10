@@ -126,7 +126,7 @@ export function SidebarNav<T extends Record<any, any>>({
                   href="/"
                   className="block overflow-visible rounded-lg px-1 py-4 outline-none transition-opacity focus-visible:ring-2 focus-visible:ring-black/50"
                 >
-                  <NavWordmark className="h-5 overflow-visible" isInApp />
+                  <NavWordmark className="h-8 overflow-visible" isInApp />
                 </Link>
               </div>
               {(!currentArea ||

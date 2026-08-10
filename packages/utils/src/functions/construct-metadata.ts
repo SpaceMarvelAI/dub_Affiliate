@@ -6,25 +6,7 @@ export function constructMetadata({
   description = "Space Marvel is the modern link attribution platform for short links, conversion tracking, and affiliate programs.",
   image = "https://assets.dub.co/thumbnail.jpg",
   video,
-  icons = [
-    {
-      rel: "apple-touch-icon",
-      sizes: "32x32",
-      url: "https://assets.dub.co/favicons/apple-touch-icon.png",
-    },
-    {
-      rel: "icon",
-      type: "image/png",
-      sizes: "32x32",
-      url: "https://assets.dub.co/favicons/favicon-32x32.png",
-    },
-    {
-      rel: "icon",
-      type: "image/png",
-      sizes: "16x16",
-      url: "https://assets.dub.co/favicons/favicon-16x16.png",
-    },
-  ],
+  icons,
   url,
   canonicalUrl,
   noIndex = false,
@@ -71,7 +53,7 @@ export function constructMetadata({
       }),
       creator: "@dubdotco",
     },
-    icons,
+    ...(icons && { icons }),
     metadataBase: new URL("https://dub.co"),
     ...((url || canonicalUrl) && {
       alternates: {

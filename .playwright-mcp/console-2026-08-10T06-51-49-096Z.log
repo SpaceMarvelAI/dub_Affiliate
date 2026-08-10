@@ -1,0 +1,39 @@
+[     855ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/a9154_next_dist_compiled_react-dom_89a36d01._.js:14537
+[    1311ms] [WARNING] Ignoring Event: localhost @ http://localhost:3000/_proxy/plausible/script.js:0
+[    1495ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5949
+[    1607ms] [LOG] [Fast Refresh] done in 213ms @ http://localhost:3000/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5809
+[  108112ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5949
+[  108138ms] [LOG] [Fast Refresh] done in 132ms @ http://localhost:3000/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5809
+[  408172ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5949
+[  411761ms] [LOG] [Fast Refresh] done in 1860ms @ http://localhost:3000/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5809
+[  412064ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5949
+[  412145ms] [LOG] [Fast Refresh] done in 182ms @ http://localhost:3000/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5809
+[  424080ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5949
+[  424136ms] [LOG] [Fast Refresh] done in 157ms @ http://localhost:3000/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5809
+[  441979ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5949
+[  444762ms] [LOG] [Fast Refresh] done in 2865ms @ http://localhost:3000/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5809
+[  446541ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5949
+[  446555ms] [LOG] [Fast Refresh] done in 115ms @ http://localhost:3000/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5809
+[  447443ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5949
+[  447457ms] [LOG] [Fast Refresh] done in 116ms @ http://localhost:3000/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5809
+[  459208ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5949
+[  460011ms] [LOG] [Fast Refresh] done in 904ms @ http://localhost:3000/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5809
+[  461226ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5949
+[  477847ms] [WARNING] [Fast Refresh] performing full reload
+
+Fast Refresh will perform a full reload when you edit a file that's imported by modules outside of the React rendering tree.
+You might have a file which exports a React component but also exports a value that is imported by a non-React component file.
+Consider migrating the non-React component export to a separate file and importing it into both files.
+
+It is also possible the parent component of the component you edited is a class component, which disables Fast Refresh.
+Fast Refresh requires at least one parent function component in your React tree. @ http://localhost:3000/_next/static/chunks/%5Bturbopack%5D_browser_dev_hmr-client_hmr-client_ts_c8c997ce._.js:34
+[  477956ms] [LOG] [Fast Refresh] done in 16655ms @ http://localhost:3000/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5809
+[  478138ms] [WARNING] [Fast Refresh] performing full reload
+
+Fast Refresh will perform a full reload when you edit a file that's imported by modules outside of the React rendering tree.
+You might have a file which exports a React component but also exports a value that is imported by a non-React component file.
+Consider migrating the non-React component export to a separate file and importing it into both files.
+
+It is also possible the parent component of the component you edited is a class component, which disables Fast Refresh.
+Fast Refresh requires at least one parent function component in your React tree. @ http://localhost:3000/_next/static/chunks/%5Bturbopack%5D_browser_dev_hmr-client_hmr-client_ts_c8c997ce._.js:34
+[  501370ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/a9154_next_dist_compiled_react-dom_89a36d01._.js:14537

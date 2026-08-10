@@ -1,0 +1,77 @@
+[   26435ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/a9154_next_dist_compiled_react-dom_89a36d01._.js:14537
+[   27324ms] [WARNING] Ignoring Event: localhost @ http://localhost:3000/_proxy/plausible/script.js:0
+[   27353ms] [ERROR] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <LoadingBoundary loading={null}>
+      <HTTPAccessFallbackBoundary notFound={undefined} forbidden={undefined} unauthorized={undefined}>
+        <RedirectBoundary>
+          <RedirectErrorBoundary router={{...}}>
+            <InnerLayoutRouter url="/login" tree={[...]} cacheNode={{lazyData:null, ...}} segmentPath={[...]}>
+              <SegmentViewNode type="layout" pagePath="/apps/web/...">
+                <SegmentTrieNode>
+                <script>
+                <script>
+                <AuthMarketingLayout>
+                  <div>
+                  <AuthMarketingLayout>
+                    <div className="relative g...">
+                      <div className="relative">
+                        <div className="absolute i...">
+                          <div className="absolute i...">
+                            <xr cellSize={60} patternOffset={[...]} className="text-neutr...">
+                              <svg className="pointer-ev..." width="100%" height="100%">
+                                <defs>
+                                  <pattern
++                                   id="grid-_R_5d9evqbndlb_"
+-                                   id="grid-_R_ll5rvabndlb_"
+                                    x={-0.25}
+                                    y={-1}
+                                    width={60}
+                                    height={60}
+                                    patternUnits="userSpaceOnUse"
+                                  >
+                                <rect
++                                 fill="url(#grid-_R_5d9evqbndlb_)"
+-                                 fill="url(#grid-_R_ll5rvabndlb_)"
+                                  width="100%"
+                                  height="100%"
+                                >
+                          ...
+                        ...
+                      ...
+            ...
+ @ http://localhost:3000/_next/static/chunks/a9154_next_dist_03a037f1._.js:2359
+[   33455ms] [WARNING] The resource http://localhost:3000/space-marvel-logo.png was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:3000/login:0
+[   37269ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5949
+[   37429ms] [LOG] [Fast Refresh] done in 264ms @ http://localhost:3000/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5809
+[   43256ms] [WARNING] The resource http://localhost:3000/space-marvel-logo.png was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:3000/login:0
+[  858031ms] [WARNING] The resource http://localhost:3000/space-marvel-logo.png was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:3000/login:0
+[  858031ms] [WARNING] The resource https://assets.dub.co/cms/framer-thumbnail.png was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:3000/login:0
+[  858032ms] [WARNING] The resource https://assets.dub.co/companies/framer.svg was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:3000/login:0
+[  858032ms] [WARNING] The resource https://assets.dub.co/companies/flow.svg was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:3000/login:0
+[  858032ms] [WARNING] The resource https://assets.dub.co/companies/perplexity.svg was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:3000/login:0
+[  858032ms] [WARNING] The resource https://assets.dub.co/companies/copper.svg was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:3000/login:0
+[  858032ms] [WARNING] The resource http://localhost:3000/_next/static/media/Satoshi_Variable-s.p.fc536e90.woff2 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:3000/login:0
+[  858032ms] [WARNING] The resource http://localhost:3000/_next/static/media/GeistMono_Variable.p.f130cd20.woff2 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:3000/login:0
+[  858032ms] [WARNING] The resource http://localhost:3000/_next/static/media/83afe278b6a6bb3c-s.p.3a6ba036.woff2 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:3000/login:0
+[  858032ms] [WARNING] The resource https://assets.dub.co/companies/granola.svg was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:3000/login:0
+[  858032ms] [WARNING] The resource https://assets.dub.co/companies/buffer.svg was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:3000/login:0
+[  961856ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5949
+[  963044ms] [LOG] [Fast Refresh] done in 1290ms @ http://localhost:3000/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5809
+[  967297ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5949
+[  981765ms] [LOG] [Fast Refresh] done in 14566ms @ http://localhost:3000/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5809
+[  992519ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5949
+[  993426ms] [LOG] [Fast Refresh] done in 1012ms @ http://localhost:3000/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5809
+[  993549ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5949
+[  995148ms] [LOG] [Fast Refresh] done in 1700ms @ http://localhost:3000/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5809

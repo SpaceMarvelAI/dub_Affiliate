@@ -2,3 +2,5 @@
 [   24534ms] [WARNING] Ignoring Event: localhost @ http://localhost:3000/_proxy/plausible/script.js:0
 [   25494ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5949
 [   26539ms] [LOG] [Fast Refresh] done in 1145ms @ http://localhost:3000/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5809
+[  123080ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5949
+[  123384ms] [LOG] [Fast Refresh] done in 407ms @ http://localhost:3000/_next/static/chunks/a9154_next_dist_client_29511c93._.js:5809

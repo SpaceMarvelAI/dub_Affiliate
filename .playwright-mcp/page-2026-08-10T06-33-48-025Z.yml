@@ -1,0 +1,64 @@
+- generic [ref=e1]:
+  - region "Notifications alt+T"
+  - generic [ref=e2]:
+    - generic [ref=e11]:
+      - link [ref=e12] [cursor=pointer]:
+        - /url: https://dub.co
+        - img "Space Marvel" [ref=e13]
+      - generic [ref=e14]:
+        - generic [ref=e16]:
+          - heading "Log in to your Space Marvel account" [level=3] [ref=e17]
+          - generic [ref=e22]:
+            - generic [ref=e23]:
+              - generic [ref=e24]:
+                - generic [ref=e25]:
+                  - generic [ref=e26]: Work email
+                  - textbox "Work email" [active] [ref=e27]:
+                    - /placeholder: panic@thedis.co
+                - button "Log in with email" [ref=e28] [cursor=pointer]
+              - generic [ref=e30]: You signed in with Email last time
+              - generic [ref=e32]: or
+            - button "Continue with Google" [ref=e37] [cursor=pointer]
+            - button "Continue with GitHub" [ref=e46] [cursor=pointer]
+            - button "Continue with SAML SSO" [ref=e52] [cursor=pointer]
+          - paragraph [ref=e57]:
+            - text: Don't have an account?
+            - link "Sign up" [ref=e58] [cursor=pointer]:
+              - /url: register
+          - link "Looking for your Space Marvel partner account? Log in at partners.dub.co" [ref=e60] [cursor=pointer]:
+            - /url: https://partners.dub.co/login
+            - generic [ref=e61]:
+              - paragraph [ref=e62]: Looking for your Space Marvel partner account?
+              - generic [ref=e63]: Log in at partners.dub.co
+        - paragraph [ref=e65]:
+          - text: By continuing, you agree to Dub’s
+          - link "Terms of Service" [ref=e66] [cursor=pointer]:
+            - /url: https://dub.co/legal/terms
+          - text: and
+          - link "Privacy Policy" [ref=e67] [cursor=pointer]:
+            - /url: https://dub.co/legal/privacy
+    - generic [ref=e68]:
+      - generic [ref=e75]:
+        - generic [ref=e76]:
+          - img "Framer team" [ref=e77]
+          - img "Framer" [ref=e78]
+        - paragraph [ref=e79]: Learn how Framer manages $900K+ in monthly affiliate payouts with Dub
+        - link "Read more" [ref=e80] [cursor=pointer]:
+          - /url: https://dub.co/customers/framer
+      - generic [ref=e81]:
+        - img "Framer" [ref=e82]
+        - img "Granola" [ref=e83]
+        - img "Buffer" [ref=e84]
+        - img "Copper" [ref=e85]
+        - img "Perplexity" [ref=e86]
+        - img "Wispr Flow" [ref=e87]
+  - generic [ref=e92] [cursor=pointer]:
+    - button "Open Next.js Dev Tools" [ref=e93]
+    - generic [ref=e97]:
+      - button "Open issues overlay" [ref=e98]:
+        - generic [ref=e99]:
+          - generic [ref=e100]: "0"
+          - generic [ref=e101]: "1"
+        - generic [ref=e102]: Issue
+      - button "Collapse issues badge" [ref=e103]
+  - alert [ref=e106]

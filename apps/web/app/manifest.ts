@@ -11,13 +11,13 @@ export default function manifest(): MetadataRoute.Manifest {
     theme_color: "#ffffff",
     icons: [
       {
-        src: "https://assets.dub.co/favicons/android-chrome-192x192.png",
+        src: "/space-marvel-icon-maskable.png",
         sizes: "192x192",
         type: "image/png",
         purpose: "maskable",
       },
       {
-        src: "https://assets.dub.co/favicons/android-chrome-512x512.png",
+        src: "/space-marvel-icon-maskable.png",
         sizes: "512x512",
         type: "image/png",
         purpose: "maskable",

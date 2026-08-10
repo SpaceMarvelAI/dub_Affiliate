@@ -2,13 +2,10 @@ import { cn } from "@dub/utils";
 
 export function Wordmark({ className }: { className?: string }) {
   return (
-    <span
-      className={cn(
-        "inline-flex h-6 items-center whitespace-nowrap text-base font-bold leading-none tracking-tight text-black dark:text-white",
-        className,
-      )}
-    >
-      Space Marvel
-    </span>
+    <img
+      src="/space-marvel-logo.png"
+      alt="Space Marvel"
+      className={cn("h-8 w-auto invert dark:invert-0", className)}
+    />
   );
 }
