@@ -12,5 +12,10 @@ graphify-out
 **/.env
 **/.env.*
 !**/.env.example
-DEPLOYMENT.md
-README.md
+**/*.md
+
+# graft context graph (local cache, no need in image)
+graft/
+
+# Claude Code local config
+.claude/

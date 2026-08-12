@@ -54,3 +54,18 @@ blob-report/
 
 # graft's local graph cache — regenerable, not committed (run `graft build`).
 graft/
+
+# internal AWS deployment/cost analysis docs — contain account IDs, ARNs, and infra details not meant for the public repo
+AWS_COST_ANALYSIS.md
+AWS_COST_ANALYSIS_FREE_TIER.md
+AWS_DEPLOYMENT_ANALYSIS.md
+AWS_EXISTING_INFRA_FINDINGS.md
+
+# local credentials backup — live secrets, never commit
+CREDENTIALS_BACKUP.md
+
+# local setup runbook — kept local alongside the other infra docs
+RUNNING_LOCALLY.md
+
+# Claude Code local config
+.claude/
