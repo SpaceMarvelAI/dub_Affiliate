@@ -69,3 +69,6 @@ RUNNING_LOCALLY.md
 
 # Claude Code local config
 .claude/
+
+# Claude Code project instructions (local only)
+CLAUDE.md
