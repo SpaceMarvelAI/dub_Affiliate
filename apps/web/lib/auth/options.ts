@@ -219,30 +219,11 @@ export const authOptions: NextAuthOptions = {
         return false;
       }
 
-      // per product decision: `is_super_admin` on the SpaceMarvel ID token/userinfo
-      // claim is the sole admin signal (the `role` org-role claim is intentionally ignored)
-      const isSuperAdmin = (profile as any)?.is_super_admin === true;
-      authDebug(
-        "signin",
-        `Role resolved from is_super_admin claim: ${isSuperAdmin ? "ADMIN" : "USER"}`,
-        { isSuperAdmin, claims: profile },
-      );
-
-      await prisma.user.update({
-        where: { id: user.id },
-        data: { isSuperAdmin },
-      });
-
-      if (isSuperAdmin) {
-        await ensureAdminWorkspace(user.id);
-      } else {
-        await ensurePartnerAccount({
-          userId: user.id,
-          email: user.email,
-          name: user.name,
-        });
-      }
-
+      // isSuperAdmin resolution + workspace/partner provisioning happens in
+      // the `jwt` callback, not here — this callback runs BEFORE the Prisma
+      // adapter creates a brand-new user's row, so `user.id` at this point can
+      // still be the raw OIDC `sub`, not yet a real User row (caused a P2025
+      // "no record found" on first-ever login).
       return true;
     },
     jwt: async ({
@@ -269,10 +250,49 @@ export const authOptions: NextAuthOptions = {
 
       // set live from the ID token claim on every sign-in (not just at provisioning time)
       if (profile) {
+        const isSuperAdmin = profile.is_super_admin === true;
         token.user = {
           ...(token.user as object),
-          isSuperAdmin: profile.is_super_admin === true,
+          isSuperAdmin,
         };
+
+        // Workspace/partner provisioning: deliberately here, not in
+        // events.signIn. events.signIn is fire-and-forget — NextAuth doesn't
+        // guarantee it finishes before the redirect response is sent, so the
+        // very next request (middleware, resolving the user's default
+        // workspace) could race it and lose, landing on a workspace that
+        // doesn't exist yet. This callback's return value directly becomes
+        // the session token, so NextAuth cannot respond until it resolves —
+        // no race is possible. `user` is guaranteed to be the real,
+        // adapter-persisted row here (unlike in the `signIn` callback above).
+        const userId = (user as { id: string }).id;
+        try {
+          await prisma.user.update({
+            where: { id: userId },
+            data: { isSuperAdmin },
+          });
+
+          if (isSuperAdmin) {
+            await ensureAdminWorkspace(userId);
+          } else {
+            await ensurePartnerAccount({
+              userId,
+              email: profile.email,
+              name: profile.name,
+            });
+          }
+
+          authDebug("jwt", "Workspace/partner provisioning complete", {
+            userId,
+            isSuperAdmin,
+          });
+        } catch (err) {
+          authDebug("error", "Workspace/partner provisioning FAILED", {
+            userId,
+            isSuperAdmin,
+            error: err instanceof Error ? err.stack || err.message : err,
+          });
+        }
       }
 
       // refresh the user's data if they update their name / email
@@ -332,6 +352,14 @@ export const authOptions: NextAuthOptions = {
         );
         return;
       }
+
+      // isSuperAdmin resolution + workspace/partner provisioning happens in
+      // the `jwt` callback, not here — events.signIn is fire-and-forget
+      // (NextAuth doesn't guarantee it completes before the redirect
+      // response is sent), which raced the very next request's workspace
+      // lookup and lost. This handler stays for the genuinely-fine-to-race
+      // side effects below (welcome workflow, avatar backup, program apps).
+
       // only process new user workflow if the user was created in the last 15s (newly created user)
       if (
         user.createdAt &&

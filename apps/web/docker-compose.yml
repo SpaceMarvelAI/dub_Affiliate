@@ -44,7 +44,11 @@ services:
   redis:
     image: redis:7-alpine
     ports:
-      - 6379:6379
+      # host-side only, remapped off 6379: another project's unrelated redis
+      # container already holds that host port. redis-http reaches this
+      # service over Docker's internal network by name ("redis:6379"),
+      # unaffected by this remap.
+      - 16379:6379
 
   redis-http:
     image: hiett/serverless-redis-http:latest
