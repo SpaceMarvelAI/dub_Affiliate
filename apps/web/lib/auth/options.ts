@@ -183,6 +183,14 @@ export const authOptions: NextAuthOptions = {
   // @ts-ignore
   adapter: CustomPrismaAdapter(prisma),
   session: { strategy: "jwt" },
+  // domain intentionally left undefined (host-only) for local dev — confirmed
+  // by direct evidence, not the old StackOverflow advice this used to cite:
+  // a cookie explicitly scoped to Domain=localhost was dropped by Chrome on
+  // the cross-site redirect back from the OIDC provider, while NextAuth's own
+  // default host-only cookies (csrfToken, callbackUrl — never customized
+  // here) survived the identical round-trip. Local dev only ever logs in via
+  // plain localhost:3000 (see NEXTAUTH_URL's comment), so host-only cookies
+  // never need to cross a host boundary in the first place.
   cookies: {
     sessionToken: {
       name: `${VERCEL_DEPLOYMENT ? "__Secure-" : ""}next-auth.session-token`,
@@ -190,9 +198,38 @@ export const authOptions: NextAuthOptions = {
         httpOnly: true,
         sameSite: "lax",
         path: "/",
-        // When working on localhost, the cookie domain must be omitted entirely (https://stackoverflow.com/a/1188145)
+        // Different situation from state/pkce below, deliberately not
+        // host-only: non-admins get redirected from localhost to
+        // PARTNERS_DOMAIN (partners.localhost) by our OWN middleware AFTER
+        // login completes — an internal, same-site redirect, not the
+        // cross-site external-IdP redirect that dropped Domain-scoped
+        // cookies earlier. The session needs to exist on both hosts for
+        // that post-login hop; state/pkce don't, since they're consumed and
+        // gone before this redirect ever happens.
+        domain: VERCEL_DEPLOYMENT ? ".dub.co" : "localhost",
+        secure: VERCEL_DEPLOYMENT,
+      },
+    },
+    state: {
+      name: "next-auth.state",
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
         domain: VERCEL_DEPLOYMENT ? ".dub.co" : undefined,
         secure: VERCEL_DEPLOYMENT,
+        maxAge: 900,
+      },
+    },
+    pkceCodeVerifier: {
+      name: "next-auth.pkce.code_verifier",
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        domain: VERCEL_DEPLOYMENT ? ".dub.co" : undefined,
+        secure: VERCEL_DEPLOYMENT,
+        maxAge: 900,
       },
     },
   },
