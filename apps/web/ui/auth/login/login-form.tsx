@@ -1,5 +1,6 @@
 "use client";
 
+import { authDebug } from "@/lib/auth/debug-log";
 import { Button } from "@dub/ui";
 import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
@@ -24,6 +25,12 @@ export default function LoginForm({ next }: { next?: string }) {
   useEffect(() => {
     const error = searchParams?.get("error");
     if (error) {
+      authDebug("error", `OAuth sign-in failed: ${error}`, {
+        error,
+        allParams: Object.fromEntries(searchParams?.entries() ?? []),
+        shownToUser: errorCodes[error] ?? "An unexpected error occurred.",
+        hint: "Full detail (bad client_id/secret, discovery fetch failure, etc.) is in the server console, not here — this browser only ever sees the error code on the redirect URL.",
+      });
       toast.error(
         errorCodes[error] ||
           "An unexpected error occurred. Please try again later.",
@@ -37,6 +44,10 @@ export default function LoginForm({ next }: { next?: string }) {
       loading={clicked}
       onClick={() => {
         setClicked(true);
+        authDebug("client", "Continue with SpaceMarvel clicked", {
+          provider: "spacemarvel",
+          callbackUrl: next ?? "(default)",
+        });
         signIn("spacemarvel", {
           ...(next && { callbackUrl: next }),
         });

@@ -14,11 +14,28 @@ import { JWT } from "next-auth/jwt";
 import { createId } from "../api/create-id";
 import { qstash } from "../cron";
 import { completeProgramApplications } from "../partners/complete-program-applications";
+import { authDebug } from "./debug-log";
 import { trackDubLead } from "./track-dub-lead";
 
 const VERCEL_DEPLOYMENT = !!process.env.VERCEL_URL;
 
 const ADMIN_WORKSPACE_SLUG = "spacemarvel-affiliate";
+
+// Surfaced once at module load, dev-only: the #1 cause of "OAuthSignin" is a
+// missing/placeholder client_id/secret/issuer — this makes that obvious
+// instead of a silent redirect back to /login with a generic error code.
+authDebug("config", "SpaceMarvel OIDC provider config", {
+  issuer: process.env.OIDC_SPACEMARVEL_ISSUER || "❌ MISSING",
+  clientId: process.env.OIDC_SPACEMARVEL_CLIENT_ID
+    ? "✅ set"
+    : "❌ MISSING",
+  clientSecret: process.env.OIDC_SPACEMARVEL_CLIENT_SECRET
+    ? "✅ set"
+    : "❌ MISSING",
+  wellKnownUrl: process.env.OIDC_SPACEMARVEL_ISSUER
+    ? `${process.env.OIDC_SPACEMARVEL_ISSUER}/.well-known/openid-configuration`
+    : "❌ cannot build — OIDC_SPACEMARVEL_ISSUER is missing",
+});
 
 const CustomPrismaAdapter = (p: PrismaClient) => {
   return {
@@ -174,15 +191,42 @@ export const authOptions: NextAuthOptions = {
     signIn: "/login",
     error: "/login",
   },
+  // Dev-only: NextAuth's own debug output plus a custom logger. `logger.error`
+  // is where the *actual* reason behind a generic "?error=OAuthSignin" or
+  // "?error=OAuthCallback" redirect lives (bad client_id, discovery fetch
+  // failure, invalid_grant, etc.) — NextAuth normally only shows the code on
+  // the URL and logs the real error server-side; this makes that visible.
+  debug: process.env.NODE_ENV !== "production",
+  logger: {
+    error(code, metadata) {
+      authDebug("error", `NextAuth error: ${code}`, metadata);
+    },
+    warn(code) {
+      authDebug("warn", `NextAuth warning: ${code}`);
+    },
+    debug(code, metadata) {
+      authDebug("config", `NextAuth debug: ${code}`, metadata);
+    },
+  },
   callbacks: {
     signIn: async ({ user, profile }) => {
+      authDebug("signin", "signIn callback invoked", { user, profile });
+
       if (!user.email || (await isBlacklistedEmail(user.email))) {
+        authDebug("warn", "signIn blocked — missing or blacklisted email", {
+          email: user.email,
+        });
         return false;
       }
 
       // per product decision: `is_super_admin` on the SpaceMarvel ID token/userinfo
       // claim is the sole admin signal (the `role` org-role claim is intentionally ignored)
       const isSuperAdmin = (profile as any)?.is_super_admin === true;
+      authDebug(
+        "signin",
+        `Role resolved from is_super_admin claim: ${isSuperAdmin ? "ADMIN" : "USER"}`,
+        { isSuperAdmin, claims: profile },
+      );
 
       await prisma.user.update({
         where: { id: user.id },
@@ -212,6 +256,13 @@ export const authOptions: NextAuthOptions = {
       profile?: any;
       trigger?: "signIn" | "update" | "signUp";
     }) => {
+      authDebug("jwt", `jwt callback (trigger=${trigger ?? "n/a"})`, {
+        hasUser: !!user,
+        hasProfile: !!profile,
+        profile,
+        tokenBefore: token,
+      });
+
       if (user) {
         token.user = user;
       }
@@ -249,6 +300,7 @@ export const authOptions: NextAuthOptions = {
         }
       }
 
+      authDebug("jwt", "jwt callback result", token);
       return token;
     },
     session: async ({ session, token }) => {
@@ -257,6 +309,7 @@ export const authOptions: NextAuthOptions = {
         // @ts-ignore
         ...(token || session).user,
       };
+      authDebug("session", "session callback result", session);
       return session;
     },
   },
