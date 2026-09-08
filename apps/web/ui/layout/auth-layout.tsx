@@ -29,17 +29,17 @@ export const AuthLayout = ({
       <div className="flex grow basis-0 flex-col justify-end">
         {showTerms && (
           <p className="px-20 py-8 text-center text-xs font-medium text-neutral-500 md:px-0">
-            By continuing, you agree to Dub&rsquo;s{" "}
+            By continuing, you agree to SpaceMarvel&rsquo;s{" "}
             <a
-              href={`https://dub.co/legal/${showTerms === "app" ? "terms" : "partners"}`}
+              href="https://spacemarvel.com/terms"
               target="_blank"
               className="font-semibold text-neutral-600 hover:text-neutral-800"
             >
-              {showTerms === "app" ? "Terms of Service" : "Partner Terms"}
+              Terms of Service
             </a>{" "}
             and{" "}
             <a
-              href="https://dub.co/legal/privacy"
+              href="https://spacemarvel.com/privacy-policy"
               target="_blank"
               className="font-semibold text-neutral-600 hover:text-neutral-800"
             >
