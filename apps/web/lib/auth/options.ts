@@ -157,7 +157,16 @@ export const authOptions: NextAuthOptions = {
       wellKnown: `${process.env.OIDC_SPACEMARVEL_ISSUER}/.well-known/openid-configuration`,
       clientId: process.env.OIDC_SPACEMARVEL_CLIENT_ID,
       clientSecret: process.env.OIDC_SPACEMARVEL_CLIENT_SECRET,
-      authorization: { params: { scope: "openid profile email" } },
+      // prompt=login: after our own logout, force the dashboard to show its
+      // login screen again instead of silently re-authenticating whichever
+      // account is still active there — dub_Affiliate's logout only ever
+      // clears ITS OWN session, never the dashboard's shared one, so without
+      // this every login after a logout just silently picks up the same
+      // account. (select_account isn't supported by the dashboard's OAuth
+      // library — only login/none are — so `login` is the correct value.)
+      authorization: {
+        params: { scope: "openid profile email", prompt: "login" },
+      },
       idToken: true,
       checks: ["pkce", "state"],
       allowDangerousEmailAccountLinking: true,

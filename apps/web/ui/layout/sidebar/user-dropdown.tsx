@@ -90,7 +90,18 @@ export function UserDropdown() {
       type: "button",
       label: "Log out",
       icon: LogOut,
-      onClick: () => {
+      onClick: async () => {
+        // NextAuth's signOut() below only clears its own session/CSRF
+        // cookies. Clear everything else this app sets first — including
+        // httpOnly cookies client JS can't touch itself — plus localStorage/
+        // sessionStorage (the support chat widget caches history there).
+        try {
+          await fetch("/api/auth/clear-all", { method: "POST" });
+        } catch {
+          // best-effort — still proceed with the NextAuth sign-out below
+        }
+        localStorage.clear();
+        sessionStorage.clear();
         signOut({
           callbackUrl: "/login",
         });
