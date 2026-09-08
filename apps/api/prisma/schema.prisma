@@ -1,0 +1,97 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  oidcSub      String   @unique
+  email        String   @unique
+  name         String?
+  image        String?
+  isSuperAdmin Boolean  @default(false)
+  createdAt    DateTime @default(now())
+
+  partner Partner?
+}
+
+model Program {
+  id                String   @id @default(cuid())
+  name              String
+  commissionPercent Decimal  @db.Decimal(5, 2)
+  createdAt         DateTime @default(now())
+
+  links Link[]
+}
+
+model Partner {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  name      String
+  email     String
+  createdAt DateTime @default(now())
+
+  user        User         @relation(fields: [userId], references: [id])
+  links       Link[]
+  commissions Commission[]
+}
+
+model Link {
+  id          String   @id @default(cuid())
+  partnerId   String
+  programId   String
+  key         String   @unique
+  url         String
+  clicksCount Int      @default(0)
+  createdAt   DateTime @default(now())
+
+  partner     Partner      @relation(fields: [partnerId], references: [id])
+  program     Program      @relation(fields: [programId], references: [id])
+  clicks      Click[]
+  commissions Commission[]
+}
+
+model Click {
+  id        String   @id @default(cuid())
+  linkId    String
+  ip        String?
+  referrer  String?
+  userAgent String?
+  createdAt DateTime @default(now())
+
+  link Link @relation(fields: [linkId], references: [id])
+}
+
+model Customer {
+  id         String   @id @default(cuid())
+  externalId String   @unique
+  email      String?
+  createdAt  DateTime @default(now())
+
+  commissions Commission[]
+}
+
+enum CommissionStatus {
+  pending
+  paid
+}
+
+model Commission {
+  id         String            @id @default(cuid())
+  partnerId  String
+  linkId     String?
+  customerId String
+  amount     Int
+  currency   String            @default("usd")
+  invoiceId  String?           @unique
+  status     CommissionStatus  @default(pending)
+  createdAt  DateTime          @default(now())
+
+  partner  Partner  @relation(fields: [partnerId], references: [id])
+  link     Link?    @relation(fields: [linkId], references: [id])
+  customer Customer @relation(fields: [customerId], references: [id])
+}

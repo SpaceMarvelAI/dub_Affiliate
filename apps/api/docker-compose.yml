@@ -1,0 +1,21 @@
+# This is meant for local development only. Do not use this in production.
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: dub_affiliate_api
+    ports:
+      # host port 5433, not 5432: something else on this machine already
+      # binds 5432, and the existing dub_Affiliate stack uses MySQL on
+      # 3306/3900 anyway.
+      - 5433:5432
+    volumes:
+      - api-postgres:/var/lib/postgresql/data
+
+volumes:
+  api-postgres:
