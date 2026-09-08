@@ -61,6 +61,7 @@ export const withSession = (handler: WithSessionHandler) =>
               name: true,
               email: true,
               isMachine: true,
+              isSuperAdmin: true,
             },
           });
           if (!user) {
@@ -115,6 +116,7 @@ export const withSession = (handler: WithSessionHandler) =>
               name: user.name || "",
               email: user.email || "",
               isMachine: user.isMachine,
+              isSuperAdmin: user.isSuperAdmin,
             },
           };
         } else {

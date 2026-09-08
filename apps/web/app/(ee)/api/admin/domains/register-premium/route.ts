@@ -83,7 +83,4 @@ export const POST = withAdmin(
       throw error;
     }
   },
-  {
-    requiredRoles: ["owner"],
-  },
 );

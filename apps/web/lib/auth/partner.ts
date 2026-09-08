@@ -182,6 +182,7 @@ export const withPartnerProfile = (
               name: token.user.name || "",
               email: token.user.email || "",
               isMachine: token.user.isMachine,
+              isSuperAdmin: token.user.isSuperAdmin,
               defaultPartnerId: token.user.defaultPartnerId || undefined,
             },
           };

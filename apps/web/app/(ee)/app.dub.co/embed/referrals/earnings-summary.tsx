@@ -1,4 +1,3 @@
-import { SSO_LOGIN_PROGRAMS } from "@/lib/auth/sso-login-programs";
 import { Button, InfoTooltip } from "@dub/ui";
 import { currencyFormatter } from "@dub/utils";
 import { useReferralsEmbedData } from "./page-client";
@@ -10,13 +9,7 @@ export function ReferralsEmbedEarningsSummary({
   showSettingsTab: boolean;
   onSelectTab: (tab: string) => void;
 }) {
-  const { program, partner, earnings } = useReferralsEmbedData();
-
-  // for custom SSO login programs, we just redirect to the login page
-  // so they can easily login with SSO instead of creating a new account
-  const isCustomSSOLoginProgram = SSO_LOGIN_PROGRAMS.some(
-    ({ slug }) => slug === program.slug,
-  );
+  const { program, earnings } = useReferralsEmbedData();
 
   const settingsButton = (
     <Button
@@ -38,11 +31,7 @@ export function ReferralsEmbedEarningsSummary({
           settingsButton
         ) : (
           <a
-            href={`https://partners.dub.co/${program.slug}/${
-              isCustomSSOLoginProgram
-                ? "login"
-                : `register${partner.email ? `?email=${partner.email}` : ""}`
-            }`}
+            href={`https://partners.dub.co/${program.slug}/login`}
             target="_blank"
           >
             {settingsButton}

@@ -24,18 +24,7 @@ module.exports = withPlausibleProxy({
   apiPath: "/_proxy/plausible/event",
 })({
   reactStrictMode: false,
-  transpilePackages: [
-    "prettier",
-    "shiki",
-    "@dub/email",
-    "@boxyhq/saml-jackson",
-  ],
-  outputFileTracingIncludes: {
-    "/api/auth/saml/token": [
-      "./node_modules/jose/**/*",
-      "./node_modules/openid-client/**/*",
-    ],
-  },
+  transpilePackages: ["prettier", "shiki", "@dub/email"],
   experimental: {
     optimizePackageImports: [
       "@dub/email",

@@ -136,7 +136,4 @@ export const POST = withAdmin(
       },
     });
   },
-  {
-    requiredRoles: ["owner"],
-  },
 );

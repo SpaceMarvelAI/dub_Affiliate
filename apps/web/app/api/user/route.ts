@@ -1,24 +1,14 @@
 import { DubApiError } from "@/lib/api/errors";
 import { withSession } from "@/lib/auth";
 import { hasPermission } from "@/lib/auth/partner-users/partner-user-permissions";
-import { requestEmailChange } from "@/lib/auth/request-email-change";
 import {
-  assertEmailAvailableForIdentitySync,
   isImageReferencedByPartner,
-  requestSyncedEmailChange,
   syncNameAndImageToPartner,
 } from "@/lib/partners/sync-partner-identity";
 import { prisma } from "@/lib/prisma";
 import { storage } from "@/lib/storage";
 import { uploadedImageSchema } from "@/lib/zod/schemas/images";
-import {
-  APP_DOMAIN,
-  PARTNERS_DOMAIN,
-  PARTNERS_HOSTNAMES,
-  R2_URL,
-  nanoid,
-  trim,
-} from "@dub/utils";
+import { PARTNERS_HOSTNAMES, R2_URL, nanoid, trim } from "@dub/utils";
 import { waitUntil } from "@vercel/functions";
 import { NextResponse } from "next/server";
 import * as z from "zod/v4";
@@ -77,7 +67,6 @@ export const PATCH = withSession(async ({ req, session }) => {
 
   const hostName = req.headers.get("host") || "";
   const isPartnersDomain = PARTNERS_HOSTNAMES.has(hostName);
-  const emailChangeHost = isPartnersDomain ? PARTNERS_DOMAIN : APP_DOMAIN;
   const partnerId = session.user.defaultPartnerId;
   const shouldSyncIdentity =
     syncIdentity === true && isPartnersDomain && !!partnerId;
@@ -133,45 +122,13 @@ export const PATCH = withSession(async ({ req, session }) => {
     }
   }
 
-  // Verify email ownership if the email is being changed
+  // Email is managed by the SpaceMarvel SSO identity provider and can't be changed here.
   if (email && email !== session.user.email) {
-    if (shouldSyncIdentity && partnerId) {
-      await assertEmailAvailableForIdentitySync({
-        newEmail: email,
-        userId: session.user.id,
-        partnerId,
-      });
-
-      await requestSyncedEmailChange({
-        currentEmail: session.user.email!,
-        newEmail: email,
-        userId: session.user.id,
-        partnerId,
-        hostName: PARTNERS_DOMAIN,
-        redirectTo: "/account/settings",
-      });
-    } else {
-      const userWithEmail = await prisma.user.findUnique({
-        where: {
-          email,
-        },
-      });
-
-      if (userWithEmail) {
-        throw new DubApiError({
-          code: "conflict",
-          message: "Email is already in use.",
-        });
-      }
-
-      await requestEmailChange({
-        email: session.user.email,
-        newEmail: email,
-        identifier: session.user.id,
-        userId: session.user.id,
-        hostName: emailChangeHost,
-      });
-    }
+    throw new DubApiError({
+      code: "bad_request",
+      message:
+        "Email is managed by your SpaceMarvel account and can't be changed here.",
+    });
   }
 
   const response = await prisma.user.update({

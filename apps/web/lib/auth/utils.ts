@@ -11,6 +11,7 @@ export interface Session {
     email: string;
     image?: string;
     isMachine: boolean;
+    isSuperAdmin: boolean;
     defaultWorkspace?: string;
     defaultPartnerId?: string;
   };

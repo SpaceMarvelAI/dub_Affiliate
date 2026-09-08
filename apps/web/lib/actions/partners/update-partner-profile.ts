@@ -2,14 +2,9 @@
 
 import { DubApiError } from "@/lib/api/errors";
 import { throwIfNoPermission } from "@/lib/auth/partner-users/throw-if-no-permission";
-import { requestEmailChange } from "@/lib/auth/request-email-change";
 import { qstash } from "@/lib/cron";
 import { isReservedUsername } from "@/lib/edge-config";
-import {
-  assertEmailAvailableForIdentitySync,
-  requestSyncedEmailChange,
-  syncNameAndImageToUser,
-} from "@/lib/partners/sync-partner-identity";
+import { syncNameAndImageToUser } from "@/lib/partners/sync-partner-identity";
 import { prisma } from "@/lib/prisma";
 import { storage } from "@/lib/storage";
 import { ratelimit } from "@/lib/upstash";
@@ -22,7 +17,6 @@ import {
   APP_DOMAIN_WITH_NGROK,
   deepEqual,
   nanoid,
-  PARTNERS_DOMAIN,
   RESERVED_SLUGS,
   validSlugRegex,
 } from "@dub/utils";
@@ -186,63 +180,13 @@ export const updatePartnerProfileAction = authPartnerActionClient
         },
       });
 
-      // If the email is being changed, we need to verify the new email address
+      // Email is managed by the SpaceMarvel SSO identity provider and can't be changed here.
       if (emailChanged) {
-        if (syncIdentity) {
-          if (!user.email) {
-            throw new DubApiError({
-              code: "bad_request",
-              message:
-                "Your login account does not have an email address on file.",
-            });
-          }
-
-          await assertEmailAvailableForIdentitySync({
-            newEmail,
-            userId: user.id,
-            partnerId: partner.id,
-          });
-
-          await requestSyncedEmailChange({
-            currentEmail: user.email,
-            newEmail,
-            userId: user.id,
-            partnerId: partner.id,
-            hostName: PARTNERS_DOMAIN,
-            redirectTo: "/profile",
-          });
-        } else {
-          if (!partner.email) {
-            throw new DubApiError({
-              code: "bad_request",
-              message:
-                "Your partner profile does not have an email address on file.",
-            });
-          }
-
-          const partnerWithEmail = await prisma.partner.findUnique({
-            where: {
-              email: newEmail,
-            },
-          });
-
-          if (partnerWithEmail) {
-            throw new Error(
-              `Email ${newEmail} is already in use. Do you want to merge your partner accounts instead? (https://d.to/merge-partners)`,
-            );
-          }
-
-          await requestEmailChange({
-            email: partner.email,
-            newEmail,
-            identifier: partner.id,
-            userId: user.id,
-            isPartnerProfile: true,
-            hostName: PARTNERS_DOMAIN,
-          });
-        }
-
-        needsEmailVerification = true;
+        throw new DubApiError({
+          code: "bad_request",
+          message:
+            "Email is managed by your SpaceMarvel account and can't be changed here.",
+        });
       }
 
       if (syncIdentity) {

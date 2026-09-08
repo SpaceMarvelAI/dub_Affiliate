@@ -15,6 +15,7 @@ model User {
   emailVerified DateTime?
   image         String?
   isMachine     Boolean   @default(false)
+  isSuperAdmin  Boolean   @default(false)
   createdAt     DateTime  @default(now())
 
   // password & security fields

@@ -298,6 +298,7 @@ export const withWorkspace = (
               name: token.user.name || "",
               email: token.user.email || "",
               isMachine: token.user.isMachine,
+              isSuperAdmin: token.user.isSuperAdmin,
             },
           };
         } else {

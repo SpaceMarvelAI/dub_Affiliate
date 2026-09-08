@@ -162,9 +162,6 @@ export const POST = withAdmin(
 
     return NextResponse.json(updatedProgram);
   },
-  {
-    requiredRoles: ["owner"],
-  },
 );
 
 const reorderProgramsSchema = z.object({
@@ -225,8 +222,5 @@ export const PATCH = withAdmin(
       ok: true,
       updated: updatesToApply.length,
     });
-  },
-  {
-    requiredRoles: ["owner"],
   },
 );

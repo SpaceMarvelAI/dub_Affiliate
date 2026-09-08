@@ -117,7 +117,4 @@ export const PATCH = withAdmin(
 
     return NextResponse.json(updatedPartner);
   },
-  {
-    requiredRoles: ["owner"],
-  },
 );

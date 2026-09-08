@@ -1,5 +1,4 @@
 import { createId } from "@/lib/api/create-id";
-import { hashPassword } from "@/lib/auth/password";
 import { prisma } from "@/lib/prisma";
 import {
   Domain,
@@ -155,15 +154,12 @@ const createUsers = async (data: SeedData) => {
     return;
   }
 
-  const passwordHash = await hashPassword("password");
-
   const { count } = await prisma.user.createMany({
     data: users.map((user) => ({
       id: user.id,
       name: user.name,
       email: user.email,
       emailVerified: new Date(user.emailVerified),
-      passwordHash,
     })),
   });
 
@@ -377,8 +373,6 @@ const createPartners = async (data: SeedData) => {
     return;
   }
 
-  const passwordHash = await hashPassword("password");
-
   // Create users for partners
   await prisma.user.createMany({
     data: partners.map((partner) => ({
@@ -386,7 +380,6 @@ const createPartners = async (data: SeedData) => {
       name: partner.user.name,
       email: partner.user.email,
       emailVerified: new Date(partner.user.emailVerified),
-      passwordHash,
       defaultPartnerId: partner.id,
     })),
   });

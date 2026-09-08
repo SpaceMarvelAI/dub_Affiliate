@@ -116,9 +116,6 @@ export const POST = withAdmin(
 
     return NextResponse.json(updatedPartner);
   },
-  {
-    requiredRoles: ["owner"],
-  },
 );
 
 // DELETE /api/admin/partners/trusted
@@ -165,8 +162,5 @@ export const DELETE = withAdmin(
     });
 
     return NextResponse.json({ success: true });
-  },
-  {
-    requiredRoles: ["owner"],
   },
 );

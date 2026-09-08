@@ -9,7 +9,6 @@ import {
   partnerSubmittedLeadsCountByStatusSchema,
   partnerUserSchema,
 } from "@/lib/zod/schemas/partner-profile";
-import { DirectorySyncProviders } from "@boxyhq/saml-jackson";
 import {
   Commission,
   CommissionStatus,
@@ -325,6 +324,7 @@ export interface UserProps {
   defaultWorkspace?: string;
   defaultPartnerId?: string;
   isMachine: boolean;
+  isSuperAdmin: boolean;
   hasPassword: boolean;
   provider: string | null;
 }
@@ -374,18 +374,6 @@ export interface ImportedDomainCountProps {
   id: number;
   domain: string;
   links: number;
-}
-
-export interface SAMLProviderProps {
-  name: string;
-  logo: string;
-  saml: "okta" | "azure" | "google";
-  samlModalCopy: string;
-  scim: keyof typeof DirectorySyncProviders;
-  scimModalCopy: {
-    url: string;
-    token: string;
-  };
 }
 
 export type NewLinkProps = z.infer<typeof createLinkBodySchema>;

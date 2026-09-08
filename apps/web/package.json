@@ -26,7 +26,6 @@
     "@axiomhq/logging": "^0.1.5",
     "@axiomhq/nextjs": "^0.1.6",
     "@better-fetch/fetch": "^1.1.21",
-    "@boxyhq/saml-jackson": "1.52.1",
     "@chronark/zod-bird": "^1.0.0",
     "@date-fns/tz": "^1.4.1",
     "@dub/analytics": "^0.0.32",

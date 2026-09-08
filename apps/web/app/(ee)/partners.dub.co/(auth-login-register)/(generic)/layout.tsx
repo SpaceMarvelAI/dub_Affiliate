@@ -19,7 +19,7 @@ export async function generateMetadata(props: {
     : undefined;
 
   if (programSlug && !program) {
-    redirect("/register");
+    redirect("/login");
   }
 
   if (program) {
@@ -59,7 +59,7 @@ export default async function PartnerAuthLayout(props: {
     : undefined;
 
   if (programSlug && !program) {
-    redirect("/register");
+    redirect("/login");
   }
   return (
     <div className="relative grid min-h-[100dvh] min-h-screen grid-cols-1 min-[900px]:grid-cols-[440px_minmax(0,1fr)] lg:grid-cols-[595px_minmax(0,1fr)]">

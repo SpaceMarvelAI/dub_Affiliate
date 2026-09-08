@@ -83,7 +83,4 @@ export const POST = withAdmin(
       sessionUrl: verification.url,
     });
   },
-  {
-    requiredRoles: ["owner"],
-  },
 );

@@ -138,7 +138,4 @@ export const POST = withAdmin(
 
     return NextResponse.json({ success: true });
   },
-  {
-    requiredRoles: ["owner"],
-  },
 );

@@ -15,7 +15,7 @@ export function CTAButtons() {
     <>
       <Link
         href={
-          status === "authenticated" ? "/programs" : `${slugPrefix}/register`
+          status === "authenticated" ? "/programs" : `${slugPrefix}/login`
         }
       >
         <Button

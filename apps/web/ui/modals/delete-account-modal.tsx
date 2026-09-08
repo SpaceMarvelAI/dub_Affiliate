@@ -43,7 +43,7 @@ function DeleteAccountModal({
           // delay to allow for the route change to complete
           await new Promise((resolve) =>
             setTimeout(() => {
-              router.push("/register");
+              router.push("/login");
               resolve(null);
             }, 200),
           );

@@ -1,5 +1,5 @@
 import { DubApiError } from "@/lib/api/errors";
-import { getDubAdminRole, withWorkspace } from "@/lib/auth";
+import { withWorkspace } from "@/lib/auth";
 import { getDubCustomer } from "@/lib/dub";
 import { getFeatureFlags } from "@/lib/edge-config";
 import { stripe } from "@/lib/stripe";
@@ -50,8 +50,7 @@ export const POST = withWorkspace(
       : null;
 
     if (process.env.VERCEL === "1" && process.env.VERCEL_ENV === "preview") {
-      const adminRole = await getDubAdminRole(session.user.id);
-      if (!adminRole) {
+      if (!session.user.isSuperAdmin) {
         throw new DubApiError({
           code: "unauthorized",
           message: "Unauthorized: Not an admin.",

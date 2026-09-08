@@ -73,9 +73,6 @@ export const PATCH = withAdmin(
       categories: updatedProgram.categories.map(({ category }) => category),
     });
   },
-  {
-    requiredRoles: ["owner"],
-  },
 );
 
 // DELETE /api/admin/programs/[programId]
@@ -109,8 +106,5 @@ export const DELETE = withAdmin(
     });
 
     return NextResponse.json({ ok: true });
-  },
-  {
-    requiredRoles: ["owner"],
   },
 );

@@ -122,7 +122,4 @@ export const PATCH = withAdmin(
 
     return NextResponse.json({ success: true });
   },
-  {
-    requiredRoles: ["owner"],
-  },
 );

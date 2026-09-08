@@ -47,7 +47,4 @@ export const DELETE = withAdmin(
 
     return NextResponse.json(response);
   },
-  {
-    requiredRoles: ["owner"],
-  },
 );

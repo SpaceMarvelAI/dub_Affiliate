@@ -41,7 +41,4 @@ export const POST = withAdmin(
       success: true,
     });
   },
-  {
-    requiredRoles: ["owner"],
-  },
 );

@@ -1,5 +1,4 @@
 import { DubApiError } from "@/lib/api/errors";
-import { requestEmailChange } from "@/lib/auth/request-email-change";
 import { prisma } from "@/lib/prisma";
 import { storage } from "@/lib/storage";
 import { nanoid } from "@dub/utils";
@@ -150,31 +149,4 @@ export async function isImageReferencedByPartner({
   });
 
   return !!partner;
-}
-
-export async function requestSyncedEmailChange({
-  currentEmail,
-  newEmail,
-  userId,
-  partnerId,
-  hostName,
-  redirectTo,
-}: {
-  currentEmail: string;
-  newEmail: string;
-  userId: string;
-  partnerId: string;
-  hostName: string;
-  redirectTo: "/profile" | "/account/settings";
-}) {
-  await requestEmailChange({
-    email: currentEmail,
-    newEmail,
-    identifier: userId,
-    userId,
-    hostName,
-    syncIdentity: true,
-    partnerId,
-    redirectTo,
-  });
 }
