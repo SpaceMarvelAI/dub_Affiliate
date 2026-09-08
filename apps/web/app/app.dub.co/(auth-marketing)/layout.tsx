@@ -2,7 +2,6 @@ import Toolbar from "@/ui/layout/toolbar/toolbar";
 import { Grid, Wordmark } from "@dub/ui";
 import { cn } from "@dub/utils";
 import { ReactNode } from "react";
-import { SidePanel } from "./side-panel";
 
 export default function AuthMarketingLayout({
   children,
@@ -13,8 +12,8 @@ export default function AuthMarketingLayout({
     <>
       <Toolbar />
 
-      <div className="relative grid min-h-[100dvh] grid-cols-1 min-[900px]:grid-cols-[minmax(0,1fr)_440px] lg:grid-cols-[minmax(0,1fr)_595px]">
-        {/* Left: Main auth content */}
+      <div className="relative grid min-h-[100dvh] grid-cols-1">
+        {/* Main auth content */}
         <div className="relative">
           <div className="absolute inset-0 isolate overflow-hidden bg-white">
             {/* Grid */}
@@ -65,9 +64,6 @@ export default function AuthMarketingLayout({
             {children}
           </div>
         </div>
-
-        {/* Right: Side panel - hidden on mobile */}
-        <SidePanel />
       </div>
     </>
   );

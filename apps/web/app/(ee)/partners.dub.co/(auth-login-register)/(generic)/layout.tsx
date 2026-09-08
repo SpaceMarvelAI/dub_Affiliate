@@ -7,7 +7,6 @@ import { redirect } from "next/navigation";
 import { ReactNode } from "react";
 import { Logo } from "../../(auth-other)/logo";
 import { PartnerBanner } from "../partner-banner";
-import { SidePanel } from "../side-panel";
 
 export async function generateMetadata(props: {
   params: Promise<{ programSlug?: string }>;
@@ -62,9 +61,8 @@ export default async function PartnerAuthLayout(props: {
     redirect("/login");
   }
   return (
-    <div className="relative grid min-h-[100dvh] min-h-screen grid-cols-1 min-[900px]:grid-cols-[440px_minmax(0,1fr)] lg:grid-cols-[595px_minmax(0,1fr)]">
+    <div className="relative grid min-h-[100dvh] min-h-screen grid-cols-1">
       <PartnerBanner program={program} />
-      <SidePanel program={program} />
 
       <div className="relative">
         <div className="absolute inset-0 isolate overflow-hidden bg-white">
