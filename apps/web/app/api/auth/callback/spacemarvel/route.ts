@@ -59,6 +59,18 @@ export async function GET(req: NextRequest) {
 
   if (!code) return fail(req, "missing code", "OAuthCallback");
   if (!state || !stateCookie || state !== stateCookie) {
+    // Hard proof, not theory: log exactly what cookie header (if any) the
+    // browser actually sent on this request, so we can see whether the
+    // cookies are missing entirely (never arrived) vs present but wrong
+    // (some other bug) instead of guessing from timing/domain theories.
+    authDebug("error", "state mismatch — raw request detail", {
+      url: req.url,
+      rawCookieHeader: req.headers.get("cookie"),
+      queryState: state,
+      cookieOidcState: stateCookie,
+      cookieOidcVerifierPresent: !!verifier,
+      referer: req.headers.get("referer"),
+    });
     return fail(req, "state mismatch or missing", "OAuthCallback");
   }
   if (!verifier) return fail(req, "missing pkce verifier cookie", "OAuthCallback");
@@ -191,11 +203,11 @@ export async function GET(req: NextRequest) {
   });
 
   const res = NextResponse.redirect(returnTo);
-  // Domain has to match what they were set with (login/route.ts) or the
-  // browser won't actually overwrite/clear them — same bug already fixed in
-  // clear-all/route.ts.
+  // Host-only, matching how login/route.ts sets them now — a Domain-scoped
+  // clear here wouldn't remove a host-only cookie (same class of bug already
+  // fixed once in clear-all/route.ts, just the opposite direction this time).
   for (const name of ["oidc_state", "oidc_verifier", "oidc_return_to"]) {
-    res.cookies.set(name, "", { path: "/", maxAge: 0, domain: COOKIE_DOMAIN });
+    res.cookies.set(name, "", { path: "/", maxAge: 0 });
   }
   res.cookies.set(SESSION_COOKIE, token, {
     httpOnly: true,

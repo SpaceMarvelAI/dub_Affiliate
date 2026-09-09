@@ -7,38 +7,60 @@ import { NextRequest, NextResponse } from "next/server";
 // request, no client-side fetch dance — unlike NextAuth's signIn(), which did
 // separate csrf/providers/signin fetches before ever redirecting.
 //
-// This app has multiple local hostnames (localhost, partners.localhost) but
-// the dashboard's registered redirect_uri is always localhost:3000 — so login
-// can start on one host and the callback always lands on another. These
-// cookies MUST be Domain-scoped (not host-only) to survive that, same as the
-// session cookie already is.
+// These cookies have to survive a REAL external round trip (dashboard ->
+// WorkOS -> Google -> WorkOS -> dashboard -> us), not just an internal hop.
+// Proven via raw-cookie-header logging: Domain=localhost cookies do NOT
+// reliably survive that (they arrived empty on the real callback request,
+// while a Domain=localhost session cookie set the normal way — after
+// returning, not before leaving — worked fine). Host-only cookies are the
+// setting that's actually been shown to work for a cookie that has to
+// survive leaving the site and coming back.
+//
+// That conflicts with the OTHER requirement — the dashboard's registered
+// redirect_uri is always localhost:3000, so login can start on a different
+// host (partners.localhost). Solution: bounce to the canonical host FIRST,
+// before ever leaving to the dashboard, so these cookies are always
+// set-and-read on the exact one host (localhost:3000) the callback lands
+// on — no cross-host cookie sharing needed at all.
 const isProd = !!process.env.VERCEL_URL;
-export const OIDC_COOKIE_DOMAIN = isProd ? ".dub.co" : "localhost";
+const CANONICAL_HOST = new URL(process.env.NEXTAUTH_URL!).host;
+const PROTOCOL = isProd ? "https" : "http";
 
 const COOKIE_OPTS = {
   httpOnly: true,
   sameSite: "lax" as const,
   path: "/",
-  maxAge: 300, // 5 minutes — single-use, only needs to survive the redirect round trip
+  // 20 minutes, not 5 — the dashboard's "Continue with Google" path now
+  // routes through WorkOS + Google's own account-picker/consent/2FA screens
+  // before ever coming back, which can easily take longer than 5 minutes on
+  // a first-time authorization. These cookies are single-use and deleted
+  // immediately once consumed, so a longer window costs nothing.
+  maxAge: 1200,
   secure: isProd,
-  domain: OIDC_COOKIE_DOMAIN,
+  // host-only (no domain) — see comment above.
 };
 
 export async function GET(req: NextRequest) {
+  const host = req.headers.get("host");
   const next = req.nextUrl.searchParams.get("next");
   const path = next && next.startsWith("/") ? next : "/";
-  // Store the full origin, not just the path — the callback always executes
-  // on localhost:3000 (the registered redirect_uri), so without this a login
-  // started on partners.localhost would land back on the wrong host.
-  //
-  // req.nextUrl.origin is NOT reliable here — this route bypasses
-  // middleware.ts (matcher excludes /api/), and outside it NextURL doesn't
-  // reflect the real incoming Host header, only whatever the dev server's
-  // own canonical address is. lib/middleware/utils/parse.ts hits the same
-  // issue and works around it the same way: read the Host header directly.
-  const host = req.headers.get("host");
-  const protocol = isProd ? "https" : "http";
-  const returnTo = `${protocol}://${host}${path}`;
+
+  if (host !== CANONICAL_HOST) {
+    const url = new URL(
+      `/api/auth/login${req.nextUrl.search}`,
+      `${PROTOCOL}://${CANONICAL_HOST}`,
+    );
+    if (!url.searchParams.get("next")) url.searchParams.set("next", path);
+    // Where to send the user back to once login fully completes — carried
+    // as a query param through this one same-site internal hop, not a
+    // cookie, since nothing sensitive happens until the real OIDC round
+    // trip starts (which begins fresh on the canonical host below).
+    url.searchParams.set("returnHost", host ?? CANONICAL_HOST);
+    return NextResponse.redirect(url);
+  }
+
+  const returnHost = req.nextUrl.searchParams.get("returnHost") || host;
+  const returnTo = `${PROTOCOL}://${returnHost}${path}`;
 
   const { verifier, challenge } = generatePkce();
   const state = generateState();
