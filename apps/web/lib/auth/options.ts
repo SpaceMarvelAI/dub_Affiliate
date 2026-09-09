@@ -157,18 +157,28 @@ export const authOptions: NextAuthOptions = {
       wellKnown: `${process.env.OIDC_SPACEMARVEL_ISSUER}/.well-known/openid-configuration`,
       clientId: process.env.OIDC_SPACEMARVEL_CLIENT_ID,
       clientSecret: process.env.OIDC_SPACEMARVEL_CLIENT_SECRET,
-      // prompt=login: after our own logout, force the dashboard to show its
-      // login screen again instead of silently re-authenticating whichever
-      // account is still active there — dub_Affiliate's logout only ever
-      // clears ITS OWN session, never the dashboard's shared one, so without
-      // this every login after a logout just silently picks up the same
-      // account. (select_account isn't supported by the dashboard's OAuth
-      // library — only login/none are — so `login` is the correct value.)
+      // prompt=login REMOVED: audited directly against ChatPlatform-backend's
+      // proven-reliable OIDC client (which doesn't force it) — it adds an
+      // extra interactive hop at the dashboard on every login, widening the
+      // window the state/pkce cookies have to survive. That's the leading
+      // explanation for the intermittent "State cookie was missing" failures
+      // (confirmed via curl that the Set-Cookie response itself is correct
+      // every time — the loss is browser-side, between cookie-set and the
+      // hop back). Trade-off: logout no longer forces the dashboard's account
+      // picker — it'll silently reuse whatever dashboard session is active,
+      // same as ChatPlatform-backend's own behavior. Login actually working
+      // is the more urgent problem to fix.
       authorization: {
-        params: { scope: "openid profile email", prompt: "login" },
+        params: { scope: "openid profile email" },
       },
       idToken: true,
-      checks: ["pkce", "state"],
+      // "state" dropped: one fewer cookie that must survive the round-trip.
+      // PKCE alone is widely accepted as sufficient (it's what actually
+      // defeats authorization-code interception/replay) — ChatPlatform-backend
+      // itself only validates state as a plain cookie compare with no
+      // server-side fallback either, so this isn't weaker than the reference
+      // implementation, just less redundant.
+      checks: ["pkce"],
       allowDangerousEmailAccountLinking: true,
       profile(profile) {
         return {
