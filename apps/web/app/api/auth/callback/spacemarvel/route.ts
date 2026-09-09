@@ -5,6 +5,11 @@ import { exchangeCodeForTokens, verifyIdToken } from "@/lib/auth/oidc-client";
 import { ensureAdminWorkspace, ensurePartnerAccount } from "@/lib/auth/provisioning";
 import { isBlacklistedEmail } from "@/lib/edge-config";
 import { prisma } from "@/lib/prisma";
+import {
+  API_HOSTNAMES,
+  APP_HOSTNAMES,
+  PARTNERS_HOSTNAMES,
+} from "@dub/utils";
 import { NextRequest, NextResponse } from "next/server";
 
 // Same URL this app has always registered with the dashboard as its
@@ -17,11 +22,32 @@ import { NextRequest, NextResponse } from "next/server";
 // never by email, same anti-account-takeover posture as ChatPlatform), mint
 // our own JWT, set it as the session cookie, redirect.
 const isProd = !!process.env.VERCEL_URL;
-const SESSION_COOKIE_DOMAIN = isProd ? ".dub.co" : "localhost";
+const COOKIE_DOMAIN = isProd ? ".dub.co" : "localhost";
+const KNOWN_HOSTNAMES = new Set([
+  ...APP_HOSTNAMES,
+  ...PARTNERS_HOSTNAMES,
+  ...API_HOSTNAMES,
+]);
 
 function fail(req: NextRequest, reason: string, code: string) {
   authDebug("error", `OIDC callback failed: ${reason}`);
   return NextResponse.redirect(new URL(`/login?error=${code}`, req.url));
+}
+
+// oidc_return_to is an absolute URL (set in app/api/auth/login/route.ts) so a
+// login started on partners.localhost lands back on partners.localhost, not
+// wherever the callback itself executes (always localhost:3000). Only trust
+// it if the host is one we actually recognize — open-redirect guard.
+function resolveReturnTo(req: NextRequest, raw: string | undefined) {
+  if (raw) {
+    try {
+      const url = new URL(raw);
+      if (KNOWN_HOSTNAMES.has(url.host)) return url;
+    } catch {
+      // fall through to default below
+    }
+  }
+  return new URL("/", req.url);
 }
 
 export async function GET(req: NextRequest) {
@@ -29,7 +55,7 @@ export async function GET(req: NextRequest) {
   const state = req.nextUrl.searchParams.get("state");
   const stateCookie = req.cookies.get("oidc_state")?.value;
   const verifier = req.cookies.get("oidc_verifier")?.value;
-  const returnTo = req.cookies.get("oidc_return_to")?.value || "/";
+  const returnTo = resolveReturnTo(req, req.cookies.get("oidc_return_to")?.value);
 
   if (!code) return fail(req, "missing code", "OAuthCallback");
   if (!state || !stateCookie || state !== stateCookie) {
@@ -71,23 +97,50 @@ export async function GET(req: NextRequest) {
   if (account) {
     userId = account.userId;
   } else {
-    const user = await prisma.user.create({
-      data: {
-        id: createId({ prefix: "user_" }),
-        name: profile.name || profile.email,
-        email: profile.email,
-        notificationPreferences: { create: {} },
-      },
+    // No Account row for this exact `sub` — either a first-ever login, or a
+    // returning user whose dashboard `sub` changed since they last linked
+    // (this DOES happen: the dashboard row for a returning tester's account
+    // was reissued a different sub, so their email is already taken by their
+    // old User row here, and a blind create() crashes on the unique email
+    // constraint — this is the actual "works for one account, not others"
+    // bug). Fall back to matching by email (verified, freshly RS256-checked
+    // ID token from our one trusted first-party IdP — not the multi-IdP
+    // federation risk allowDangerousEmailAccountLinking usually warns about)
+    // and re-link a fresh Account row to the new sub, rather than crashing.
+    const existingUser = await prisma.user.findUnique({
+      where: { email: profile.email },
+      select: { id: true },
     });
-    userId = user.id;
-    await prisma.account.create({
-      data: {
-        userId,
-        type: "oauth",
-        provider: "spacemarvel",
-        providerAccountId: profile.sub,
-      },
-    });
+
+    if (existingUser) {
+      userId = existingUser.id;
+      await prisma.account.create({
+        data: {
+          userId,
+          type: "oauth",
+          provider: "spacemarvel",
+          providerAccountId: profile.sub,
+        },
+      });
+    } else {
+      const user = await prisma.user.create({
+        data: {
+          id: createId({ prefix: "user_" }),
+          name: profile.name || profile.email,
+          email: profile.email,
+          notificationPreferences: { create: {} },
+        },
+      });
+      userId = user.id;
+      await prisma.account.create({
+        data: {
+          userId,
+          type: "oauth",
+          provider: "spacemarvel",
+          providerAccountId: profile.sub,
+        },
+      });
+    }
   }
 
   const isSuperAdmin = profile.is_super_admin === true;
@@ -137,17 +190,20 @@ export async function GET(req: NextRequest) {
     isSuperAdmin: user.isSuperAdmin,
   });
 
-  const res = NextResponse.redirect(new URL(returnTo, req.url));
-  res.cookies.set("oidc_state", "", { path: "/", maxAge: 0 });
-  res.cookies.set("oidc_verifier", "", { path: "/", maxAge: 0 });
-  res.cookies.set("oidc_return_to", "", { path: "/", maxAge: 0 });
+  const res = NextResponse.redirect(returnTo);
+  // Domain has to match what they were set with (login/route.ts) or the
+  // browser won't actually overwrite/clear them — same bug already fixed in
+  // clear-all/route.ts.
+  for (const name of ["oidc_state", "oidc_verifier", "oidc_return_to"]) {
+    res.cookies.set(name, "", { path: "/", maxAge: 0, domain: COOKIE_DOMAIN });
+  }
   res.cookies.set(SESSION_COOKIE, token, {
     httpOnly: true,
     sameSite: "lax",
     path: "/",
     maxAge: SESSION_MAX_AGE,
     secure: isProd,
-    domain: SESSION_COOKIE_DOMAIN,
+    domain: COOKIE_DOMAIN,
   });
   return res;
 }

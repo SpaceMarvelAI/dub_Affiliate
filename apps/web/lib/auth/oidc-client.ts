@@ -49,6 +49,14 @@ export function buildAuthorizeUrl({
     state,
     code_challenge: codeChallenge,
     code_challenge_method: "S256",
+    // Without this, the dashboard sees an existing session cookie and skips
+    // straight past its login screen, silently reusing whatever account is
+    // currently active there — "Continue with SpaceMarvel" would never
+    // actually ask. Forces re-authentication every time instead. (Dropped
+    // once earlier while chasing a NextAuth state-cookie bug — that flow is
+    // gone now, replaced by this Domain-scoped cookie OIDC client, so the
+    // extra hop this adds is no longer the fragile point it used to be.)
+    prompt: "login",
   });
   return `${AUTHORIZE_URL}?${params}`;
 }
