@@ -202,7 +202,35 @@ export async function GET(req: NextRequest) {
     isSuperAdmin: user.isSuperAdmin,
   });
 
-  const res = NextResponse.redirect(returnTo);
+  // Proven via raw-cookie-header logging: when this response both (a) is the
+  // landing point of the long external chain (dashboard -> WorkOS -> Google
+  // -> WorkOS -> dashboard -> here) AND (b) immediately 3xx-redirects again
+  // to a DIFFERENT host (partners.localhost), the browser's redirect-chain
+  // tracking mitigation (Chrome's "bounce tracking"/DIPS) wipes cookies for
+  // that next hop entirely — confirmed: rawCookieHeader was `null`, not just
+  // missing the session cookie. A pure server-side 3xx chain with no real
+  // page render in between is exactly what that protection targets.
+  //
+  // Fix: only do a plain redirect when staying on the same host. For a
+  // cross-host hop, render a real HTML page that sets the cookie via a
+  // normal 200 response, then does the navigation with a client-side
+  // window.location — a genuine separate, rendered top-level navigation,
+  // not a continuation of the server redirect chain.
+  const host = req.headers.get("host");
+  const isCrossHost = returnTo.host !== host;
+
+  let res: NextResponse;
+  if (isCrossHost) {
+    res = new NextResponse(
+      `<!doctype html><meta charset="utf-8"><title>Signing you in…</title>` +
+        `<p>Signing you in…</p>` +
+        `<script>window.location.replace(${JSON.stringify(returnTo.toString())})</script>`,
+      { headers: { "Content-Type": "text/html; charset=utf-8" } },
+    );
+  } else {
+    res = NextResponse.redirect(returnTo);
+  }
+
   // Host-only, matching how login/route.ts sets them now — a Domain-scoped
   // clear here wouldn't remove a host-only cookie (same class of bug already
   // fixed once in clear-all/route.ts, just the opposite direction this time).

@@ -1,8 +1,7 @@
 "use client";
 
-import { signIn } from "@/lib/auth/client";
 import { authDebug } from "@/lib/auth/debug-log";
-import { Button } from "@dub/ui";
+import { Button, Input } from "@dub/ui";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -20,7 +19,11 @@ export const errorCodes = {
 
 export default function LoginForm({ next }: { next?: string }) {
   const searchParams = useSearchParams();
-  const [clicked, setClicked] = useState(false);
+  const [clicked, setClicked] = useState<"google" | null>(null);
+  const [mode, setMode] = useState<"login" | "signup">("login");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     const error = searchParams?.get("error");
@@ -38,18 +41,94 @@ export default function LoginForm({ next }: { next?: string }) {
     }
   }, [searchParams]);
 
+  const submitPassword = async () => {
+    setSubmitting(true);
+    try {
+      const res = await fetch(
+        mode === "login" ? "/api/auth/login-password" : "/api/auth/signup",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        },
+      );
+      const data = await res.json();
+      if (!res.ok) {
+        toast.error(data.error || "Something went wrong.");
+        return;
+      }
+      window.location.href = next || "/";
+    } catch {
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   return (
-    <Button
-      text="Continue with SpaceMarvel"
-      loading={clicked}
-      onClick={() => {
-        setClicked(true);
-        authDebug("client", "Continue with SpaceMarvel clicked", {
-          provider: "spacemarvel",
-          callbackUrl: next ?? "(default)",
-        });
-        signIn(next);
-      }}
-    />
+    <div className="flex flex-col gap-4">
+      <Button
+        text="Continue with Google"
+        loading={clicked === "google"}
+        disabled={clicked !== null}
+        onClick={() => {
+          setClicked("google");
+          authDebug("client", "Continue with Google clicked", {
+            provider: "google",
+            callbackUrl: next ?? "(default)",
+          });
+          window.location.href = next
+            ? `/api/auth/google/login?next=${encodeURIComponent(next)}`
+            : "/api/auth/google/login";
+        }}
+      />
+
+      <div className="flex items-center gap-3 text-xs text-neutral-400">
+        <div className="h-px flex-1 bg-neutral-200" />
+        or
+        <div className="h-px flex-1 bg-neutral-200" />
+      </div>
+
+      <form
+        className="flex flex-col gap-3"
+        onSubmit={(e) => {
+          e.preventDefault();
+          submitPassword();
+        }}
+      >
+        <Input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <Input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          minLength={8}
+        />
+        <Button
+          text={mode === "login" ? "Log in" : "Sign up"}
+          variant="secondary"
+          type="submit"
+          loading={submitting}
+          disabled={clicked !== null}
+        />
+      </form>
+
+      <button
+        type="button"
+        className="text-center text-sm text-neutral-500 hover:text-neutral-800"
+        onClick={() => setMode(mode === "login" ? "signup" : "login")}
+      >
+        {mode === "login"
+          ? "Don't have an account? Sign up"
+          : "Already have an account? Log in"}
+      </button>
+    </div>
   );
 }

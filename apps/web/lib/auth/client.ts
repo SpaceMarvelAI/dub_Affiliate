@@ -1,15 +1,14 @@
 "use client";
 
-// Drop-in replacements for next-auth/react's signIn()/signOut(), now that
-// login/logout are our own OIDC routes instead of NextAuth's. useSession()/
-// SessionProvider still come from next-auth/react unchanged — see
-// app/api/auth/session/route.ts.
-export function signIn(next?: string) {
-  window.location.href = next
-    ? `/api/auth/login?next=${encodeURIComponent(next)}`
-    : "/api/auth/login";
-}
-
+// Drop-in replacement for next-auth/react's signOut(), now that logout is
+// our own route instead of NextAuth's. useSession()/SessionProvider still
+// come from next-auth/react unchanged — see app/api/auth/session/route.ts.
+//
+// The SpaceMarvel SSO sign-in button was removed from login-form.tsx (login
+// is now Google + email/password, its own separate flow) — the
+// /api/auth/login + /api/auth/callback/spacemarvel routes still exist and
+// still work, just unlinked from the UI. Say so if you want them fully
+// removed rather than just unlinked.
 export async function signOut({
   callbackUrl = "/login",
 }: { callbackUrl?: string } = {}) {
