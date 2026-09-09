@@ -1,5 +1,5 @@
+import { SESSION_COOKIE, verifySessionToken } from "@/lib/auth/jwt";
 import { ipAddress } from "@vercel/functions";
-import { getToken } from "next-auth/jwt";
 import { NextRequest } from "next/server";
 import { ratelimit } from "../upstash";
 import { DubApiError } from "./errors";
@@ -24,10 +24,8 @@ export const ratelimitOrThrow = async (
   identifier?: string,
 ) => {
   // Rate limit if user is not logged in
-  const session = await getToken({
-    req,
-    secret: process.env.NEXTAUTH_SECRET,
-  });
+  const token = req.cookies.get(SESSION_COOKIE)?.value;
+  const session = token ? await verifySessionToken(token) : null;
   if (!session?.email) {
     const ip = ipAddress(req);
     const { success } = await ratelimit().limit(

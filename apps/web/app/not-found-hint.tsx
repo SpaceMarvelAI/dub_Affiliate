@@ -1,7 +1,8 @@
 "use client";
 
+import { signOut } from "@/lib/auth/client";
 import { Button } from "@dub/ui";
-import { SessionProvider, signOut, useSession } from "next-auth/react";
+import { SessionProvider, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
 

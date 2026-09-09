@@ -13,7 +13,8 @@ import {
 import { Gear } from "@dub/ui/icons";
 import { APP_DOMAIN, cn, PARTNERS_DOMAIN } from "@dub/utils";
 import { LogOut } from "lucide-react";
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "@/lib/auth/client";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import {
@@ -91,15 +92,9 @@ export function UserDropdown() {
       label: "Log out",
       icon: LogOut,
       onClick: async () => {
-        // NextAuth's signOut() below only clears its own session/CSRF
-        // cookies. Clear everything else this app sets first — including
-        // httpOnly cookies client JS can't touch itself — plus localStorage/
-        // sessionStorage (the support chat widget caches history there).
-        try {
-          await fetch("/api/auth/clear-all", { method: "POST" });
-        } catch {
-          // best-effort — still proceed with the NextAuth sign-out below
-        }
+        // localStorage/sessionStorage aren't cookies — clear-all (inside
+        // signOut()) only clears cookies. The support chat widget caches
+        // history in localStorage, so clear that here too.
         localStorage.clear();
         sessionStorage.clear();
         signOut({

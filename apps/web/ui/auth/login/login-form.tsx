@@ -1,8 +1,8 @@
 "use client";
 
+import { signIn } from "@/lib/auth/client";
 import { authDebug } from "@/lib/auth/debug-log";
 import { Button } from "@dub/ui";
-import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -48,9 +48,7 @@ export default function LoginForm({ next }: { next?: string }) {
           provider: "spacemarvel",
           callbackUrl: next ?? "(default)",
         });
-        signIn("spacemarvel", {
-          ...(next && { callbackUrl: next }),
-        });
+        signIn(next);
       }}
     />
   );

@@ -1,8 +1,8 @@
-import { getServerSession } from "next-auth/next";
+import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
 import { randomInt } from "node:crypto";
 import { DubApiError } from "../api/errors";
-import { authOptions } from "./options";
+import { SESSION_COOKIE, verifySessionToken } from "./jwt";
 
 export interface Session {
   user: {
@@ -17,8 +17,16 @@ export interface Session {
   };
 }
 
+// Reads and verifies our own session cookie (see lib/auth/jwt.ts) — replaces
+// NextAuth's getServerSession(authOptions). Same Session shape as before, so
+// every existing caller (withSession, server components, etc.) needs no
+// changes.
 export const getSession = async () => {
-  return getServerSession(authOptions) as Promise<Session>;
+  const token = (await cookies()).get(SESSION_COOKIE)?.value;
+  if (!token) return null as unknown as Session;
+  const user = await verifySessionToken(token);
+  if (!user) return null as unknown as Session;
+  return { user } as Session;
 };
 
 export const getAuthTokenOrThrow = (

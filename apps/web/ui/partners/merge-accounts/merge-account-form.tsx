@@ -1,9 +1,9 @@
 import { mergePartnerAccountsAction } from "@/lib/actions/partners/merge-partner-accounts";
 import useUser from "@/lib/swr/use-user";
 import { PartnerAvatar } from "@/ui/partners/partner-avatar";
+import { signOut } from "@/lib/auth/client";
 import { Button } from "@dub/ui";
 import { AlertTriangle, ArrowDown } from "lucide-react";
-import { signOut } from "next-auth/react";
 import { useAction } from "next-safe-action/hooks";
 import { toast } from "sonner";
 import { AccountInputGroup } from "./account-input-group";

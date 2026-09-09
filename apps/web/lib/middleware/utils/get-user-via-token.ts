@@ -1,15 +1,9 @@
+import { SESSION_COOKIE, verifySessionToken } from "@/lib/auth/jwt";
 import { UserProps } from "@/lib/types";
-import { getToken } from "next-auth/jwt";
 import { NextRequest } from "next/server";
 
 export async function getUserViaToken(req: NextRequest) {
-  const session = (await getToken({
-    req,
-    secret: process.env.NEXTAUTH_SECRET,
-  })) as {
-    email?: string;
-    user?: UserProps;
-  };
-
-  return session?.user;
+  const token = req.cookies.get(SESSION_COOKIE)?.value;
+  if (!token) return undefined;
+  return (await verifySessionToken(token)) as UserProps | undefined;
 }
