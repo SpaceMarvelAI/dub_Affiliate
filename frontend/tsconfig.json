@@ -1,5 +1,5 @@
 {
-  "extends": "tsconfig/nextjs.json",
+  "extends": "./vendor/tsconfig/nextjs.json",
   "compilerOptions": {
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
@@ -35,8 +35,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "../../packages/blocks/src/event-list.tsx",
-    "../../packages/ui/src/hooks/use-pagination.ts"
+    "./vendor/ui/src/hooks/use-pagination.ts"
   ],
   "exclude": ["node_modules", "playwright"]
 }
