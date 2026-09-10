@@ -22,7 +22,21 @@ import { NextRequest, NextResponse } from "next/server";
 // never by email, same anti-account-takeover posture as ChatPlatform), mint
 // our own JWT, set it as the session cookie, redirect.
 const isProd = process.env.NODE_ENV === "production";
-const COOKIE_DOMAIN = isProd ? ".dub.co" : "localhost";
+
+// Was hardcoded to ".dub.co" — silently broke every non-dub.co deployment
+// (e.g. affiliate.spacemarvel.com): a cookie's Domain attribute must be the
+// request's own host or a registrable parent of it, and dub.co isn't a
+// parent of spacemarvel.com, so browsers reject the Set-Cookie outright.
+// Derive it from the actual request host instead, so it's valid wherever
+// this runs. Cross-subdomain sharing only applies to genuine multi-label
+// hosts (app.dub.co, affiliate.spacemarvel.com); a bare/apex host gets a
+// host-only cookie, which is exactly right for a single-hostname deployment.
+function getCookieDomain(host: string | null): string | undefined {
+  if (!isProd || !host) return undefined;
+  const labels = host.split(":")[0].split(".");
+  if (labels.length <= 2) return undefined;
+  return `.${labels.slice(-2).join(".")}`;
+}
 const KNOWN_HOSTNAMES = new Set([
   ...APP_HOSTNAMES,
   ...PARTNERS_HOSTNAMES,
@@ -243,7 +257,7 @@ export async function GET(req: NextRequest) {
     path: "/",
     maxAge: SESSION_MAX_AGE,
     secure: isProd,
-    domain: COOKIE_DOMAIN,
+    domain: getCookieDomain(host),
   });
   return res;
 }

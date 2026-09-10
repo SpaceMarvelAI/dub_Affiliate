@@ -30,7 +30,23 @@ import { NextRequest, NextResponse } from "next/server";
 // handoff path is never exercised there.
 const isProd = process.env.NODE_ENV === "production";
 const PROTOCOL = isProd ? "https" : "http";
-const COOKIE_DOMAIN = isProd ? ".dub.co" : undefined;
+
+// Was hardcoded to ".dub.co" — silently broke every non-dub.co deployment
+// (e.g. affiliate.spacemarvel.com): a cookie's Domain attribute must be the
+// request's own host or a registrable parent of it, and dub.co isn't a
+// parent of spacemarvel.com, so browsers reject the Set-Cookie outright
+// (this is exactly why the session cookie never showed up here while the
+// three host-only pre-auth cookies did). Derive it from the actual request
+// host instead. Cross-subdomain sharing only applies to genuine multi-label
+// hosts (app.dub.co, affiliate.spacemarvel.com); a bare/apex host gets a
+// host-only cookie, which is exactly right for a single-hostname deployment.
+function getCookieDomain(host: string): string | undefined {
+  if (!isProd) return undefined;
+  const labels = host.split(":")[0].split(".");
+  if (labels.length <= 2) return undefined;
+  return `.${labels.slice(-2).join(".")}`;
+}
+
 const KNOWN_HOSTNAMES = new Set([
   ...APP_HOSTNAMES,
   ...PARTNERS_HOSTNAMES,
@@ -209,7 +225,7 @@ export async function GET(req: NextRequest) {
       path: "/",
       maxAge: SESSION_MAX_AGE,
       secure: isProd,
-      ...(COOKIE_DOMAIN ? { domain: COOKIE_DOMAIN } : {}),
+      ...(getCookieDomain(host) ? { domain: getCookieDomain(host) } : {}),
     });
   }
 
