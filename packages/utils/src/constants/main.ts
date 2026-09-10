@@ -49,6 +49,7 @@ export const PARTNERS_HOSTNAMES = new Set([
   "partners-staging.dub.co",
   "partners.localhost:3000",
   "partners.localhost",
+  "affiliate.spacemarvel.com",
 ]);
 
 export const PARTNERS_DOMAIN =
