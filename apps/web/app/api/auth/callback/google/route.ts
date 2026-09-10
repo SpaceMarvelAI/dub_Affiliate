@@ -140,7 +140,7 @@ export async function GET(req: NextRequest) {
     });
   }
 
-  const user = await prisma.user.findUniqueOrThrow({
+  let user = await prisma.user.findUniqueOrThrow({
     where: { id: userId },
     select: {
       id: true,
@@ -153,6 +153,28 @@ export async function GET(req: NextRequest) {
       defaultPartnerId: true,
     },
   });
+
+  // Backfill the profile picture from Google when this user's row predates
+  // it or was never linked through Google before (e.g. an existing
+  // password-signup account matched by email above) — otherwise `image`
+  // stays null forever even though Google is handing us a real picture on
+  // every login.
+  if (profile.picture && profile.picture !== user.image) {
+    user = await prisma.user.update({
+      where: { id: user.id },
+      data: { image: profile.picture },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        image: true,
+        isMachine: true,
+        isSuperAdmin: true,
+        defaultWorkspace: true,
+        defaultPartnerId: true,
+      },
+    });
+  }
 
   const sessionUser = {
     id: user.id,
