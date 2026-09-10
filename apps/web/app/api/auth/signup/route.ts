@@ -59,7 +59,11 @@ export async function POST(req: NextRequest) {
     },
   });
 
-  const token = await signSessionToken(user);
+  const token = await signSessionToken({
+    ...user,
+    name: user.name || "",
+    email: user.email || "",
+  });
   authDebug("session", "Signup complete, session token issued", { userId: user.id });
 
   const res = NextResponse.json({ ok: true });

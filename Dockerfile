@@ -28,6 +28,11 @@ ENV NEXT_TELEMETRY_DISABLED=1
 # old-space limit inside a container; raise it explicitly.
 ENV NODE_OPTIONS=--max-old-space-size=4096
 RUN pnpm --filter web prisma:generate
+# workspace packages (e.g. @dub/embed-react) must be built before web —
+# `pnpm --filter web build` only runs web's own script, it doesn't build
+# its workspace dependencies first (confirmed: web's typecheck fails with
+# "Cannot find module '@dub/embed-react'" without this step)
+RUN pnpm build:packages
 RUN pnpm --filter web build
 
 # ---- runtime ----
