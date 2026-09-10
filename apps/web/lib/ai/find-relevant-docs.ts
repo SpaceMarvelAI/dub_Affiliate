@@ -1,6 +1,6 @@
 import { tool } from "ai";
 import { z } from "zod";
-import { vectorIndex } from "../upstash/vector";
+import { getVectorIndex } from "../upstash/vector";
 
 export const findRelevantDocsTool = tool({
   description: "Finds the most relevant docs / help article for a given query.",
@@ -11,7 +11,7 @@ export const findRelevantDocsTool = tool({
       .describe("The type of account the user is asking about."),
   }),
   execute: async ({ query }) => {
-    const result = await vectorIndex.query({
+    const result = await getVectorIndex().query({
       data: query,
       topK: 4,
       includeMetadata: true,

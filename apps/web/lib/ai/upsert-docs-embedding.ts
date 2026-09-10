@@ -1,4 +1,4 @@
-import { vectorIndex } from "../../lib/upstash/vector";
+import { getVectorIndex } from "../../lib/upstash/vector";
 import { PAYOUT_SUPPORTED_COUNTRIES } from "../constants/payouts-supported-countries";
 /**
  * Clean raw MDX fetched from Mintlify's .md endpoint.
@@ -237,7 +237,7 @@ export async function upsertDocsEmbeddings(
 
   await Promise.all(
     chunks.map(async (chunk) => {
-      await vectorIndex.upsert([
+      await getVectorIndex().upsert([
         {
           id: chunk.id,
           data: chunk.content,
