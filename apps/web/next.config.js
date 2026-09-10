@@ -26,6 +26,11 @@ module.exports = withPlausibleProxy({
   reactStrictMode: false,
   transpilePackages: ["prettier", "shiki", "@dub/email"],
   experimental: {
+    // Caps parallel build workers to fit the OOM budget of a memory-
+    // constrained build host (confirmed: default parallelism killed the
+    // Docker build with "cannot allocate memory" on an 8GB machine).
+    // Slower build, much lower peak RAM — fine, this isn't latency-sensitive.
+    cpus: 1,
     optimizePackageImports: [
       "@dub/email",
       "@dub/ui",
