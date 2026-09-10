@@ -1,6 +1,13 @@
 # syntax=docker/dockerfile:1
 
 FROM node:20-slim AS base
+# Prisma's query engine needs a real OpenSSL + CA trust store to validate the
+# RDS server certificate over TLS — node:20-slim ships neither by default.
+# Without this, every DB call fails with "self-signed certificate in
+# certificate chain" (there's no root CA to validate against at all), and
+# `prisma generate` logs "failed to detect the libssl/openssl version".
+RUN apt-get update && apt-get install -y --no-install-recommends openssl ca-certificates \
+  && rm -rf /var/lib/apt/lists/*
 RUN corepack enable
 WORKDIR /app
 
@@ -37,6 +44,8 @@ RUN pnpm --filter web build
 
 # ---- runtime ----
 FROM node:20-slim AS runner
+RUN apt-get update && apt-get install -y --no-install-recommends openssl ca-certificates \
+  && rm -rf /var/lib/apt/lists/*
 RUN corepack enable
 WORKDIR /app
 ENV NODE_ENV=production
