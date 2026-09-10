@@ -25,6 +25,13 @@ module.exports = withPlausibleProxy({
 })({
   reactStrictMode: false,
   transpilePackages: ["prettier", "shiki", "@dub/email"],
+  // Both already independently gated elsewhere (deploy.sh runs `tsc
+  // --noEmit` before the Docker build even starts) — Next re-doing a full
+  // type-check/lint pass inside the build is redundant work that appears
+  // to be the dominant memory cost causing repeated OOM kills on this
+  // memory-constrained build host.
+  typescript: { ignoreBuildErrors: true },
+  eslint: { ignoreDuringBuilds: true },
   experimental: {
     // Caps parallel build workers to fit the OOM budget of a memory-
     // constrained build host (confirmed: default parallelism killed the
