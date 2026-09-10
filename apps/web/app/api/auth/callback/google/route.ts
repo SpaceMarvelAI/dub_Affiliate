@@ -1,7 +1,12 @@
 import { createId } from "@/lib/api/create-id";
 import { authDebug } from "@/lib/auth/debug-log";
 import { exchangeCodeForTokens, verifyIdToken } from "@/lib/auth/google-client";
-import { SESSION_COOKIE, SESSION_MAX_AGE, signSessionToken } from "@/lib/auth/jwt";
+import {
+  SESSION_COOKIE,
+  SESSION_MAX_AGE,
+  signHandoffToken,
+  signSessionToken,
+} from "@/lib/auth/jwt";
 import { isBlacklistedEmail } from "@/lib/edge-config";
 import { prisma } from "@/lib/prisma";
 import {
@@ -11,14 +16,21 @@ import {
 } from "@dub/utils";
 import { NextRequest, NextResponse } from "next/server";
 
-// dub_Affiliate's OWN Google login callback — same structure as
-// app/api/auth/callback/spacemarvel/route.ts (validate state, exchange code
-// w/ PKCE verifier, verify id_token, find-or-create user by provider `sub`,
-// mint our own session JWT), and the same fix for the confirmed
-// browser redirect-chain cookie wipe: a rendered HTML page + client-side
-// navigation for any cross-host landing, not a raw 3xx chain.
+// dub_Affiliate's OWN Google login callback. In dev this always runs on the
+// canonical host (localhost:3000 — Google's console rejects any *.localhost
+// subdomain as a redirect URI), which is usually NOT the host the user
+// actually wants to end up on (e.g. partners.localhost:3000). Rather than
+// share the session via a Domain=localhost cookie — confirmed unreliable
+// across *.localhost subdomains in real browsers — a cross-host return
+// hands off via a short-lived signed token to /api/auth/consume on the
+// target host, which sets the real session cookie there directly. In prod,
+// partners.dub.co etc. are real registrable domains: Google accepts them as
+// redirect URIs directly, callback and returnTo host always match, and the
+// session cookie gets Domain=.dub.co for real cross-subdomain SSO — the
+// handoff path is never exercised there.
 const isProd = !!process.env.VERCEL_URL;
-const COOKIE_DOMAIN = isProd ? ".dub.co" : "localhost";
+const PROTOCOL = isProd ? "https" : "http";
+const COOKIE_DOMAIN = isProd ? ".dub.co" : undefined;
 const KNOWN_HOSTNAMES = new Set([
   ...APP_HOSTNAMES,
   ...PARTNERS_HOSTNAMES,
@@ -43,6 +55,7 @@ function resolveReturnTo(req: NextRequest, raw: string | undefined) {
 }
 
 export async function GET(req: NextRequest) {
+  const host = req.headers.get("host")!;
   const code = req.nextUrl.searchParams.get("code");
   const state = req.nextUrl.searchParams.get("state");
   const stateCookie = req.cookies.get("google_state")?.value;
@@ -57,7 +70,7 @@ export async function GET(req: NextRequest) {
 
   let profile;
   try {
-    const redirectUri = `${process.env.NEXTAUTH_URL}/api/auth/callback/google`;
+    const redirectUri = `${PROTOCOL}://${host}/api/auth/callback/google`;
     const tokens = await exchangeCodeForTokens({
       code,
       codeVerifier: verifier,
@@ -141,7 +154,7 @@ export async function GET(req: NextRequest) {
     },
   });
 
-  const token = await signSessionToken({
+  const sessionUser = {
     id: user.id,
     name: user.name || "",
     email: user.email || "",
@@ -150,37 +163,36 @@ export async function GET(req: NextRequest) {
     isSuperAdmin: user.isSuperAdmin,
     defaultWorkspace: user.defaultWorkspace,
     defaultPartnerId: user.defaultPartnerId,
-  });
+  };
 
   authDebug("session", "Google login complete, session token issued", {
     userId: user.id,
   });
 
-  const host = req.headers.get("host");
   const isCrossHost = returnTo.host !== host;
 
   let res: NextResponse;
   if (isCrossHost) {
-    res = new NextResponse(
-      `<!doctype html><meta charset="utf-8"><title>Signing you in…</title>` +
-        `<p>Signing you in…</p>` +
-        `<script>window.location.replace(${JSON.stringify(returnTo.toString())})</script>`,
-      { headers: { "Content-Type": "text/html; charset=utf-8" } },
-    );
+    const handoff = await signHandoffToken(sessionUser);
+    const consumeUrl = new URL("/api/auth/consume", returnTo.origin);
+    consumeUrl.searchParams.set("token", handoff);
+    consumeUrl.searchParams.set("next", returnTo.pathname + returnTo.search);
+    res = NextResponse.redirect(consumeUrl);
   } else {
+    const token = await signSessionToken(sessionUser);
     res = NextResponse.redirect(returnTo);
+    res.cookies.set(SESSION_COOKIE, token, {
+      httpOnly: true,
+      sameSite: "lax",
+      path: "/",
+      maxAge: SESSION_MAX_AGE,
+      secure: isProd,
+      ...(COOKIE_DOMAIN ? { domain: COOKIE_DOMAIN } : {}),
+    });
   }
 
   for (const name of ["google_state", "google_verifier", "google_return_to"]) {
     res.cookies.set(name, "", { path: "/", maxAge: 0 });
   }
-  res.cookies.set(SESSION_COOKIE, token, {
-    httpOnly: true,
-    sameSite: "lax",
-    path: "/",
-    maxAge: SESSION_MAX_AGE,
-    secure: isProd,
-    domain: COOKIE_DOMAIN,
-  });
   return res;
 }

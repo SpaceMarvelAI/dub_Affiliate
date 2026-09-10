@@ -1,10 +1,15 @@
 import { buildAuthorizeUrl, generatePkce, generateState } from "@/lib/auth/google-client";
 import { NextRequest, NextResponse } from "next/server";
 
-// dub_Affiliate's OWN Google login — same host-only-cookie / canonical-host-
-// bounce pattern as app/api/auth/login/route.ts (the SpaceMarvel one), for
-// the same proven reason: these cookies have to survive a real external
-// round trip to Google and back, which only host-only cookies reliably do.
+// dub_Affiliate's OWN Google login. Google's OAuth console rejects any
+// *.localhost subdomain as a redirect URI ("must end with a public/private
+// top-level domain") — only bare localhost:<port> is accepted. So in dev we
+// always bounce to NEXTAUTH_URL's host for the actual round trip with
+// Google; the PKCE state/verifier/return-to cookies are host-only and set
+// AFTER the bounce, on the same host the callback will run on, so they
+// survive fine. Getting the resulting session onto the real target host
+// (e.g. partners.localhost:3000) is handled separately by the callback's
+// handoff to /api/auth/consume — see callback/google/route.ts.
 const isProd = !!process.env.VERCEL_URL;
 const CANONICAL_HOST = new URL(process.env.NEXTAUTH_URL!).host;
 const PROTOCOL = isProd ? "https" : "http";
