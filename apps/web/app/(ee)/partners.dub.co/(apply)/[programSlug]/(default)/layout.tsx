@@ -38,12 +38,20 @@ export async function generateMetadata(props: {
 }
 
 export async function generateStaticParams() {
-  const programs = await getProgramSlugs();
-
-  return programs.map((program) => ({
-    programSlug: program.slug,
-    groupSlug: DEFAULT_PARTNER_GROUP.slug,
-  }));
+  // Build environments aren't guaranteed DB access (e.g. AWS CodeBuild isn't
+  // networked into the RDS instance's VPC/security group) — fall back to no
+  // pre-rendered params rather than failing the whole build. dynamicParams
+  // defaults to true, so any slug not statically generated here still
+  // renders correctly on-demand at request time.
+  try {
+    const programs = await getProgramSlugs();
+    return programs.map((program) => ({
+      programSlug: program.slug,
+      groupSlug: DEFAULT_PARTNER_GROUP.slug,
+    }));
+  } catch {
+    return [];
+  }
 }
 
 export default async function ApplyLayout(

@@ -40,11 +40,17 @@ export async function generateMetadata(props: {
 }
 
 export async function generateStaticParams() {
-  const programs = await getProgramSlugs();
-
-  return programs.map((program) => ({
-    programSlug: program.slug,
-  }));
+  // See the (apply)/[programSlug]/(default)/layout.tsx comment — build
+  // environments (e.g. AWS CodeBuild) aren't guaranteed DB access, so this
+  // falls back to no pre-rendered params rather than failing the build.
+  try {
+    const programs = await getProgramSlugs();
+    return programs.map((program) => ({
+      programSlug: program.slug,
+    }));
+  } catch {
+    return [];
+  }
 }
 
 export default async function PartnerAuthLayout(props: {

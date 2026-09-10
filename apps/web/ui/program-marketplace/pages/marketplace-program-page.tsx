@@ -19,16 +19,26 @@ import { getMarketplaceHref } from "../utils/urls";
 export const revalidate = 3600; // 1 hour
 
 export async function generateMarketplaceProgramStaticParams() {
-  const programs = await prisma.program.findMany({
-    where: {
-      addedToMarketplaceAt: {
-        not: null,
+  // Build environments aren't guaranteed DB access (e.g. AWS CodeBuild isn't
+  // networked into the RDS instance's VPC/security group) — fall back to no
+  // program pages (category/base pages still build fine) rather than
+  // failing the whole build. dynamicParams defaults to true, so any program
+  // slug not statically generated here still renders correctly on-demand.
+  let programs: { slug: string }[] = [];
+  try {
+    programs = await prisma.program.findMany({
+      where: {
+        addedToMarketplaceAt: {
+          not: null,
+        },
       },
-    },
-    select: {
-      slug: true,
-    },
-  });
+      select: {
+        slug: true,
+      },
+    });
+  } catch {
+    // fall through with programs = []
+  }
 
   const categoryPages = Object.values(Category).map((category) => ({
     segments: ["c", category.toLowerCase()],
