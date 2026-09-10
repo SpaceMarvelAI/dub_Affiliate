@@ -79,4 +79,15 @@ export const ensurePartnerAccount = async ({
       notificationPreferences: { create: {} },
     },
   });
+
+  // Without this, a user who's never explicitly chosen a default partner
+  // (or gone through a separate onboarding flow that sets one) has NO
+  // defaultPartnerId at all even after the upserts above create their
+  // Partner/PartnerUser rows — every partner-scoped API 404s "not_found"
+  // forever, with no default to fall back to. updateMany + defaultPartnerId:
+  // null keeps this idempotent and never clobbers a value they've since set.
+  await prisma.user.updateMany({
+    where: { id: userId, defaultPartnerId: null },
+    data: { defaultPartnerId: partner.id },
+  });
 };

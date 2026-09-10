@@ -7,6 +7,7 @@ import {
   signHandoffToken,
   signSessionToken,
 } from "@/lib/auth/jwt";
+import { ensurePartnerAccount } from "@/lib/auth/provisioning";
 import { isBlacklistedEmail } from "@/lib/edge-config";
 import { prisma } from "@/lib/prisma";
 import {
@@ -155,6 +156,18 @@ export async function GET(req: NextRequest) {
       },
     });
   }
+
+  // This app's Google login IS the partner-facing signup path (the separate
+  // SpaceMarvel/OIDC login is for internal admins) — every Google-authed
+  // user should end up with a partner profile and a defaultPartnerId, the
+  // same way the OIDC callback provisions one for non-admins. Idempotent
+  // (upserts), so this is safe and cheap to run on every login, not just
+  // account creation.
+  await ensurePartnerAccount({
+    userId,
+    email: profile.email,
+    name: profile.name,
+  });
 
   let user = await prisma.user.findUniqueOrThrow({
     where: { id: userId },

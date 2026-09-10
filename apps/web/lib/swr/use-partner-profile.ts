@@ -9,8 +9,7 @@ interface PartnerProfile extends PartnerProps {
 }
 
 export default function usePartnerProfile() {
-  const { data: session, status } = useSession();
-  const defaultPartnerId = session?.user?.["defaultPartnerId"];
+  const { status } = useSession();
 
   const {
     data: partner,
@@ -18,7 +17,13 @@ export default function usePartnerProfile() {
     isLoading,
     mutate,
   } = useSWR<PartnerProfile>(
-    defaultPartnerId && "/api/partner-profile",
+    // Gating on defaultPartnerId itself (rather than just waiting for the
+    // session to resolve) meant a user with NO partner profile at all never
+    // got a response either way — no data, no error — so the API's own
+    // "not_found" 404 (lib/auth/partner.ts) never had a chance to reach the
+    // callers that branch on it (e.g. PartnerProfileAuth's redirect to
+    // /onboarding), leaving them stuck in a permanent loading state instead.
+    status !== "loading" && "/api/partner-profile",
     fetcher,
     {
       dedupingInterval: 60000,
