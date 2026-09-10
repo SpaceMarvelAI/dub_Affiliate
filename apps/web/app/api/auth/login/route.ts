@@ -23,8 +23,14 @@ import { NextRequest, NextResponse } from "next/server";
 // set-and-read on the exact one host (localhost:3000) the callback lands
 // on — no cross-host cookie sharing needed at all.
 const isProd = !!process.env.VERCEL_URL;
-const CANONICAL_HOST = new URL(process.env.NEXTAUTH_URL!).host;
 const PROTOCOL = isProd ? "https" : "http";
+// Computed inside the handler, not at module scope — NEXTAUTH_URL isn't
+// set during the Docker build (.env is excluded from the build context),
+// and evaluating `new URL(...)` at module load throws "Invalid URL"
+// during Next's build-time page-data collection, breaking the whole build.
+function getCanonicalHost() {
+  return new URL(process.env.NEXTAUTH_URL!).host;
+}
 
 const COOKIE_OPTS = {
   httpOnly: true,
@@ -41,21 +47,22 @@ const COOKIE_OPTS = {
 };
 
 export async function GET(req: NextRequest) {
+  const canonicalHost = getCanonicalHost();
   const host = req.headers.get("host");
   const next = req.nextUrl.searchParams.get("next");
   const path = next && next.startsWith("/") ? next : "/";
 
-  if (host !== CANONICAL_HOST) {
+  if (host !== canonicalHost) {
     const url = new URL(
       `/api/auth/login${req.nextUrl.search}`,
-      `${PROTOCOL}://${CANONICAL_HOST}`,
+      `${PROTOCOL}://${canonicalHost}`,
     );
     if (!url.searchParams.get("next")) url.searchParams.set("next", path);
     // Where to send the user back to once login fully completes — carried
     // as a query param through this one same-site internal hop, not a
     // cookie, since nothing sensitive happens until the real OIDC round
     // trip starts (which begins fresh on the canonical host below).
-    url.searchParams.set("returnHost", host ?? CANONICAL_HOST);
+    url.searchParams.set("returnHost", host ?? canonicalHost);
     return NextResponse.redirect(url);
   }
 

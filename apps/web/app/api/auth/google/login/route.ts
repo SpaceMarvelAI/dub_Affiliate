@@ -11,8 +11,15 @@ import { NextRequest, NextResponse } from "next/server";
 // (e.g. partners.localhost:3000) is handled separately by the callback's
 // handoff to /api/auth/consume — see callback/google/route.ts.
 const isProd = !!process.env.VERCEL_URL;
-const CANONICAL_HOST = new URL(process.env.NEXTAUTH_URL!).host;
 const PROTOCOL = isProd ? "https" : "http";
+// Computed inside the handler (not at module scope): NEXTAUTH_URL isn't
+// set during the Docker build (.env is intentionally excluded from the
+// build context), and evaluating `new URL(...)` at module load threw
+// "Invalid URL" during Next's build-time page-data collection, breaking
+// the whole build the same way the eager vectorIndex construction did.
+function getCanonicalHost() {
+  return new URL(process.env.NEXTAUTH_URL!).host;
+}
 
 const COOKIE_OPTS = {
   httpOnly: true,
@@ -23,17 +30,18 @@ const COOKIE_OPTS = {
 };
 
 export async function GET(req: NextRequest) {
+  const canonicalHost = getCanonicalHost();
   const host = req.headers.get("host");
   const next = req.nextUrl.searchParams.get("next");
   const path = next && next.startsWith("/") ? next : "/";
 
-  if (host !== CANONICAL_HOST) {
+  if (host !== canonicalHost) {
     const url = new URL(
       `/api/auth/google/login${req.nextUrl.search}`,
-      `${PROTOCOL}://${CANONICAL_HOST}`,
+      `${PROTOCOL}://${canonicalHost}`,
     );
     if (!url.searchParams.get("next")) url.searchParams.set("next", path);
-    url.searchParams.set("returnHost", host ?? CANONICAL_HOST);
+    url.searchParams.set("returnHost", host ?? canonicalHost);
     return NextResponse.redirect(url);
   }
 
