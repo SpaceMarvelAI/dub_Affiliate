@@ -31,5 +31,11 @@
   "resolutions": {
     "chrono-node": "2.7.5"
   },
+  "pnpm": {
+    "overrides": {
+      "form-data@>=4.0.0 <4.0.6": "^4.0.6",
+      "@aws-sdk/core>fast-xml-parser": "^4.5.7"
+    }
+  },
   "packageManager": "pnpm@9.15.9"
 }
