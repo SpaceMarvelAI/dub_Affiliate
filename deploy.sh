@@ -36,8 +36,15 @@ ok "no type errors"
 
 # ---- 2. Dependency security audit -------------------------------------
 step "Auditing dependencies for known vulnerabilities"
-if ! pnpm audit --audit-level=high; then
-  echo "    ✗ pnpm audit found high/critical vulnerabilities — fix or explicitly override before deploying."
+AUDIT_OUTPUT="$(NODE_OPTIONS="--max-old-space-size=6144" pnpm audit --audit-level=high 2>&1)"
+AUDIT_EXIT=$?
+if [ $AUDIT_EXIT -ne 0 ]; then
+  echo "$AUDIT_OUTPUT"
+  if echo "$AUDIT_OUTPUT" | grep -qi "out of memory\|Abort trap\|FATAL ERROR"; then
+    echo "    ✗ pnpm audit crashed (out of memory) — not an actual vulnerability finding. Re-run with more RAM available, or skip this check manually if urgent."
+  else
+    echo "    ✗ pnpm audit found high/critical vulnerabilities — fix or explicitly override before deploying."
+  fi
   exit 1
 fi
 ok "no high/critical vulnerabilities"
