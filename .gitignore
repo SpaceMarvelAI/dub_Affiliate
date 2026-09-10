@@ -14,6 +14,9 @@ dist/
 # misc
 .DS_Store
 *.pem
+# public AWS RDS CA bundle (not a secret — needed inside the Docker image
+# so Prisma can validate RDS's TLS certificate)
+!apps/web/certs/rds-global-bundle.pem
 
 # debug
 .pnpm-debug.log*
