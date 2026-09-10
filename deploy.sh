@@ -142,12 +142,18 @@ echo "    instance IP: $EC2_IP"
 SSH_OPTS=(-o StrictHostKeyChecking=no -i "$SSH_KEY")
 scp "${SSH_OPTS[@]}" "$ENV_FILE" ec2-user@"$EC2_IP":/tmp/affiliate.env
 
+# Prune BEFORE pulling, not after: images are ~6GB now, and pruning
+# afterwards means every deploy needs room for old + new simultaneously,
+# which has repeatedly filled the disk. Pruning first only leaves a dangling
+# image around from a pull that failed mid-way (this one's untagged the
+# moment the new manifest lands), so at most one old image is ever on disk
+# at once going into a pull.
 ssh "${SSH_OPTS[@]}" ec2-user@"$EC2_IP" "
   sudo mv /tmp/affiliate.env /etc/affiliate.env &&
   sudo chmod 600 /etc/affiliate.env &&
+  sudo docker image prune -af &&
   aws ecr get-login-password --region $AWS_REGION | sudo docker login --username AWS --password-stdin ${ECR_URI%/*} &&
   sudo docker pull ${ECR_URI}:latest &&
-  sudo docker image prune -af &&
   (sudo docker rm -f affiliate-app || true) &&
   sudo docker run -d --name affiliate-app --restart unless-stopped --env-file /etc/affiliate.env -p 3000:3000 ${ECR_URI}:latest &&
   sleep 8 &&
