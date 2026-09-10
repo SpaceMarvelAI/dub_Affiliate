@@ -28,7 +28,7 @@ import { NextRequest, NextResponse } from "next/server";
 // redirect URIs directly, callback and returnTo host always match, and the
 // session cookie gets Domain=.dub.co for real cross-subdomain SSO — the
 // handoff path is never exercised there.
-const isProd = !!process.env.VERCEL_URL;
+const isProd = process.env.NODE_ENV === "production";
 const PROTOCOL = isProd ? "https" : "http";
 const COOKIE_DOMAIN = isProd ? ".dub.co" : undefined;
 const KNOWN_HOSTNAMES = new Set([

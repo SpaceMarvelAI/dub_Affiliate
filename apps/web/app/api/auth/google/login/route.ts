@@ -10,7 +10,7 @@ import { NextRequest, NextResponse } from "next/server";
 // survive fine. Getting the resulting session onto the real target host
 // (e.g. partners.localhost:3000) is handled separately by the callback's
 // handoff to /api/auth/consume — see callback/google/route.ts.
-const isProd = !!process.env.VERCEL_URL;
+const isProd = process.env.NODE_ENV === "production";
 const PROTOCOL = isProd ? "https" : "http";
 // Computed inside the handler (not at module scope): NEXTAUTH_URL isn't
 // set during the Docker build (.env is intentionally excluded from the

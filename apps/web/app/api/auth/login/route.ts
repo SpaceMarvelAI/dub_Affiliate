@@ -22,7 +22,7 @@ import { NextRequest, NextResponse } from "next/server";
 // before ever leaving to the dashboard, so these cookies are always
 // set-and-read on the exact one host (localhost:3000) the callback lands
 // on — no cross-host cookie sharing needed at all.
-const isProd = !!process.env.VERCEL_URL;
+const isProd = process.env.NODE_ENV === "production";
 const PROTOCOL = isProd ? "https" : "http";
 // Computed inside the handler, not at module scope — NEXTAUTH_URL isn't
 // set during the Docker build (.env is excluded from the build context),

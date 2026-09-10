@@ -4,7 +4,7 @@ import { LOCKOUT_MINUTES, MAX_LOGIN_ATTEMPTS, verifyPassword } from "@/lib/auth/
 import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
-const isProd = !!process.env.VERCEL_URL;
+const isProd = process.env.NODE_ENV === "production";
 const COOKIE_DOMAIN = isProd ? ".dub.co" : "localhost";
 
 // Same generic message for "no such account", "no password set" (they

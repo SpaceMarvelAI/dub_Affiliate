@@ -6,7 +6,7 @@ import { isBlacklistedEmail } from "@/lib/edge-config";
 import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
-const isProd = !!process.env.VERCEL_URL;
+const isProd = process.env.NODE_ENV === "production";
 const COOKIE_DOMAIN = isProd ? ".dub.co" : "localhost";
 
 export async function POST(req: NextRequest) {

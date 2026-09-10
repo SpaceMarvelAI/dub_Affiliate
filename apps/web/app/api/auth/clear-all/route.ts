@@ -15,7 +15,7 @@ import { NextRequest, NextResponse } from "next/server";
 // Clear both host-only and domain-scoped forms of every cookie to be sure.
 export async function POST(req: NextRequest) {
   const res = new NextResponse(null, { status: 204 });
-  const domain = process.env.VERCEL_URL ? ".dub.co" : "localhost";
+  const domain = process.env.NODE_ENV === "production" ? ".dub.co" : "localhost";
 
   for (const { name } of req.cookies.getAll()) {
     res.cookies.set(name, "", { path: "/", maxAge: 0 });

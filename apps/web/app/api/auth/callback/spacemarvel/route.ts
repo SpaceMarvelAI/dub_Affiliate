@@ -21,7 +21,7 @@ import { NextRequest, NextResponse } from "next/server";
 // id_token, look up the user by OIDC `sub` only (via the Account table —
 // never by email, same anti-account-takeover posture as ChatPlatform), mint
 // our own JWT, set it as the session cookie, redirect.
-const isProd = !!process.env.VERCEL_URL;
+const isProd = process.env.NODE_ENV === "production";
 const COOKIE_DOMAIN = isProd ? ".dub.co" : "localhost";
 const KNOWN_HOSTNAMES = new Set([
   ...APP_HOSTNAMES,

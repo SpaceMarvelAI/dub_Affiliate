@@ -12,7 +12,7 @@ import { NextRequest, NextResponse } from "next/server";
 // a short-lived signed token instead of a cookie. This request's own host IS
 // the real target (e.g. partners.localhost:3000), so the session cookie set
 // here is host-only and just works — no cross-subdomain sharing needed.
-const isProd = !!process.env.VERCEL_URL;
+const isProd = process.env.NODE_ENV === "production";
 
 export async function GET(req: NextRequest) {
   const handoff = req.nextUrl.searchParams.get("token");
