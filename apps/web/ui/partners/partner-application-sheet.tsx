@@ -1,5 +1,4 @@
 import { mutatePrefix } from "@/lib/swr/mutate";
-import useWorkspace from "@/lib/swr/use-workspace";
 import { EnrolledPartnerProps } from "@/lib/types";
 import { useApprovePartnerApplicationModal } from "@/ui/modals/approve-partner-application-modal";
 import { useRejectPartnerApplicationModal } from "@/ui/modals/reject-partner-application-modal";
@@ -8,12 +7,10 @@ import {
   Button,
   ChevronLeft,
   ChevronRight,
-  Msgs,
   Sheet,
   useKeyboardShortcut,
   useRouterStuff,
 } from "@dub/ui";
-import Link from "next/link";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { PartnerAbout } from "./partner-about";
 import { PartnerApplicationDetails } from "./partner-application-details";
@@ -34,7 +31,6 @@ function PartnerApplicationSheetContent({
   onNext,
   setIsOpen,
 }: PartnerApplicationSheetProps) {
-  const { slug: workspaceSlug } = useWorkspace();
   const [currentTabId, setCurrentTabId] = useState<string>("about");
 
   const [selectedGroupId, setSelectedGroupId] = useState<string | null>(
@@ -75,17 +71,6 @@ function PartnerApplicationSheetContent({
           Partner application
         </Sheet.Title>
         <div className="flex items-center gap-4">
-          <Link
-            href={`/${workspaceSlug}/program/messages/${partner.id}`}
-            target="_blank"
-          >
-            <Button
-              variant="secondary"
-              text="Message"
-              icon={<Msgs className="size-4 shrink-0" />}
-              className="hidden h-9 rounded-lg px-4 sm:flex"
-            />
-          </Link>
           <div className="flex items-center">
             <Button
               type="button"

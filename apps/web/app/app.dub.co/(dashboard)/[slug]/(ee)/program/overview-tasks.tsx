@@ -1,9 +1,8 @@
-import { usePartnerMessagesCount } from "@/lib/messages/hooks/use-partner-messages-count";
 import usePartnersCount from "@/lib/swr/use-partners-count";
 import { usePayoutsCount } from "@/lib/swr/use-payouts-count";
 import useWorkspace from "@/lib/swr/use-workspace";
 import { ProgramOverviewCard } from "@/ui/partners/overview/program-overview-card";
-import { MoneyBills2, Msgs, UserCheck } from "@dub/ui";
+import { MoneyBills2, UserCheck } from "@dub/ui";
 import { cn, nFormatter } from "@dub/utils";
 import Link from "next/link";
 import { useMemo } from "react";
@@ -24,13 +23,6 @@ export function OverviewTasks() {
     ignoreParams: true,
   });
 
-  const { count: unreadMessagesCount, isLoading: unreadMessagesLoading } =
-    usePartnerMessagesCount({
-      query: {
-        unread: true,
-      },
-    });
-
   const tasks = useMemo(
     () => [
       {
@@ -39,13 +31,6 @@ export function OverviewTasks() {
         count: eligiblePayoutsCount?.[0]?.count ?? 0,
         href: `/${slug}/program/payouts?status=pending`,
         loading: eligiblePayoutsLoading,
-      },
-      {
-        icon: Msgs,
-        label: "Respond to partners",
-        count: unreadMessagesCount,
-        href: `/${slug}/program/messages`,
-        loading: unreadMessagesLoading,
       },
       {
         icon: UserCheck,
@@ -59,8 +44,6 @@ export function OverviewTasks() {
       slug,
       eligiblePayoutsCount,
       eligiblePayoutsLoading,
-      unreadMessagesCount,
-      unreadMessagesLoading,
       partnersCount,
       partnersCountLoading,
     ],

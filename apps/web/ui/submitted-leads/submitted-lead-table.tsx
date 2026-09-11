@@ -114,11 +114,7 @@ export function SubmittedLeadTable() {
       minSize: 200,
       cell: ({ row }: { row: Row<SubmittedLeadItem> }) => {
         return (
-          <PartnerRowItem
-            partner={row.original.partner}
-            showPermalink={true}
-            showFraudIndicator={false}
-          />
+          <PartnerRowItem partner={row.original.partner} showPermalink={true} />
         );
       },
     },

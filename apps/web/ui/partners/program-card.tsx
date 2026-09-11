@@ -16,7 +16,6 @@ import {
 import { formatDate, getPrettyUrl, OG_AVATAR_URL } from "@dub/utils";
 import NumberFlow from "@number-flow/react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { type ReactNode, useMemo } from "react";
 
 function RejectionTooltipRow({
@@ -104,8 +103,7 @@ function ProgramCardNonApprovedStatus({
   programEnrollment: ProgramEnrollmentProps;
   statusDescription: string | undefined;
 }) {
-  const router = useRouter();
-  const { status, createdAt, program, application } = programEnrollment;
+  const { status, createdAt, application } = programEnrollment;
 
   if (status === "pending") {
     return `Applied ${formatDate(createdAt)}`;
@@ -134,22 +132,7 @@ function ProgramCardNonApprovedStatus({
   }
 
   if (statusDescription) {
-    return (
-      <p>
-        {statusDescription}{" "}
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            router.push(`/messages/${program.slug}`);
-          }}
-          className="text-neutral-400 underline decoration-dotted underline-offset-2 hover:text-neutral-700"
-        >
-          Reach out to the {program.name} team
-        </button>{" "}
-        if you have any questions.
-      </p>
-    );
+    return <p>{statusDescription}</p>;
   }
 
   return null;

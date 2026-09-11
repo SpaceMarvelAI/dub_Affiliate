@@ -10,7 +10,7 @@ export default function PartnersPayoutsSettings() {
       title="Payouts"
       titleInfo={{
         title:
-          "Connect a bank account and start receiving partner payouts from the affiliate programs you're working with.",
+          "View your upcoming and previous payouts from the affiliate programs you're working with.",
         href: "https://dub.co/help/article/receiving-payouts",
       }}
       controls={<PartnerPayoutSettingsButton />}

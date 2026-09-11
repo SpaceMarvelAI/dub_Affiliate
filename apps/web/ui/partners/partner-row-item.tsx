@@ -6,9 +6,7 @@ import { CircleMinus } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import type { ReactNode } from "react";
-import { PartnerRiskIndicator } from "./fraud-risks/partner-risk-indicator";
 import { PartnerAvatar } from "./partner-avatar";
-import { PartnerNetworkStatusBadge } from "./partner-network/partner-network-status-badge";
 import {
   getPayoutMethodIconConfig,
   getPayoutMethodLabel,
@@ -16,7 +14,6 @@ import {
 
 interface PartnerRowItemProps {
   showPermalink?: boolean;
-  showFraudIndicator?: boolean;
   suffix?: ReactNode;
   partner: {
     id: string;
@@ -171,7 +168,6 @@ function PartnerPayoutStatusTooltip({
 export function PartnerRowItem({
   partner,
   showPermalink = true,
-  showFraudIndicator = true,
   suffix,
 }: PartnerRowItemProps) {
   const { slug } = useParams();
@@ -225,14 +221,9 @@ export function PartnerRowItem({
           {partner.name}
         </As>
 
-        {"networkStatus" in partner && partner.networkStatus && (
-          <PartnerNetworkStatusBadge networkStatus={partner.networkStatus} />
-        )}
       </div>
 
       {suffix}
-
-      {showFraudIndicator && <PartnerRiskIndicator partnerId={partner.id} />}
     </div>
   );
 }

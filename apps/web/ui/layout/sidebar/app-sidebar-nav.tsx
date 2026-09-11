@@ -1,25 +1,16 @@
 "use client";
 
-import { usePartnerMessagesCount } from "@/lib/messages/hooks/use-partner-messages-count";
 import { getPlanCapabilities } from "@/lib/plan-capabilities";
 import { SUBMITTED_LEADS_ENABLED_PROGRAM_IDS } from "@/lib/submitted-leads/constants";
-import {
-  SubmissionsCountByStatus,
-  useBountySubmissionsCount,
-} from "@/lib/swr/use-bounty-submissions-count";
-import { useFraudGroupCount } from "@/lib/swr/use-fraud-groups-count";
 import { usePayoutsCount } from "@/lib/swr/use-payouts-count";
-import useProgram from "@/lib/swr/use-program";
 import { useProgramSubmittedLeadsCount } from "@/lib/swr/use-program-submitted-leads-count";
 import useWorkspace from "@/lib/swr/use-workspace";
 import { useRouterStuff } from "@dub/ui";
 import {
   Bell,
-  Brush,
   ConnectedDots,
   CubeSettings,
   DiamondTurnRight,
-  Flag,
   Folder,
   Gauge6,
   Gear2,
@@ -27,20 +18,15 @@ import {
   Globe,
   InvoiceDollar,
   Key,
-  LifeRing,
   LinesY as LinesYStatic,
   MarketingTarget,
   MoneyBills2,
-  Msgs,
-  PaperPlane,
   Receipt2,
   ShieldCheck,
   Sliders,
   StackY3,
   Tag,
-  Trophy,
   UserCheck,
-  UserPlus,
   Users,
   Users6,
   Webhook,
@@ -71,12 +57,8 @@ type SidebarNavData = {
   showNews?: boolean;
   pendingPayoutsCount?: number;
   applicationsCount?: number;
-  submittedBountiesCount?: number;
-  unreadMessagesCount?: number;
-  pendingFraudEventsCount?: number;
   pendingLeadsCount?: number;
   showConversionGuides?: boolean;
-  partnerNetworkEnabled?: boolean;
 };
 
 const NAV_GROUPS: SidebarNavGroups<SidebarNavData> = ({
@@ -122,11 +104,7 @@ const NAV_AREAS: SidebarNavAreas<SidebarNavData> = {
     showNews,
     pendingPayoutsCount,
     applicationsCount,
-    submittedBountiesCount,
-    unreadMessagesCount,
-    pendingFraudEventsCount,
     pendingLeadsCount,
-    partnerNetworkEnabled,
   }) => ({
     title: "Partner Program",
     showNews,
@@ -150,16 +128,6 @@ const NAV_AREAS: SidebarNavAreas<SidebarNavData> = {
                 : pendingPayoutsCount
               : undefined,
           },
-          {
-            name: "Messages",
-            icon: Msgs,
-            href: `/${slug}/program/messages`,
-            badge: unreadMessagesCount
-              ? unreadMessagesCount > 99
-                ? "99+"
-                : unreadMessagesCount
-              : undefined,
-          },
         ],
       },
       {
@@ -176,18 +144,8 @@ const NAV_AREAS: SidebarNavAreas<SidebarNavData> = {
           {
             name: "Groups",
             icon: Users6,
-            href: `/${slug}/program/groups`,
+            href: `/${slug}/program/groups/default/rewards`,
           },
-          ...(partnerNetworkEnabled
-            ? [
-                {
-                  name: "Partner Network",
-                  icon: UserPlus,
-                  href: `/${slug}/program/network` as `/${string}`,
-                  badge: "New",
-                },
-              ]
-            : []),
           {
             name: "Applications",
             icon: UserCheck,
@@ -226,41 +184,6 @@ const NAV_AREAS: SidebarNavAreas<SidebarNavData> = {
             icon: InvoiceDollar,
             href: `/${slug}/program/commissions`,
           },
-          {
-            name: "Risk Center",
-            icon: Flag,
-            href: `/${slug}/program/risks`,
-            badge: pendingFraudEventsCount
-              ? pendingFraudEventsCount > 99
-                ? "99+"
-                : pendingFraudEventsCount
-              : undefined,
-          },
-        ],
-      },
-      {
-        name: "Engagement",
-        items: [
-          {
-            name: "Bounties",
-            icon: Trophy,
-            href: `/${slug}/program/bounties`,
-            badge: submittedBountiesCount
-              ? submittedBountiesCount > 99
-                ? "99+"
-                : submittedBountiesCount
-              : "",
-          },
-          {
-            name: "Email Campaigns",
-            icon: PaperPlane,
-            href: `/${slug}/program/campaigns` as `/${string}`,
-          },
-          {
-            name: "Resources",
-            icon: LifeRing,
-            href: `/${slug}/program/resources`,
-          },
         ],
       },
       {
@@ -278,13 +201,6 @@ const NAV_AREAS: SidebarNavAreas<SidebarNavData> = {
             icon: Sliders,
             href: `/${slug}/program/groups/default/links`,
             arrow: true,
-            isActive: () => false,
-          },
-          {
-            name: "Branding",
-            icon: Brush,
-            arrow: true,
-            href: `/${slug}/program/groups/default/branding`,
             isActive: () => false,
           },
         ],
@@ -510,18 +426,12 @@ export function AppSidebarNav({
       ? "userSettings"
       : pathname.startsWith(`/${slug}/settings`)
         ? "workspaceSettings"
-        : pathname.includes("/program/campaigns/") ||
-            pathname.includes("/program/messages/") ||
-            pathname.endsWith("/program/payouts/success")
+        : pathname.endsWith("/program/payouts/success")
           ? null
           : pathname.startsWith(`/${slug}/program`)
             ? "program"
             : "links";
   }, [slug, pathname]);
-
-  const { program } = useProgram({
-    enabled: Boolean(currentArea === "program" && defaultProgramId),
-  });
 
   const { payoutsCount: pendingPayoutsCount } = usePayoutsCount({
     eligibility: "eligible",
@@ -532,31 +442,6 @@ export function AppSidebarNav({
 
   const applicationsCount = useProgramApplicationsCount({
     enabled: Boolean(currentArea === "program" && defaultProgramId),
-  });
-
-  const { submissionsCount } = useBountySubmissionsCount<
-    SubmissionsCountByStatus[]
-  >({
-    ignoreParams: true,
-    enabled: Boolean(currentArea === "program" && defaultProgramId),
-  });
-
-  const submittedBountiesCount =
-    submissionsCount?.find(({ status }) => status === "submitted")?.count || 0;
-
-  const { count: unreadMessagesCount } = usePartnerMessagesCount({
-    enabled: Boolean(currentArea === "program"),
-    query: {
-      unread: true,
-    },
-  });
-
-  const { fraudGroupCount: pendingFraudEventsCount } = useFraudGroupCount<
-    number | undefined
-  >({
-    query: { status: "pending" },
-    enabled: Boolean(currentArea === "program" && defaultProgramId),
-    ignoreParams: true,
   });
 
   const { data: pendingLeadsCount } = useProgramSubmittedLeadsCount<number>({
@@ -587,14 +472,9 @@ export function AppSidebarNav({
         defaultProduct,
         pendingPayoutsCount: pendingPayoutsCount?.[0]?.count ?? 0,
         applicationsCount,
-        submittedBountiesCount,
-        unreadMessagesCount,
-        pendingFraudEventsCount,
         pendingLeadsCount,
         showConversionGuides:
           canTrackConversions && pathname.startsWith(`/${slug}/links`),
-        partnerNetworkEnabled:
-          program && program.partnerNetworkEnabledAt !== null,
       }}
       toolContent={toolContent}
       newsContent={

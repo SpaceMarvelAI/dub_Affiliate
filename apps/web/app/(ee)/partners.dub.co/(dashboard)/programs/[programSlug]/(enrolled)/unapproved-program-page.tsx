@@ -6,7 +6,6 @@ import { PageWidthWrapper } from "@/ui/layout/page-width-wrapper";
 import { useConfirmModal } from "@/ui/modals/confirm-modal";
 import { PartnerStatusBadges } from "@/ui/partners/partner-status-badges";
 import { Button, StatusBadge } from "@dub/ui";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ReactNode } from "react";
 import { toast } from "sonner";
@@ -86,18 +85,7 @@ export function UnapprovedProgramPage({
             {title}
           </h2>
           <p className="text-content-subtle [&_strong]:text-content-default mt-2 max-w-sm text-balance text-sm font-medium [&_strong]:font-semibold">
-            {description}{" "}
-            {programEnrollment.status === "banned" && (
-              <>
-                <Link
-                  href={`/messages/${programEnrollment.program.slug}`}
-                  className="text-neutral-500 underline decoration-dotted underline-offset-2 transition-colors hover:text-neutral-800"
-                >
-                  Reach out to the {programEnrollment.program.name} team
-                </Link>{" "}
-                if you have any questions.
-              </>
-            )}
+            {description}
           </p>
 
           {/* Withdraw button - only show for pending applications */}

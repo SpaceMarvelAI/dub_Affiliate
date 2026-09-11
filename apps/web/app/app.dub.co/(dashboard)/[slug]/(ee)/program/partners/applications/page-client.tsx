@@ -182,11 +182,7 @@ export function ProgramPartnersApplicationsPageClient() {
         minSize: 250,
         cell: ({ row }) => {
           return (
-            <PartnerRowItem
-              partner={row.original}
-              showPermalink={false}
-              showFraudIndicator={true}
-            />
+            <PartnerRowItem partner={row.original} showPermalink={false} />
           );
         },
       },

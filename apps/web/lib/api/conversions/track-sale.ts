@@ -335,7 +335,7 @@ export const trackSale = async ({
         customer,
       }),
 
-    _trackSale({
+    trackSaleForCustomer({
       amount,
       currency,
       eventName,
@@ -459,8 +459,11 @@ const _trackLead = async ({
   );
 };
 
-// Track the sale event
-const _trackSale = async ({
+// Track the sale event — exported (not just internal to trackSale()) so
+// /api/track/redeem-code can reuse the exact same Reward/Commission
+// pipeline for a sale that has no real click/lead history (a manually
+// typed code at checkout instead of a followed link).
+export const trackSaleForCustomer = async ({
   amount,
   currency = "usd",
   eventName,

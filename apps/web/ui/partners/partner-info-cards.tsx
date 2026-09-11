@@ -39,15 +39,8 @@ import { CircleMinus } from "lucide-react";
 import Link from "next/link";
 import { Fragment, ReactNode, createElement } from "react";
 import useSWR from "swr";
-import { PartnerApplicationRiskSummary } from "./fraud-risks/partner-application-risk-summary";
-import {
-  PartnerApplicationRiskBanner,
-  PartnerRiskBanner,
-} from "./fraud-risks/partner-risk-banner";
-import { PartnerRiskIndicator } from "./fraud-risks/partner-risk-indicator";
 import { PartnerAvatar } from "./partner-avatar";
 import { PartnerInfoGroup } from "./partner-info-group";
-import { PartnerNetworkStatusBadge } from "./partner-network/partner-network-status-badge";
 import { PartnerStarButton } from "./partner-star-button";
 import { PartnerStatusBadgeWithTooltip } from "./partner-status-badge-with-tooltip";
 import { PartnerTagsList } from "./partner-tags-list";
@@ -244,14 +237,6 @@ export function PartnerInfoCards({
   return (
     <div className="flex flex-col gap-4">
       <div className="overflow-hidden rounded-xl bg-red-100">
-        {partner &&
-          isEnrolled &&
-          (partner.status === "pending" ? (
-            <PartnerApplicationRiskBanner partner={partner} />
-          ) : (
-            <PartnerRiskBanner partner={partner} />
-          ))}
-
         <div className="border-border-subtle flex flex-col divide-y divide-neutral-200 rounded-xl border bg-white">
           <div className="p-4">
             <div className="flex items-start justify-between gap-2">
@@ -288,16 +273,6 @@ export function PartnerInfoCards({
                     {partner.name}
                   </span>
 
-                  {"networkStatus" in partner && partner.networkStatus && (
-                    <PartnerNetworkStatusBadge
-                      networkStatus={partner.networkStatus}
-                      size="large"
-                    />
-                  )}
-
-                  {showFraudIndicator && (
-                    <PartnerRiskIndicator partnerId={partner.id} />
-                  )}
                 </div>
               ) : (
                 <div className="h-7 w-24 animate-pulse rounded bg-neutral-200" />
@@ -369,10 +344,6 @@ export function PartnerInfoCards({
               })}
           </div>
           {isEnrolled && partner && <TagsList partner={partner} />}
-
-          {partner && isEnrolled && showApplicationRiskAnalysis && (
-            <PartnerApplicationRiskSummary partner={partner} />
-          )}
         </div>
       </div>
 

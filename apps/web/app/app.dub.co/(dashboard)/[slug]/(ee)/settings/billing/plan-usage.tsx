@@ -423,7 +423,7 @@ export default function PlanUsage() {
               icon={Users6}
               usage={groupsCount ?? 0}
               usageLimit={groupsLimit}
-              href={`/${slug}/program/groups`}
+              href={`/${slug}/program/groups/default/rewards`}
             />
             <UsageCategory
               title="Partner payouts"

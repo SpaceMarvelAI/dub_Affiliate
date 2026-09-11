@@ -886,16 +886,6 @@ function RewardListItem({
             <p className="text-content-subtle text-sm">
               You are not eligible for any rewards at this time.
             </p>
-
-            {programSlug && (
-              <Link href={`/messages/${programSlug}`}>
-                <Button
-                  variant="secondary"
-                  text="Contact program"
-                  className="h-8 rounded-lg px-3"
-                />
-              </Link>
-            )}
           </div>
         )}
       </div>

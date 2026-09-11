@@ -7,10 +7,8 @@ import { GroupProps } from "@/lib/types";
 import { GroupSelector } from "@/ui/partners/groups/group-selector";
 import {
   ArrowUpRight2,
-  Brush,
   Button,
   ChevronRight,
-  Discount,
   Gift,
   Hyperlink,
   Sliders,
@@ -40,7 +38,7 @@ export function GroupHeaderTitle() {
   }
 
   if (!group) {
-    redirect(`/${workspaceSlug}/program/groups`);
+    redirect(`/${workspaceSlug}/program/groups/default/rewards`);
   }
 
   const switchToGroup = (groupId: string) => {
@@ -58,9 +56,9 @@ export function GroupHeaderTitle() {
   return (
     <div className="flex items-center gap-1.5">
       <Link
-        href={`/${workspaceSlug}/program/groups`}
-        aria-label="Back to groups"
-        title="Back to groups"
+        href={`/${workspaceSlug}/program`}
+        aria-label="Back to program"
+        title="Back to program"
         className="bg-bg-subtle hover:bg-bg-emphasis flex size-8 shrink-0 items-center justify-center rounded-lg transition-[transform,background-color] duration-150 active:scale-95"
       >
         <Users className="size-4" />
@@ -91,28 +89,12 @@ export function GroupHeaderTabs() {
         `/${slug}/program/groups/${group.slug}/rewards`,
     },
     {
-      id: "discounts",
-      label: "Discounts",
-      icon: Discount,
-      external: false,
-      getHref: (group: GroupProps) =>
-        `/${slug}/program/groups/${group.slug}/discounts`,
-    },
-    {
       id: "links",
       label: "Links",
       icon: Hyperlink,
       external: false,
       getHref: (group: GroupProps) =>
         `/${slug}/program/groups/${group.slug}/links`,
-    },
-    {
-      id: "branding",
-      label: "Branding",
-      icon: Brush,
-      external: false,
-      getHref: (group: GroupProps) =>
-        `/${slug}/program/groups/${group.slug}/branding`,
     },
     {
       id: "partners",

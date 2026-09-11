@@ -9,7 +9,7 @@ import {
   Popover,
   ScrollContainer,
 } from "@dub/ui";
-import { Check2, GridIcon, Magnifier, Shop } from "@dub/ui/icons";
+import { Check2, GridIcon, Magnifier } from "@dub/ui/icons";
 import { cn, OG_AVATAR_URL } from "@dub/utils";
 import { Command } from "cmdk";
 import { ChevronsUpDown } from "lucide-react";
@@ -84,19 +84,6 @@ export function PartnerProgramDropdown() {
                   <GridIcon className="size-5 text-neutral-500 sm:size-4" />
                   <span className="text-content-default block truncate">
                     Your programs
-                  </span>
-                </Link>
-                <Link
-                  href="/marketplace"
-                  className={cn(
-                    "flex items-center gap-x-2.5 rounded-md px-2.5 py-2 text-base transition-all duration-75 hover:bg-neutral-200/50 active:bg-neutral-200/80 sm:text-sm",
-                    "outline-none focus-visible:ring-2 focus-visible:ring-black/50",
-                  )}
-                  onClick={() => setOpenPopover(false)}
-                >
-                  <Shop className="size-5 text-neutral-500 sm:size-4" />
-                  <span className="text-content-default block truncate">
-                    Marketplace
                   </span>
                 </Link>
               </div>

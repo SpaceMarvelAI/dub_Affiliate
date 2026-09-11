@@ -3,10 +3,8 @@ import useProgram from "@/lib/swr/use-program";
 import useWorkspace from "@/lib/swr/use-workspace";
 import { GroupWithProgramProps } from "@/lib/types";
 import { ProgramOverviewCard } from "@/ui/partners/overview/program-overview-card";
-import { ButtonLink } from "@/ui/placeholders/button-link";
 import {
   ArrowUpRight,
-  Brush,
   Check,
   Copy,
   InputField,
@@ -57,14 +55,6 @@ export function OverviewLinks() {
         <h2 className="text-content-emphasis text-sm font-medium">
           Program links
         </h2>
-        <ButtonLink
-          href={`/${slug}/program/groups/default/branding`}
-          variant="secondary"
-          className="-mr-1 -mt-1 h-7 px-2 text-sm"
-        >
-          <Brush className="mr-1.5 size-4 shrink-0" />
-          Branding
-        </ButtonLink>
       </div>
       <div className="mt-3 flex flex-col px-2">
         {links.map((link) => {

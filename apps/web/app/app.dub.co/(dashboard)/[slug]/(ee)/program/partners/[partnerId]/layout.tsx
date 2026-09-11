@@ -39,7 +39,6 @@ import {
   EnvelopeArrowRight,
   InvoiceDollar,
   LoadingSpinner,
-  Msgs,
   PenWriting,
   Refresh2,
   SquareUserSparkle2,
@@ -287,26 +286,14 @@ function PageControls({ partner }: { partner: EnrolledPartnerProps }) {
           className="hidden h-8 w-fit px-3 sm:h-9 md:flex"
         />
       ) : (
-        <>
-          <Button
-            variant="primary"
-            text="Create commission"
-            shortcut="C"
-            onClick={() => setCreateCommissionSheetOpen(true)}
-            disabledTooltip={createCommissionDisabledTooltip}
-            className="hidden h-8 w-fit px-3 sm:h-9 md:flex"
-          />
-
-          <Link href={`/${workspaceSlug}/program/messages/${partner.id}`}>
-            <Button
-              variant="secondary"
-              text="Message"
-              icon={<Msgs className="size-4 shrink-0" />}
-              onClick={() => setIsOpen(false)}
-              className="hidden h-8 w-fit px-3 sm:h-9 md:flex"
-            />
-          </Link>
-        </>
+        <Button
+          variant="primary"
+          text="Create commission"
+          shortcut="C"
+          onClick={() => setCreateCommissionSheetOpen(true)}
+          disabledTooltip={createCommissionDisabledTooltip}
+          className="hidden h-8 w-fit px-3 sm:h-9 md:flex"
+        />
       )}
 
       <Popover
@@ -343,16 +330,6 @@ function PageControls({ partner }: { partner: EnrolledPartnerProps }) {
             ) : (
               <>
                 <div className="grid gap-px p-2">
-                  <MenuItem
-                    as={Link}
-                    href={`/${workspaceSlug}/program/messages/${partner.id}`}
-                    target="_blank"
-                    icon={Msgs}
-                    onClick={() => setIsOpen(false)}
-                    className="md:hidden"
-                  >
-                    Message
-                  </MenuItem>
                   <MenuItem
                     icon={InvoiceDollar}
                     onClick={() => {

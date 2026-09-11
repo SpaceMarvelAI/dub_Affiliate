@@ -1,23 +1,13 @@
 "use client";
 
 import usePartnerPayoutsCount from "@/lib/swr/use-partner-payouts-count";
-import usePartnerProfile from "@/lib/swr/use-partner-profile";
-import { ConnectPayoutButton } from "@/ui/partners/payouts/connect-payout-button";
-import { AlertCircleFill } from "@/ui/shared/icons";
-import {
-  AnimatedSizeContainer,
-  ChevronRight,
-  MoneyBills2,
-  Tooltip,
-} from "@dub/ui";
+import { AnimatedSizeContainer, ChevronRight, MoneyBills2 } from "@dub/ui";
 import { currencyFormatter } from "@dub/utils";
 import { PayoutStatus } from "@prisma/client";
 import Link from "next/link";
 import { memo } from "react";
 
 export const PayoutStats = memo(() => {
-  const { partner } = usePartnerProfile();
-
   const { payoutsCount } = usePartnerPayoutsCount({
     groupBy: "status",
   });
@@ -40,16 +30,6 @@ export const PayoutStats = memo(() => {
           <div className="grid gap-1 text-xs">
             <p className="text-content-subtle font-medium">Upcoming payouts</p>
             <div className="flex items-center gap-1">
-              {partner && !partner.payoutsEnabledAt && (
-                <Tooltip
-                  content="You need to [connect your payout account](/payouts?settings=true) to be able to receive payouts from the programs you are enrolled in. [Learn more](https://dub.co/help/article/receiving-payouts)"
-                  side="right"
-                >
-                  <div>
-                    <AlertCircleFill className="text-content-default size-3" />
-                  </div>
-                </Tooltip>
-              )}
               {payoutsCount ? (
                 <p className="text-content-default font-medium">
                   {currencyFormatter(
@@ -87,9 +67,6 @@ export const PayoutStats = memo(() => {
             )}
           </div>
         </div>
-        {partner && !partner.payoutsEnabledAt && (
-          <ConnectPayoutButton className="mt-4 h-8 w-full" />
-        )}
       </div>
     </AnimatedSizeContainer>
   );
