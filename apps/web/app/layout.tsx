@@ -16,7 +16,13 @@ export default function RootLayout({
       lang="en"
       className={cn(satoshi.variable, inter.variable, geistMono.variable)}
     >
-      <body>
+      {/* suppressHydrationWarning here (not a blanket app-wide setting) is
+          the standard, official fix for browser extensions (ColorZilla,
+          Grammarly, etc.) injecting attributes like cz-shortcut-listen onto
+          <body> before React hydrates — a client-side DOM change outside
+          the app's control, not a real markup mismatch. It only silences
+          warnings for attribute differences on this one element. */}
+      <body suppressHydrationWarning>
         <RootProviders>{children}</RootProviders>
 
         <Script id="set-theme" strategy="beforeInteractive">

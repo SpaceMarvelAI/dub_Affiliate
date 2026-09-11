@@ -17,13 +17,19 @@ function getDimensions() {
 }
 
 export function useMediaQuery() {
+  // Initial state must be null on BOTH server and client — calling
+  // getDevice()/getDimensions() here reads `window`, which doesn't exist
+  // during SSR but does during the client's first (pre-hydration) render,
+  // so the two would compute different values and React would flag a
+  // hydration mismatch on every single page load. The real value is only
+  // ever set in the effect below, which runs client-side after hydration.
   const [device, setDevice] = useState<"mobile" | "tablet" | "desktop" | null>(
-    getDevice(),
+    null,
   );
   const [dimensions, setDimensions] = useState<{
     width: number;
     height: number;
-  } | null>(getDimensions());
+  } | null>(null);
 
   useEffect(() => {
     const checkDevice = () => {
